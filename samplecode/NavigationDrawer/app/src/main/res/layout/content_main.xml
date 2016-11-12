@@ -19,13 +19,4 @@
         android:text="Hello World!"
         android:id="@+id/TextView1"/>
 
-    <Button
-        android:text="@string/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/TextView1"
-        android:layout_toEndOf="@+id/TextView1"
-        android:layout_marginStart="73dp"
-        android:layout_marginTop="134dp"
-        android:id="@+id/button" />
 </RelativeLayout>
