@@ -1,10 +1,17 @@
 package com.voice;
 
 import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.dialogGator.DBHelper;
+import com.dialogGator.PostTaskListener;
+import com.dialogGator.Product;
 import com.dialogGator.ProductAttributes;
+import com.dialogGator.ReaderTask;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -31,6 +38,14 @@ public class APIAITaskAgent {
         aiDialog = new AIDialog(activity, aiConfiguration);
         Log.i("HashMap", String.valueOf(ProductAttributes.productMap));
 
+        PostTaskListener<ArrayList<Product>> postTaskListener = new PostTaskListener<ArrayList<Product>>() {
+            @Override
+            public void onPostTask(ArrayList<Product> result, Context context ) {
+                Log.i("Result", result.toString());
+            }
+        };
+        final ReaderTask readerTask = new ReaderTask(activity.getApplicationContext(),postTaskListener);
+
         aiDialog.setResultsListener(new AIDialog.AIDialogListener() {
             @Override
             public void onResult(AIResponse response) {
@@ -40,9 +55,10 @@ public class APIAITaskAgent {
                         String speech = result.getFulfillment().getSpeech();
                         switch (result.getAction()) {
                             case "clothes.product":
-                                ProductAttributes.productMap.put("category",result.getParameters().values());
-                                speech = speech + "Who would like to buy it for? Men or Women?";
+                                ProductAttributes.productMap.put("category", result.getParameters().get("items").toString().replaceAll("\"",""));
+                                speech = speech;// + "Who would like to buy it for? Men or Women?";
                                 TTS.speak(speech);
+                                readerTask.execute(ProductAttributes.productMap);
                                 break;
                             case "clothes.startwithname":
                                 TTS.speak(speech);
@@ -65,26 +81,26 @@ public class APIAITaskAgent {
                                 TTS.stopSpeaking();
                                 break;
                             case "clothes.priceless":
-                                ProductAttributes.productMap.put("pricestart","0");
-                                ProductAttributes.productMap.put("priceend",result.getParameters().values());
+                                ProductAttributes.productMap.put("priceStart","0");
+                                ProductAttributes.productMap.put("priceEnd",result.getParameters().values());
                                 speech = speech + "Do you have any colour in mind? If yes what color?";
                                 TTS.speak(speech);
                                 break;
                             case "clothes.pricegreater":
-                                ProductAttributes.productMap.put("pricestart",result.getParameters().values());
-                                ProductAttributes.productMap.put("priceend","999999999999");
+                                ProductAttributes.productMap.put("priceStart",result.getParameters().values());
+                                ProductAttributes.productMap.put("priceEnd","999999999999");
                                 speech = speech + "Do you have any colour in mind? If yes what color?";
                                 TTS.speak(speech);
                                 break;
                             case "clothes.pricevalue":
-                                ProductAttributes.productMap.put("pricestart",result.getParameters().values());
-                                ProductAttributes.productMap.put("priceend",result.getParameters().values());
+                                ProductAttributes.productMap.put("priceStart",result.getParameters().values());
+                                ProductAttributes.productMap.put("priceEnd",result.getParameters().values());
                                 speech = speech + "Do you have any colour in mind? If yes what color?";
                                 TTS.speak(speech);
                                 break;
                             case "clothes.pricebetween":
-                                ProductAttributes.productMap.put("pricestart",result.getParameters().get("rangestart"));
-                                ProductAttributes.productMap.put("priceend",result.getParameters().get("rangeend"));
+                                ProductAttributes.productMap.put("priceStart",result.getParameters().get("rangestart"));
+                                ProductAttributes.productMap.put("priceEnd",result.getParameters().get("rangeend"));
                                 speech = speech + "Do you have any colour in mind? If yes what color?";
                                 TTS.speak(speech);
                                 break;

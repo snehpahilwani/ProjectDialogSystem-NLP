@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.voice.APIAITaskAgent;
 import com.voice.TTS;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.inject.Singleton;
@@ -44,6 +45,8 @@ public class MainActivity extends AppCompatActivity
 
         TTS.init(getApplicationContext());
         ProductAttributes.init();
+
+        //DBHelper.getInstance(getApplicationContext());
         final APIAITaskAgent apiaiTaskAgent = new APIAITaskAgent(this);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
