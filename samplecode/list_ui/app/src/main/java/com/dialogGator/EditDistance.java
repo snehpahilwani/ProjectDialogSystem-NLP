@@ -20,6 +20,6 @@ public class EditDistance {
                         distance[i][j - 1] + 1,
                         distance[i - 1][j - 1] + ((lhs.charAt(i - 1) == rhs.charAt(j - 1)) ? 0 : 1));
 
-        return ((float)distance[lhs.length()][rhs.length()] / lhs.length()) * 100;
+        return ((float)(lhs.length() - distance[lhs.length()][rhs.length()]) / lhs.length()) * 100;
     }
 }
