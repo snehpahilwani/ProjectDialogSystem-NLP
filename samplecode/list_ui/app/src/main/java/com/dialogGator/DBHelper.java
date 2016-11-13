@@ -23,7 +23,7 @@ public class DBHelper extends SQLiteOpenHelper
     private static String TAG = "DataBaseHelper"; // Tag just for the LogCat window
     //destination path (location) of our database on device
     private static String DB_PATH = "";
-    private static String DB_NAME ="Dialog";// Database name
+    private static String DB_NAME ="Dialog.db";// Database name
     private SQLiteDatabase mDataBase;
     private final Context mContext;
 
@@ -57,57 +57,64 @@ public class DBHelper extends SQLiteOpenHelper
     }
 
     public ArrayList<Product> Query(Map<String, String> searchBox) {
+        boolean db = openDataBase();
         ArrayList<Product> products = new ArrayList<Product>();
         String queryString = GetQueryString(searchBox);
         Cursor data = readData(queryString);
-        while (data.moveToNext())
+        try
         {
-            Product product = new Product();
-            product.id = Integer.toString(data.getInt(0));
-            product.title = (data.getString(1));
-            product.category = (data.getString(2));
-            product.brand = (data.getString(3));
-            product.price = (data.getDouble(4));
-            product.size = (data.getString(5));
-            product.color = (data.getString(6));
-            product.imgUrl = (data.getString(7));
+            while (data.moveToNext()) {
+                Product product = new Product();
+                product.id = Integer.toString(data.getInt(0));
+                product.title = (data.getString(1));
+                product.category = (data.getString(2));
+                product.brand = (data.getString(3));
+                product.price = (data.getDouble(4));
+                product.size = (data.getString(5));
+                product.color = (data.getString(6));
+                product.imgUrl = (data.getString(7));
 
-            Set<String> attributeSet = searchBox.keySet();
+                Set<String> attributeSet = searchBox.keySet();
 
             /*
             Native sqlite in android does not support any function for fuzzy string matching
             TODO : Move to a remote MySQL db
             */
-            for(String attribute : attributeSet)
-            {
-                Field field = null;
-                try {
-                    field = Product.class.getDeclaredField(attribute);
-                } catch (NoSuchFieldException e) {
-                    e.printStackTrace();
-                }
-                field.setAccessible(true);
-                String lhs = null;
-                try {
-                    lhs = (String) field.get(product);
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
-                String rhs = searchBox.get(attribute);
-                if(EditDistance.findEditDistance(lhs.toLowerCase(), rhs.toLowerCase()) >= 70)
-                {
-                    products.add(product);
+                for (String attribute : attributeSet) {
+                    Field field = null;
+                    try {
+                        field = Product.class.getDeclaredField(attribute);
+                    } catch (NoSuchFieldException e) {
+                        e.printStackTrace();
+                    }
+                    field.setAccessible(true);
+                    String lhs = null;
+                    try {
+                        lhs = (String) field.get(product);
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
+                    String rhs = searchBox.get(attribute);
+                    if (EditDistance.findEditDistance(lhs.toLowerCase(), rhs.toLowerCase()) >= 70) {
+                        products.add(product);
+                    }
                 }
             }
         }
+        catch (Exception e)
+        {
+            Log.e(TAG, e.toString());
+        }
+        close();
         return products;
     }
+
 
     private Cursor readData(String sql)
     {
         try
         {
-            return this.getReadableDatabase().rawQuery(sql, null);
+            return mDataBase.rawQuery(sql, null);
             //Cursor mCur = mDataBase.rawQuery(sql, null);
             //return mCur;
         }
@@ -222,7 +229,7 @@ public class DBHelper extends SQLiteOpenHelper
     {
         String mPath = DB_PATH + DB_NAME;
         //Log.v("mPath", mPath);
-        mDataBase = SQLiteDatabase.openDatabase(mPath, null, SQLiteDatabase.CREATE_IF_NECESSARY);
+        mDataBase = SQLiteDatabase.openDatabase(mPath, null, SQLiteDatabase.OPEN_READONLY);
         //mDataBase = SQLiteDatabase.openDatabase(mPath, null, SQLiteDatabase.NO_LOCALIZED_COLLATORS);
         return mDataBase != null;
     }

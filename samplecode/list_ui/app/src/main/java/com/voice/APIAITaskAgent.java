@@ -38,24 +38,28 @@ public class APIAITaskAgent {
         aiDialog = new AIDialog(activity, aiConfiguration);
         Log.i("HashMap", String.valueOf(ProductAttributes.productMap));
 
-        PostTaskListener<ArrayList<Product>> postTaskListener = new PostTaskListener<ArrayList<Product>>() {
+        final PostTaskListener<ArrayList<Product>> postTaskListener = new PostTaskListener<ArrayList<Product>>() {
             @Override
             public void onPostTask(ArrayList<Product> result, Context context ) {
                 Log.i("Result", result.toString());
             }
         };
-        final ReaderTask readerTask = new ReaderTask(activity.getApplicationContext(),postTaskListener);
 
         aiDialog.setResultsListener(new AIDialog.AIDialogListener() {
             @Override
             public void onResult(AIResponse response) {
                 try {
                     if (!response.isError()){
+                        final ReaderTask readerTask = new ReaderTask(activity.getApplicationContext(),postTaskListener);
                         Result result =  response.getResult();
                         String speech = result.getFulfillment().getSpeech();
                         switch (result.getAction()) {
                             case "clothes.product":
-                                ProductAttributes.productMap.put("category", result.getParameters().get("items").toString().replaceAll("\"",""));
+                                if(result.getParameters().get("items").toString().toLowerCase().contains("\""))
+                                    ProductAttributes.productMap.put("category", result.getParameters().get("items").toString().replaceAll("\"",""));
+                                else
+                                    ProductAttributes.productMap.put("category", result.getParameters().get("items").toString());
+
                                 speech = speech;// + "Who would like to buy it for? Men or Women?";
                                 TTS.speak(speech);
                                 readerTask.execute(ProductAttributes.productMap);
