@@ -14,6 +14,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.voice.APIAITaskAgent;
+import com.voice.TTS;
+
+import java.util.HashMap;
+
+import javax.inject.Singleton;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -35,12 +42,17 @@ public class MainActivity extends AppCompatActivity
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        TTS.init(getApplicationContext());
+        ProductAttributes.init();
+        final APIAITaskAgent apiaiTaskAgent = new APIAITaskAgent(this);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                TTS.stopSpeaking();
+                apiaiTaskAgent.startRecognition();
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
             }
         });
 
@@ -60,6 +72,7 @@ public class MainActivity extends AppCompatActivity
 
         navigationView.setNavigationItemSelectedListener(this);
     }
+
 
     @Override
     public void onBackPressed() {
@@ -127,4 +140,10 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        TTS.stopSpeaking();
+//    }
 }

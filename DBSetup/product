@@ -1,0 +1,288 @@
+Id,ItemId,Title,Gender,CategoryId,Price,ColorId,SizeId,BrandId,Department,ImgUrl,Rank
+1,B00EAN2JHU,Carhartt Men's Workwear Pocket Short Sleeve Henley Original Fit Shirt K84,Men,3,23.0,3,3,1,Apparel,http://ecx.images-amazon.com/images/I/41h164G-wiL._SL75_.jpg,338
+2,B003AU5WJQ,Soffe Men's Long-Sleeve Cotton T-Shirt,Men,4,9.99,2,1,2,Apparel,http://ecx.images-amazon.com/images/I/41zWWIU5k2L._SL75_.jpg,143
+3,B002G9U8VE,Carhartt Men's Workwear Midweight Jersey Pocket Long-Sleeve T-Shirt K126,Men,4,18.0,7,5,1,Apparel,http://ecx.images-amazon.com/images/I/61jR2ITKJXL._SL75_.jpg,32
+4,B01GUAMG28,Dream USA Men's Casual 3/4 Sleeve Baseball Tshirt Raglan Jersey Shirt,Men,4,30,3,4,3,Apparel,http://ecx.images-amazon.com/images/I/41cUCVSbpeL._SL75_.jpg,98
+5,B007BLNDLO,Lee Uniforms Men's Short Sleeve Uniforms Polo Shirt,Men,3,18.0,2,4,4,Apparel,http://ecx.images-amazon.com/images/I/419xFBb5XWL._SL75_.jpg,122
+6,B00T7TSI86,Jerzees Men's Long-Sleeve T-Shirt,Men,4,6.99,3,4,5,Apparel,http://ecx.images-amazon.com/images/I/41LpY4FDk2L._SL75_.jpg,83
+7,B000BTIKQQ,Gildan Men's Heavy Cotton T-Shirt,Men,4,12.0,3,4,6,Apparel,None,525
+8,B00BPLRM68,U.S. Polo Assn. Men's Classic Polo Shirt,Men,4,42.0,1,2,7,Apparel,http://ecx.images-amazon.com/images/I/418rVXo3MtL._SL75_.jpg,47
+9,B00JJV4AFW,Next Level mens Premium Sueded V shirt - 6440,Men,4,4.75,1,2,8,Apparel,http://ecx.images-amazon.com/images/I/41gH0iiARcL._SL75_.jpg,94
+10,B01M7Y5YKN,Chicago Cubs World Series T-Shirt,Men,4,25,1,5,9,Apparel,http://ecx.images-amazon.com/images/I/41wmS1wAUNL._SL75_.jpg,1452
+11,B01M71HHQ1,Wrangler Men's Authentics Long Sleeve Plaid Fleece Shirt,Men,4,28,3,5,10,Apparel,None,225
+12,B004IMMIM4,Hanes Adult Tagless Long Sleeve Tee,Men,4,11.5,2,5,11,Apparel,http://ecx.images-amazon.com/images/I/41C994OhRAL._SL75_.jpg,54
+13,B01IGBW6MO,GH Bass Men's Long Sleeve Fireside Plaid Flannel Shirt,Men,4,56.0,2,3,12,Apparel,http://ecx.images-amazon.com/images/I/51mu1EVuNQL._SL75_.jpg,1445
+14,B003TP8HJ4,N6210 Next Level Men's CVC Crew,Men,4,7.15,5,4,8,Apparel,http://ecx.images-amazon.com/images/I/41MsR1-gSwL._SL75_.jpg,104
+15,B018VLHO8K,Men's Compression Long Sleeve Running Fitness Workout Base Layer Shirt,Men,4,38.98,3,3,13,Apparel,http://ecx.images-amazon.com/images/I/51fXS0IjFQL._SL75_.jpg,543
+16,B00KBZOB40,Hanes Men's 2 Pack X-Temp Performance T-Shirt,Men,4,13.0,2,3,11,Apparel,http://ecx.images-amazon.com/images/I/41gy%2B67pLpL._SL75_.jpg,500
+17,B00NISMRY8,Reigning Champ Men's Mid Weight Terry Sweatshirt,Men,5,32,1,1,14,Apparel,http://ecx.images-amazon.com/images/I/41TJQrjzMqL._SL75_.jpg,277
+18,B01E8NO4SI,H2H Mens Casual Slim Fit Raglan Baseball Three-Quarter Sleeve Henley T-Shirts,Men,4,42,2,4,15,Apparel,http://ecx.images-amazon.com/images/I/41BSOMNGGAL._SL75_.jpg,360
+19,B00SKX1QMU,PAUL JONES Mens Dress Shirt in Slim Fit CL5252,Men,7,24.98,1,3,16,Apparel,http://ecx.images-amazon.com/images/I/41fn1wZ2uTL._SL75_.jpg,163
+20,B010283OG6,Hanes Men's ComfortSoft T-Shirt (Pack of 4),Men,4,20.0,3,1,11,Apparel,http://ecx.images-amazon.com/images/I/31M1mpZ29aL._SL75_.jpg,14
+21,B00F3SJQ72,Tom's Ware Mens Premium Casual Inner Contrast Dress Shirt,Men,7,48,2,2,17,Apparel,http://ecx.images-amazon.com/images/I/41a6Zry91bL._SL75_.jpg,127
+22,B00KBZO8WK,Hanes Men's Nano Premium Cotton T-Shirt (Pack of 2),Men,4,12.0,1,3,11,Apparel,http://ecx.images-amazon.com/images/I/41XEBJP8kLL._SL75_.jpg,430
+23,B00XKXHNOK,Wrangler Authentics Mens Classic Regular-Fit Jean,Men,2,19.99,2,3,10,Apparel,http://ecx.images-amazon.com/images/I/41Ql4jBqmBL._SL75_.jpg,8
+24,B0018OMRWQ,Levi's Men's 501 Original Shrink-To-Fit Jean,Men,2,46.0,6,5,18,Apparel,http://ecx.images-amazon.com/images/I/41sK2WA5YPL._SL75_.jpg,241
+25,B0018OR118,Levi's Men's 501 Original-Fit Jean,Men,2,68.0,2,5,18,Apparel,http://ecx.images-amazon.com/images/I/41OsiiL64YL._SL75_.jpg,3
+26,B00D2KSI0E,Levi's Men's 513 Slim-Straight Jean,Men,2,64.0,7,5,18,Apparel,http://ecx.images-amazon.com/images/I/41jtyp8dpXL._SL75_.jpg,48
+27,B0018OKX68,Levi's Men's 550 Relaxed-Fit Jean,Men,2,44.0,3,2,18,Apparel,http://ecx.images-amazon.com/images/I/41N8hXFHm6L._SL75_.jpg,11
+28,B01K81ZQ2C,NITAGUT Men's Ripped Slim Fit Tapered Leg Jeans,Men,2,25,2,1,19,Apparel,http://ecx.images-amazon.com/images/I/41nxmDtVseL._SL75_.jpg,2331
+29,B01KGZ79WU,Aiyino Men's Slim Zipper Biker Jeans Moto Denim Pants,Men,2,46,3,3,20,Apparel,http://ecx.images-amazon.com/images/I/41cItu4ZnsL._SL75_.jpg,4423
+30,B00D2KSHZU,Levi's Men's 510 Skinny-Fit Jean,Men,2,68.0,1,3,18,Apparel,http://ecx.images-amazon.com/images/I/41EmmBxOHBL._SL75_.jpg,509
+31,B000N8TKP0,Dickies Men's Relaxed Fit Straight-Leg Duck Carpenter Jean,Men,2,44.0,1,5,21,Apparel,http://ecx.images-amazon.com/images/I/41nqKVjTSUL._SL75_.jpg,119
+32,B00XKXHWKK,Wrangler Authentics Mens Premium Relaxed Bootcut Jean,Men,2,24.99,2,4,10,Apparel,http://ecx.images-amazon.com/images/I/41BPCrZNYGL._SL75_.jpg,515
+33,B0018OLTAC,Levi's Men's 511 Slim-Fit Jean,Men,2,68.0,1,3,18,Apparel,http://ecx.images-amazon.com/images/I/4119cPxF6KL._SL75_.jpg,5
+34,B01EMVZ1HE,Men's Ripped Skinny Distressed Destroyed Straight Fit Zipper Jeans with Holes,Men,2,24,2,1,22,Apparel,http://ecx.images-amazon.com/images/I/31OvaIrsg7L._SL75_.jpg,329
+35,B01HP3VVSY,Southpole Men's Flex Stretch Basic Twill and Rinse Denim Pants,Men,1,50.0,1,4,23,Apparel,http://ecx.images-amazon.com/images/I/41axF6-7JSL._SL75_.jpg,4468
+36,B01ECFBFCA,Levi's Men's 505 Regular Fit Jean,Men,2,59.5,1,3,18,Apparel,http://ecx.images-amazon.com/images/I/41b9YeM9oAL._SL75_.jpg,2
+37,B008COI8PA,Lee Men's Modern Series Straight-Fit Jean,Men,2,58.0,1,1,4,Apparel,http://ecx.images-amazon.com/images/I/41MMOsvHvEL._SL75_.jpg,479
+38,B0018OY5X0,Levi's Men's 569 Loose Straight-Leg Jean,Men,2,48.0,2,5,18,Apparel,http://ecx.images-amazon.com/images/I/4142BkFiRKL._SL75_.jpg,23
+39,B00XKXHLGA,Wrangler Authentics Mens Classic Relaxed-Fit Jean,Men,2,32.99,3,1,10,Apparel,http://ecx.images-amazon.com/images/I/41gSxBO9AvL._SL75_.jpg,175
+40,B0018OT2PG,Levi's Men's 559 Relaxed Straight Jean,Men,2,44.0,3,5,18,Apparel,http://ecx.images-amazon.com/images/I/41yL4pU7bSL._SL75_.jpg,25
+41,B0018OPBBK,Levi's Men's 517 Bootcut Jean,Men,2,44.0,2,2,18,Apparel,http://ecx.images-amazon.com/images/I/41IoAvPxuEL._SL75_.jpg,216
+42,B01M3VGM8R,Wrangler Men's Rugged Wear Relaxed Fit Jean,Men,2,47,3,4,10,Apparel,http://ecx.images-amazon.com/images/I/31CcscBJTcL._SL75_.jpg,131
+43,B0018OQ93Y,Levi's Men's 514 Straight Fit Jeans,Men,2,54.0,7,5,18,Apparel,http://ecx.images-amazon.com/images/I/41DmP8Zw3aL._SL75_.jpg,6
+44,B00MN6LLKM,Levi's Men's 541 Athletic-Fit Jean,Men,2,68.0,3,3,18,Apparel,http://ecx.images-amazon.com/images/I/414EcUhxO6L._SL75_.jpg,55
+45,B00XKXHMD2,Wrangler Authentics Mens Big & Tall Classic Relaxed-Fit Jean,Men,2,22.99,2,4,10,Apparel,http://ecx.images-amazon.com/images/I/510mphyfqVL._SL75_.jpg,501
+46,B00MB5Q434,WenVen Men's Cotton Twill Cargo Shorts Outdoor Wear Lightweight,Men,3,41,1,1,24,Apparel,http://ecx.images-amazon.com/images/I/412FXfoD-WL._SL75_.jpg,7194
+47,B0040JGADS,Haggar Men's Cool 18 Hidden Expandable-Waist Pleat-Front Short,Men,3,48.0,3,3,25,Apparel,http://ecx.images-amazon.com/images/I/614jVLJ77PL._SL75_.jpg,5468
+48,B008AHISU4,Lee Men's Dungarees Belted Wyoming Cargo Short,Men,3,58.0,2,1,4,Apparel,http://ecx.images-amazon.com/images/I/41yJuVPcIEL._SL75_.jpg,3299
+49,B01610O85K,Levi's Men's Carrier Cargo Short,Men,3,50.0,2,2,18,Apparel,http://ecx.images-amazon.com/images/I/41QewoL9EdL._SL75_.jpg,3648
+50,B00EUYP4DK,Levi's Men's 550 Short,Men,3,40.0,1,2,18,Apparel,http://ecx.images-amazon.com/images/I/416f8iwbDKL._SL75_.jpg,5510
+51,B01623Z9JU,Pro Club Men's Cotton Twill Cargo Shorts with Belt,Men,3,39.99,1,1,26,Apparel,http://ecx.images-amazon.com/images/I/51y7%2BAXqQnL._SL75_.jpg,3009
+52,B00PZTVCF8,Unionbay Men's Survivor Belted Cargo Short,Men,3,46.0,1,4,27,Apparel,http://ecx.images-amazon.com/images/I/41ofcSQox8L._SL75_.jpg,600
+53,B00XKXIA42,Wrangler Authentics Mens Utility Hiker Short,Men,3,27.99,2,2,10,Apparel,http://ecx.images-amazon.com/images/I/41FxPbyZvWL._SL75_.jpg,3364
+54,B016X0P9WY,Billabong Men's Crossfire X Submersible Short,Men,3,54.95,2,1,28,Apparel,http://ecx.images-amazon.com/images/I/41YpYcrtwXL._SL75_.jpg,5430
+55,B00XKXI380,Wrangler Authentics Men's Premium Twill Cargo Short,Men,3,18.99,3,4,10,Apparel,http://ecx.images-amazon.com/images/I/41xXp25lh7L._SL75_.jpg,465
+56,B00D6BWUSA,IZOD Men's Saltwater Flat Front Short,Men,3,50.0,3,5,29,Apparel,http://ecx.images-amazon.com/images/I/41KGhJ-CT4L._SL75_.jpg,1307
+57,B01LVU3UK3,Blue Gear Men's Ripstop Cargo Shorts Big & Tall Size 32 - 50 Loose Fit Short,Men,3,31,3,2,30,Apparel,None,34546
+58,B0002FHI3U,Champion 6.1 oz. Cotton Jersey Shorts 6.1 oz. Cotton Jersey,Men,3,13.51,8,4,31,Apparel,http://ecx.images-amazon.com/images/I/21Sy5J9IbSL._SL75_.jpg,1045
+59,B001UQ6TSA,Levi's Men's 505 Regular-Fit Short,Men,3,38.0,2,3,18,Apparel,http://ecx.images-amazon.com/images/I/410ZB4g7TFL._SL75_.jpg,4291
+60,B00XKXI41Q,Wrangler Authentics Mens Classic Cargo Short,Men,3,18.99,3,2,10,Apparel,http://ecx.images-amazon.com/images/I/41e48wd106L._SL75_.jpg,1342
+61,B01DGN506Q,Manwan Walk Men's Linen Casual Classic Fit short B311,Men,3,18,1,3,32,Apparel,None,2061
+62,B009CTTVFA,Dockers Men's Perfect Short D3 Classic-Fit Flat-Front Short,Men,3,48.0,3,5,33,Apparel,http://ecx.images-amazon.com/images/I/416N%2BWGAcRL._SL75_.jpg,135
+63,B01K9PXV6A,Leward Men's Linen Casual Classic Fit short,Men,3,35,1,1,34,Apparel,http://ecx.images-amazon.com/images/I/51weHoP%2BkXL._SL75_.jpg,17111
+64,B00PZTVBYU,Unionbay Men's Cordova Belted Cargo Short,Men,3,48.0,3,5,27,Apparel,http://ecx.images-amazon.com/images/I/417ZzWnPuAL._SL75_.jpg,881
+65,B008I57ZC0,Lee Men's Big-Tall Dungarees Belted Wyoming Cargo Short,Men,3,58.0,2,2,4,Apparel,http://ecx.images-amazon.com/images/I/411ZZCEGt2L._SL75_.jpg,5712
+66,B0142RYP6G,Lee Men's Dungarees New Belted Wyoming Cargo Short,Men,3,58.0,2,2,4,Apparel,http://ecx.images-amazon.com/images/I/41HFa41COML._SL75_.jpg,3439
+67,B01HFSG9KO,One Tough Brand Men's Cotton Twill Belted Cargo Shorts,Men,3,50.0,3,4,35,Apparel,http://ecx.images-amazon.com/images/I/419OyrAkOnL._SL75_.jpg,4454
+68,B00LP9JFOW,Men's Cotton Loose Fit Multi Pocket Cargo Shorts,Men,3,50,1,5,36,Apparel,http://ecx.images-amazon.com/images/I/61GkXZ923ML._SL75_.jpg,2254
+69,B00KIDBKZS,Columbia Men's Ascender Softshell Front-Zip Jacket,Men,5,115.0,3,3,37,Apparel,http://ecx.images-amazon.com/images/I/41bgPzgXsYL._SL75_.jpg,403
+70,B0084AVW7I,Columbia Men's Big & Tall Steens Mountain Full Zip 2.0 Fleece Jacket,Men,5,65.0,5,3,37,Apparel,http://ecx.images-amazon.com/images/I/51vDrnRp1eL._SL75_.jpg,806
+71,B00RVHFWWG,Columbia Men's Steens Mountain Half Zip Pullover Fleece,Men,5,60.0,1,4,37,Apparel,http://ecx.images-amazon.com/images/I/51OrJ36pG6L._SL75_.jpg,504
+72,B00UKY2OC8,Levi's Men's The Trucker Jacket,Men,5,148.0,1,2,18,Apparel,http://ecx.images-amazon.com/images/I/41CVyhTPCBL._SL75_.jpg,1387
+73,B01FVYJ1FE,Calvin Klein Men's Packable Down Hooded Coat,Men,5,200.0,2,1,38,Apparel,http://ecx.images-amazon.com/images/I/41D67PqT%2B9L._SL75_.jpg,1150
+74,B003WOKYGQ,Caterpillar Men's Heavy Insulated Parka,Men,5,89.99,2,2,39,Apparel,http://ecx.images-amazon.com/images/I/41K694gVMaL._SL75_.jpg,925
+75,B00HN53994,Columbia Men's Watertight II Front-Zip Hooded Rain Jacket,Men,5,90.0,2,2,37,Apparel,http://ecx.images-amazon.com/images/I/41rEkfcgA-L._SL75_.jpg,1063
+76,B002VWK5QY,Alpha Industries Men's MA-1 Bomber Flight Jacket,Men,5,110.0,2,5,40,Apparel,http://ecx.images-amazon.com/images/I/41po70AzT1L._SL75_.jpg,1245
+77,B01FUM26RC,NASKY Men's Fit Retro Ripped Jeans Demin Jacket Vest Waistcoat Top Vest,Men,2,32.99,1,1,41,Apparel,http://ecx.images-amazon.com/images/I/51zmU8ybqAL._SL75_.jpg,1125
+78,B01IVEFY8Y,Kenneth Cole New York Men's Single Breasted Wool Walker,Men,4,275.0,3,3,42,Apparel,http://ecx.images-amazon.com/images/I/41TNzP6GHqL._SL75_.jpg,685
+79,B006WHGWOI,Columbia Men's Glennaker Lake Front-Zip Rain Jacket with Hideaway Hood,Men,5,60.0,1,1,37,Apparel,http://ecx.images-amazon.com/images/I/41DmNtapO7L._SL75_.jpg,246
+80,B01GU12ELK,Kenneth Cole REACTION Men's Tech Fleece Vest,Men,4,69.5,1,5,43,Apparel,http://ecx.images-amazon.com/images/I/418-es3LGvL._SL75_.jpg,56284
+81,B00QROVVQU,Columbia Men's Steens Mountain Fleece Vest,Men,4,45.0,2,1,37,Apparel,http://ecx.images-amazon.com/images/I/41zlfzWMj2L._SL75_.jpg,208
+82,B0100XQLIG,Tommy Hilfiger Men's Packable Down Jacket,Men,5,195.0,1,3,44,Apparel,http://ecx.images-amazon.com/images/I/41u9Kkt%2BsHL._SL75_.jpg,78
+83,B01KWHVGGM,Tommy Hilfiger Men's Smooth Lamb Leather Laydown Collar James Dean Jacket,Men,5,595.0,1,4,44,Apparel,http://ecx.images-amazon.com/images/I/41abNno4WOL._SL75_.jpg,755
+84,B00LQA5YEA,Chouyatou Men's Vintage Stand Collar Pu Leather Jacket,Men,5,45,2,3,45,Apparel,http://ecx.images-amazon.com/images/I/51Uu02jg2oL._SL75_.jpg,1120
+85,B009YDCKNO,Carhartt Men's Quilted Flannel Lined Sandstone Active Jacket J130,Men,5,115.0,9,4,1,Apparel,http://ecx.images-amazon.com/images/I/51WgXnVFstL._SL75_.jpg,408
+86,B000XJU2OC,Totes Unisex Rain Poncho,Men,4,22,3,2,46,Apparel,http://ecx.images-amazon.com/images/I/51759JSFpNL._SL75_.jpg,947
+87,B005EVM32I,London Fog Men's Zip-Front Golf Jacket,Men,5,120.0,3,3,47,Apparel,http://ecx.images-amazon.com/images/I/41diBWAHe8L._SL75_.jpg,1176
+88,B00NHO4WCS,Wantdo Men's Waterproof Mountain Jacket Fleece Windproof Ski Jacket,Men,5,34,1,1,48,Apparel,http://ecx.images-amazon.com/images/I/517HcCy2tuL._SL75_.jpg,169
+89,B0084AVVOM,Columbia Men's Steens Mountain Front-Zip Fleece Jacket,Men,5,60.0,1,3,37,Apparel,http://ecx.images-amazon.com/images/I/51-cOLKVEJL._SL75_.jpg,142
+90,B00OTRHNUA,Levi's Men's Chino Jogger Pant,Men,1,59.5,1,2,18,Apparel,http://ecx.images-amazon.com/images/I/4179SmVA%2BLL._SL75_.jpg,458
+91,B00B2G0T4S,Dockers Men's Easy Khaki D2 Straight-Fit Flat-Front Pant,Men,1,50.0,1,1,33,Apparel,http://ecx.images-amazon.com/images/I/41Yac7EtcLL._SL75_.jpg,174
+92,B00B58FQ5K,Lee Men's Total Freedom Relaxed Classic Fit Flat Front Pant,Men,1,58.0,3,1,4,Apparel,http://ecx.images-amazon.com/images/I/41DB-JbiT5L._SL75_.jpg,248
+93,B006P09I98,Dockers Men's Relaxed Fit Signature Khaki Pant - Pleated D4,Men,1,58.0,2,5,33,Apparel,http://ecx.images-amazon.com/images/I/41gXINou6YL._SL75_.jpg,460
+94,B01KNL98BW,ADFOLF Men's Flat Front Slim Fit Chino Pants,Men,1,35,2,1,49,Apparel,http://ecx.images-amazon.com/images/I/41P0qhWs3nL._SL75_.jpg,6389
+95,B002G9U6BG,Carhartt Men's Washed Duck Work Dungaree Utility Pant B11,Men,1,50.0,6,1,1,Apparel,http://ecx.images-amazon.com/images/I/41teqovRA9L._SL75_.jpg,279
+96,B002AQRVZE,Haggar Men's Cool 18 Hidden Expandable-Waist Plain-Front Pant,Men,1,65.0,2,1,25,Apparel,http://ecx.images-amazon.com/images/I/419Xiar0NuL._SL75_.jpg,73
+97,B00L1ZEYKA,Match Mens Slim-Tapered Flat-Front Casual Pants,Men,1,30,3,5,50,Apparel,http://ecx.images-amazon.com/images/I/41uUIjQF8yL._SL75_.jpg,308
+98,B0030DF96O,Dockers Men's Classic-Fit Signature Khaki Pant - Pleated D3,Men,1,58.0,1,3,33,Apparel,http://ecx.images-amazon.com/images/I/41%2BQypmOn%2BL._SL75_.jpg,226
+99,B01L7Z68R0,Levi's Men's 541 Athletic-Fit Chino Pant,Men,1,14,2,3,18,Apparel,http://ecx.images-amazon.com/images/I/41AKCQOiIHL._SL75_.jpg,7109
+100,B008HF8NJK,Dickies Men's Skinny Straight-Fit Work Pant,Men,2,50.0,2,1,21,Apparel,http://ecx.images-amazon.com/images/I/41jrB%2Bc7O1L._SL75_.jpg,489
+101,B00XKXI402,Wrangler Authentics Mens Classic Cargo Twill Pant,Men,1,22.99,3,4,10,Apparel,http://ecx.images-amazon.com/images/I/41GCLFmzDDL._SL75_.jpg,579
+102,B0030DFBZI,Dockers Men's Signature D3 Classic-Fit Flat-Front Pant,Men,1,58.0,1,2,33,Apparel,http://ecx.images-amazon.com/images/I/411ljE5DimL._SL75_.jpg,138
+103,B00XKXI2D6,Wrangler Authentics Men's Premium Relaxed Straight Twill Cargo Pant,Men,1,24.99,2,2,10,Apparel,http://ecx.images-amazon.com/images/I/41zxNHqLFvL._SL75_.jpg,492
+104,B0076KTX78,Dockers Men's Relaxed Fit Signature Khaki Pant - Flat Front D4,Men,1,58.0,2,4,33,Apparel,http://ecx.images-amazon.com/images/I/41Jfks%2BAYRL._SL75_.jpg,518
+105,B01LYVKDMH,Men Jogger Pants Twill Cargo Chino Cotton Slacks Tapered Leg Loose Fit,Men,1,26,1,2,49,Apparel,http://ecx.images-amazon.com/images/I/41K%2BwEN8LQL._SL75_.jpg,5179
+106,B007U1YRO2,IZOD Men's American Chino Flat Front Straight-Fit Pant,Men,1,59.5,10,5,29,Apparel,http://ecx.images-amazon.com/images/I/410TwPUNj4L._SL75_.jpg,527
+107,B002AQRTCE,Haggar Men's Work-To-Weekend No-Iron Pleat-Front Pant with Hidden Expandable Waist,Men,1,60.0,3,2,25,Apparel,http://ecx.images-amazon.com/images/I/41aPkrPJi%2BL._SL75_.jpg,317
+108,B00ZUJ9Q8I,Southpole Men's Basic Fleece Marled Jogger Pant,Men,1,40.0,14,4,23,Apparel,http://ecx.images-amazon.com/images/I/41AGqL3fh1L._SL75_.jpg,542
+109,B00LGRTH3C,Southpole Men's Active Basic Jogger Fleece Pants,Men,1,40.0,11,2,23,Apparel,http://ecx.images-amazon.com/images/I/415uPnHMoEL._SL75_.jpg,51
+110,B00T71HXGM,Victorious Mens Twill Jogger Pants,Men,1,12,10,2,51,Apparel,http://ecx.images-amazon.com/images/I/41cKaeFawEL._SL75_.jpg,449
+111,B005ZBF4VY,Dockers Men's Easy Khaki D3 Classic-Fit Flat-Front Pant,Men,1,50.0,3,1,33,Apparel,http://ecx.images-amazon.com/images/I/41gCwAio3AL._SL75_.jpg,480
+112,B00CSJFBBO,Dockers Men's New Iron-Free Flat-Front Khaki Pant,Men,1,72.0,3,4,33,Apparel,http://ecx.images-amazon.com/images/I/41LJcdKrSTL._SL75_.jpg,451
+1,B01HNP769W,Our Precious Women's Long Sleeve Tunic Lace Stitching Trim Casual Dress,Women,7,13,2,5,52,Apparel,http://ecx.images-amazon.com/images/I/41NY7nkFnQL._SL75_.jpg,541
+2,B01JOH5GNU,POSESHE Women's Long Sleeve Casual Loose T-Shirt Dress,Women,7,18,1,4,53,Apparel,http://ecx.images-amazon.com/images/I/41-6PDnCVhL._SL75_.jpg,17
+3,B0107M2B6Q,Women Bohemian Neck Tie Vintage Printed Ethnic Style Summer Shift Dress,Women,7,35.0,3,2,54,Apparel,http://ecx.images-amazon.com/images/I/51BrjsWXK5L._SL75_.jpg,101
+4,B01ALG1TQQ,Womens Asymmetrical Casual Feminine Long Sleeve Tunic Shirt Dress,Women,7,20.0,1,2,55,Apparel,http://ecx.images-amazon.com/images/I/41sKeyAY9iL._SL75_.jpg,393
+5,B016XUCYZO,GRACE KARIN BoatNeck Sleeveless Vintage Tea Dress with Belt,Women,7,45.37,2,2,56,Apparel,http://ecx.images-amazon.com/images/I/51U8gjiqkkL._SL75_.jpg,134
+6,B00WW8CVNM,ACEVOG Vintage 1950's Floral Spring Garden Party Picnic Dress Party Cocktail Dress,Women,7,19,3,4,57,Apparel,http://ecx.images-amazon.com/images/I/516sWynAnBL._SL75_.jpg,1128
+7,B018O33B5U,Dreagal Women's Plunge Neck Lattice Lace Up Long Sleeve Bodycon Mini Dress,Women,7,44,1,4,58,Apparel,http://ecx.images-amazon.com/images/I/51czzd1rGdL._SL75_.jpg,448
+8,B01F25407Q,Risesun Women's Bohemian Vintage Printed Ethnic Style Loose Casual Tunic Dress,Women,7,24,3,3,59,Apparel,http://ecx.images-amazon.com/images/I/51PSeNvE%2B1L._SL75_.jpg,668
+9,B01KWFOEAO,Stanzino Cocktail Dress | Women's Sleeveless Lace Dresses for Special Occasions,Women,7,23,1,3,60,Apparel,http://ecx.images-amazon.com/images/I/41u8GwM0EFL._SL75_.jpg,157
+10,B01AA6P66Q,DEARCASE Women's Long Sleeve Casual Loose T-Shirt Dress,Women,7,35.99,1,2,61,Apparel,http://ecx.images-amazon.com/images/I/4193o9gP5JL._SL75_.jpg,10
+11,B01FQS7RSS,Milumia Women's Button Up Split Floral Print Flowy Party Maxi Dress,Women,7,44,2,4,62,Apparel,http://ecx.images-amazon.com/images/I/51fojfUkq-L._SL75_.jpg,643
+12,B01BSG3KJM,MiYang Women's Purple Long Sleeve A-line Lace Stitching Trim Casual Dress,Women,7,50,1,3,63,Apparel,http://ecx.images-amazon.com/images/I/410FAnyGZNL._SL75_.jpg,69
+13,B01D8OI1O6,POSESHE Women's Solid V-Neck 3/4 Sleeve Plus Size Evening Party Maxi Dress,Women,7,48,1,4,53,Apparel,http://ecx.images-amazon.com/images/I/41FNuRu25AL._SL75_.jpg,358
+14,B00QEUL7Z2,MUXXN Women's 1950s Retro Vintage Cap Sleeve Party Swing Dress,Women,7,45,4,4,64,Apparel,http://ecx.images-amazon.com/images/I/4116FMyHnHL._SL75_.jpg,473
+15,B017JQ1ONO,Leezeshaw Womens Long Sleeve Loose Irregular Hem Autumn Dress,Women,7,33,2,4,65,Apparel,http://ecx.images-amazon.com/images/I/41tcniszuHL._SL75_.jpg,230
+16,B01HGKAR6I,Miusol Women's Vintage Floral Lace Contrast Bow Cocktail Evening Dress,Women,7,26,3,4,66,Apparel,http://ecx.images-amazon.com/images/I/515oVE%2B3vgL._SL75_.jpg,395
+17,B01A6P0SP0,Miusol Women's Retro Floral Lace Vintage 2/3 Sleeve Slim Ruched Wedding Maxi Dress,Women,7,43,3,4,66,Apparel,http://ecx.images-amazon.com/images/I/41zhOPnpysL._SL75_.jpg,512
+18,B01LZJ1GQP,LILBETTER Women's Long Sleeve Pocket Casual Loose T-Shirt Dress,Women,7,11,3,5,67,Apparel,http://ecx.images-amazon.com/images/I/31ioG%2BLPpxL._SL75_.jpg,328
+19,B00X0VD0SU,Miusol Women's Casual Deep- V Neck Sleeveless Vintage Maxi,Women,4,34,3,1,66,Apparel,http://ecx.images-amazon.com/images/I/41CS5iNz85L._SL75_.jpg,210
+20,B01GRY6XNA,Taydey Women's Midi Dresses Sleeveless Knee Length Party Evening Dress,Women,7,36,3,2,68,Apparel,http://ecx.images-amazon.com/images/I/41PW3qax3FL._SL75_.jpg,580
+21,B005N78IG8,Jerzees Ladies' Jersey Polo with SpotShield,Women,4,15.18,12,2,5,Apparel,http://ecx.images-amazon.com/images/I/519axxlf6jL._SL75_.jpg,302
+22,B0143UG0B0,Emmalise Women's Basic Casual Long Camisole Cami Top Regular and Plus Sizes,Women,4,14,3,1,69,Apparel,http://ecx.images-amazon.com/images/I/31%2B3Jt3BBqL._SL75_.jpg,162
+23,B01M1H14D4,Lanmo Women Plus Size 3/4 Sleeve Tunic Tops Loose Basic Shirt,Women,4,39.99,2,2,70,Apparel,http://ecx.images-amazon.com/images/I/41o6qtkgpfL._SL75_.jpg,26
+24,B01D39L00S,Dokotoo Womens Casual Chiffon Ladies V-Neck Cuffed Sleeve Blouse Tops (S-XXL),Women,4,45,1,1,71,Apparel,http://ecx.images-amazon.com/images/I/41AUtd%2BN0xL._SL75_.jpg,223
+25,B00NJ873Q4,MBJ Womens 3/4 Sleeve Drape Top with Side Shirring - Made in USA,Women,4,33,2,3,72,Apparel,http://ecx.images-amazon.com/images/I/41MW-lykRLL._SL75_.jpg,40
+26,B013T7K2G2,Dickies Women's Long-Sleeve Plaid Flannel Shirt,Women,4,21.99,4,5,21,Apparel,http://ecx.images-amazon.com/images/I/41v7Io0T8jL._SL75_.jpg,191
+27,B01935AO9E,MIXMAX Women Lapel Neck Long Sleeve Loose Dress Sides Slit Shirt Dress,Women,7,10,1,2,73,Apparel,None,260
+28,B019Z1QJ68,BAISHENGGT Women's Flared Comfy Loose Fit Tunic Top,Women,4,18,1,3,74,Apparel,http://ecx.images-amazon.com/images/I/51ikcl2V%2BDL._SL75_.jpg,184
+29,B01KHLD904,Lanmo Womens Swing Tunic Tops Loose Fit Comfy Flattering T Shirt,Women,4,39.99,1,1,70,Apparel,http://ecx.images-amazon.com/images/I/41sTmjhIx9L._SL75_.jpg,204
+30,B010G6SOMS,Free to Live Women's Long Flowy Elbow Sleeve Jersey Tunic Made in USA,Women,4,47,2,2,75,Apparel,http://ecx.images-amazon.com/images/I/41JUr3J4scL._SL75_.jpg,256
+31,B01BSG3KJM,MiYang Women's Purple Long Sleeve A-line Lace Stitching Trim Casual Dress,Women,7,46,1,2,63,Apparel,http://ecx.images-amazon.com/images/I/410FAnyGZNL._SL75_.jpg,69
+32,B00W4E3VSI,Popana Print Tunic Top - Made In USA,Women,4,34,3,3,76,Apparel,http://ecx.images-amazon.com/images/I/51YvkyMsg7L._SL75_.jpg,238
+33,B01LYO4CRQ,Women's Off Shoulder Shirt Half Sleeve Tunic Top Casual Blouse,Women,4,11,1,4,77,Apparel,http://ecx.images-amazon.com/images/I/41dSwKHT8%2BL._SL75_.jpg,110
+34,B01IO7H3U0,ALL FOR YOU Women's 3/4 Sleeve Flare Hem Tunic and Long Sleeve V-Neck Tunic,Women,4,17,3,5,78,Apparel,http://ecx.images-amazon.com/images/I/31vqhgmoXEL._SL75_.jpg,149
+35,B00NOU3VYK,No Nonsense Women's Denim Legging,Women,8,15.99,1,5,79,Apparel,http://ecx.images-amazon.com/images/I/317O9Ht3lFL._SL75_.jpg,273
+36,B01EFLNEKW,Uget Women's Casual Oversized Baggy Off-Shoulder Shirts Pullover Tops,Women,5,20,3,3,80,Apparel,http://ecx.images-amazon.com/images/I/41EAa0U3YLL._SL75_.jpg,90
+37,B00P0NWUZK,OCHENTA Women's Mid-Long Style Roll-Up Sleeve Plaid Shirt,Women,4,45,1,2,36,Apparel,http://ecx.images-amazon.com/images/I/51WjlDgXTDL._SL75_.jpg,57
+38,B00NJ8BZ18,LL Womens Boat Neck Dolman Top - Made in USA,Women,4,27,3,2,81,Apparel,http://ecx.images-amazon.com/images/I/41Sm5W3YsQL._SL75_.jpg,183
+39,B01HGW437A,Haola Women's Summer Cross Front Tops Deep V Neck Casual Teen Girls Tees T Shirts,Women,4,23,2,3,82,Apparel,http://ecx.images-amazon.com/images/I/41HWxGDYkWL._SL75_.jpg,362
+40,B00ZHLOV1G,Thanth Womens Dolman Sleeves Solid Shirring Drape Jersey Top,Women,4,23,3,3,83,Apparel,http://ecx.images-amazon.com/images/I/41cimX3jlVL._SL75_.jpg,299
+41,B0181ZMM6A,ZANZEA Women's Sexy Long Batwing Sleeve Loose Pullover Casual Top Blouse T-Shirt,Women,5,27,1,3,84,Apparel,http://ecx.images-amazon.com/images/I/41KZFo4rNOL._SL75_.jpg,18
+42,B000NZYP0I,Gloria Vanderbilt Women's Amanda Classic-Fit Straight-Leg Twill Jean,Women,2,36.0,6,1,85,Apparel,http://ecx.images-amazon.com/images/I/31QkyjalDUL._SL75_.jpg,940
+43,B00EB13L1Y,WallFlower Juniors Irresistible Jegging,Women,2,15,2,2,86,Apparel,http://ecx.images-amazon.com/images/I/41M8rMm0vIL._SL75_.jpg,557
+44,B01M18QCSB,Lee Women's Easy Fit Frenchie Skinny Jean,Women,2,16,1,5,4,Apparel,None,2301
+45,B01H4GJ5F8,Lucky Brand Women's Sofia Skinny in East Palo Alto Jean,Women,2,99.0,3,4,87,Apparel,http://ecx.images-amazon.com/images/I/41hHJeWPFUL._SL75_.jpg,722
+46,B003MQLT68,Levi's Women's 524 Skinny Jean,Women,2,46.0,7,5,18,Apparel,http://ecx.images-amazon.com/images/I/415VMzIvINL._SL75_.jpg,2358
+47,B00KGVVIF4,Democracy Women's "Ab"solution Booty Lift Jegging,Women,2,68.0,3,1,88,Apparel,http://ecx.images-amazon.com/images/I/41m%2B4Ml3WCL._SL75_.jpg,1434
+48,B00EB10XEW,WallFlower Juniors Luscious Curvy Basic Bootcut Jeans,Women,2,38,3,2,86,Apparel,http://ecx.images-amazon.com/images/I/41Rg5ZBhTvL._SL75_.jpg,1322
+49,B0018P397W,Levi's Women's 515 Bootcut Jean,Women,2,44.0,2,1,18,Apparel,http://ecx.images-amazon.com/images/I/41OETe6iy3L._SL75_.jpg,978
+50,B01H3EALH2,Signature by Levi Strauss & Co Women's Straight Jean,Women,2,24.99,3,1,89,Apparel,http://ecx.images-amazon.com/images/I/41YMq2jaZxL._SL75_.jpg,5945
+51,B01LYC3MGP,Lee Women's Petite Easy Fit Frenchie Skinny Jean,Women,2,42,2,1,4,Apparel,http://ecx.images-amazon.com/images/I/31crJTIJshL._SL75_.jpg,2524
+52,B00SJGHNJ8,HDE Women's Jeans Jeggings Five Pocket Stretch Denim Pants,Women,2,13,3,1,90,Apparel,http://ecx.images-amazon.com/images/I/41NnJUrHU-L._SL75_.jpg,1793
+53,B01FYQXKOW,Levi's Women's 711 Skinny Jean,Women,2,49.5,2,2,18,Apparel,http://ecx.images-amazon.com/images/I/41J7ggHWb2L._SL75_.jpg,2014
+54,B01EVSWQ5S,HyBrid & Company Womens Super Stretch 5 Button Hi-Waist Skinny Jeans,Women,2,14,3,3,91,Apparel,http://ecx.images-amazon.com/images/I/41dk3A-torL._SL75_.jpg,2248
+55,B0018P3GK2,Levi's Women's 529 Curvy Bootcut Jean,Women,2,44.0,3,2,18,Apparel,http://ecx.images-amazon.com/images/I/41mpZZ4YieL._SL75_.jpg,861
+56,B00KG36NIE,Lee Women's Modern Series Curvy Fit Bootcut Jean,Women,2,58.0,1,4,4,Apparel,http://ecx.images-amazon.com/images/I/41XMBbpRDFL._SL75_.jpg,2543
+57,B00LXL21DO,2LUV Women's Distressed Skinny Jeans,Women,2,48.88,1,4,92,Apparel,http://ecx.images-amazon.com/images/I/31atXLXTC5L._SL75_.jpg,12352
+58,B01LBXDLF0,Fashion Jeans for Women,Women,2,39.99,3,1,93,Apparel,http://ecx.images-amazon.com/images/I/51G1A1dsmyL._SL75_.jpg,4574
+59,B00PATII82,Levi's Women's Mid Rise Skinny Jean,Women,2,54.0,1,3,18,Apparel,http://ecx.images-amazon.com/images/I/41qeipXXNfL._SL75_.jpg,711
+60,B00KCR8A80,Levi's Women's Perfectly Slimming Pull-On Skinny,Women,2,54.0,1,3,18,Apparel,http://ecx.images-amazon.com/images/I/41dQ7ZwJ2SL._SL75_.jpg,195
+61,B0018P4YQW,Levi's Women's 505 Straight-Leg Jean,Women,2,44.0,3,3,18,Apparel,http://ecx.images-amazon.com/images/I/41smzoacqtL._SL75_.jpg,469
+62,B01EVX65PK,Hybrid & Co. Women's Butt Lift Super Comfy Stretch Denim Skinny Yoga Jeans,Women,2,39,3,4,91,Apparel,http://ecx.images-amazon.com/images/I/31fEBOGp-zL._SL75_.jpg,565
+63,B0018P6FVY,Levi's Women's 512 Bootcut Jean,Women,2,44.0,2,4,18,Apparel,http://ecx.images-amazon.com/images/I/4114HqfBTJL._SL75_.jpg,1661
+64,B01LRILQ5G,AutumnFall Women's Butt-Lifting Stretch Comfy Skinny Jeans,Women,2,47,1,4,94,Apparel,http://ecx.images-amazon.com/images/I/51XRoWGqn9L._SL75_.jpg,4722
+65,B00B4QOBJA,Lee Women's Petite Classic-Fit Monroe Straight-Leg Jean,Women,2,52.0,2,4,4,Apparel,http://ecx.images-amazon.com/images/I/41Qy9ZaAP8L._SL75_.jpg,1707
+66,B0029JHVX4,Briggs New York Women's All Around Comfort Pant,Women,1,44.0,2,4,95,Apparel,http://ecx.images-amazon.com/images/I/31OOrHJQrZL._SL75_.jpg,2183
+67,B00KGE2ZFI,Lee Women's Modern Series Curvy Fit Maxwell Trouser,Women,1,58.0,13,2,4,Apparel,http://ecx.images-amazon.com/images/I/412jRQPHR8L._SL75_.jpg,2304
+68,B003XDTOFS,Dockers Women's Metro Trouser Pant,Women,1,50.0,3,1,33,Apparel,http://ecx.images-amazon.com/images/I/51j-7QomnBL._SL75_.jpg,1034
+69,B01EZN24DS,Ybenlow Women's Solid Stretch Drawstring Casual Skinny Pants,Women,2,39,3,3,96,Apparel,http://ecx.images-amazon.com/images/I/41IAyOCM24L._SL75_.jpg,3841
+70,B00DQVTLQY,Leveret Women's Stretchable "Slight Boot Cut Comfort Pant"Pull On,Women,1,49.99,2,5,97,Apparel,http://ecx.images-amazon.com/images/I/31OtxinfZ9L._SL75_.jpg,1861
+71,B01B8GK2DE,Straight Fit Stretchy Pinstripe Trousers,Women,1,42,1,1,98,Apparel,http://ecx.images-amazon.com/images/I/41PazII0mcL._SL75_.jpg,1549
+72,B00NE4YJVK,Rekucci Women's "Ease In To Comfort Fit" Stretch Slim Pant,Women,1,18,2,1,99,Apparel,http://ecx.images-amazon.com/images/I/31y3h0fCfRL._SL75_.jpg,1924
+73,B019QVX5OQ,ToBeInStyle Women's High Waist Boot-Cut Dress Pants,Women,7,30,1,1,100,Apparel,http://ecx.images-amazon.com/images/I/31-ut7qpU8L._SL75_.jpg,2496
+74,B00J3B0LQU,Popana Damask Palazzo Pants - Made In USA,Women,1,24,3,5,76,Apparel,http://ecx.images-amazon.com/images/I/41qGVyc35OL._SL75_.jpg,2877
+75,B016X12S5Y,Rekucci Women's "Ease In To Comfort" Straight Leg Pant With Tummy Control,Women,1,37,1,3,99,Apparel,http://ecx.images-amazon.com/images/I/31mcn-fww%2BL._SL75_.jpg,1332
+76,B00NE4Y6EA,Rekucci Women's "Ease In To Comfort Fit" Barely Bootcut Stretch Pants,Women,1,49,2,2,99,Apparel,http://ecx.images-amazon.com/images/I/31kjePlYCmL._SL75_.jpg,1538
+77,B00SK3RD2W,Yelete Women's Basic Five Pocket Stretch Jegging Tights Pants,Women,1,35,1,2,101,Apparel,http://ecx.images-amazon.com/images/I/31Af8JPYnEL._SL75_.jpg,2066
+78,B001D6EW7C,Dickies Women's Flat Front Stretch Twill Pant,Women,1,54.0,2,5,21,Apparel,http://ecx.images-amazon.com/images/I/41GpYXldJCL._SL75_.jpg,1364
+79,B000J3YMGQ,Dickies Girl Junior's Worker Bootcut Pant with 2 Back Pockets,Women,1,23.5,2,1,102,Apparel,http://ecx.images-amazon.com/images/I/31BLyUWtQPL._SL75_.jpg,2095
+80,B01IET58T6,OLUOLIN Womens Solid Color Stretch Drawstring Skinny Pants Cargo Joggers (Size M-XXXL),Women,2,24,2,1,103,Apparel,http://ecx.images-amazon.com/images/I/31CgkSYSGbL._SL75_.jpg,2903
+81,B00WXWIKZK,Rekucci Women's Ease In To Comfort Boot Cut Pant,Women,1,12,2,5,99,Apparel,http://ecx.images-amazon.com/images/I/31KOKeuyj8L._SL75_.jpg,327
+82,B00JQI3C1G,ViV Collection Women's Chevron Aztec Tribal Pattern Printed Long Palazzo Pants,Women,1,22,2,5,98,Apparel,http://ecx.images-amazon.com/images/I/51nuRHsp9YL._SL75_.jpg,2047
+83,B01LXW5CF8,Lookatool Women Fitness Leggings High Waist Mesh Patchwork Skinny Push Up Pants,Women,2,17,2,1,104,Apparel,http://ecx.images-amazon.com/images/I/41XemQbfl-L._SL75_.jpg,10271
+84,B01M9AEIUJ,Chicwe Women's Plus Size Work Pants Trousers Curvy Fit Boot Cut,Women,1,15,1,4,105,Apparel,http://ecx.images-amazon.com/images/I/31j-sZuHv4L._SL75_.jpg,15824
+85,B00KRZICHG,Hanes Women's EcoSmart Fleece Sweatpant,Women,1,12.0,2,4,11,Apparel,http://ecx.images-amazon.com/images/I/31ACdeqMfCL._SL75_.jpg,1171
+86,B00NQFIG8E,MBJ Womens Comfy Chic Palazzo Lounge Pant - Made in USA,Women,1,19,2,3,72,Apparel,http://ecx.images-amazon.com/images/I/31r8ctdealL._SL75_.jpg,1321
+87,B00V84SHIE,Lee Women's Relaxed-Fit All Day Pant,Women,1,52.0,2,5,4,Apparel,http://ecx.images-amazon.com/images/I/41Y2aK5FuDL._SL75_.jpg,228
+88,B01LZBMHXR,Barefoot Dreams Bamboo Chic Lite Pant,Women,1,50,1,3,106,Apparel,http://ecx.images-amazon.com/images/I/31nYXodBlpL._SL75_.jpg,1870
+89,B00CKGB85I,Azules Women'S Rayon Span Maxi Skirt - Solid,Women,6,28,1,3,107,Apparel,http://ecx.images-amazon.com/images/I/31EyGNG2zPL._SL75_.jpg,942
+90,B01CDVRZ92,Bluetime Womens Pleated Short Braces Skirt (FBA),Women,3,32,2,5,108,Apparel,None,5581
+91,B01IP2PKNG,Urban CoCo Women's Elastic Waist Tartan Pleated School Skirt,Women,6,42,1,1,54,Apparel,http://ecx.images-amazon.com/images/I/517UmNjmt7L._SL75_.jpg,2165
+92,B00L5OXJV2,HDE Women's Shiny Liquid Metallic Wet Look Flared Pleated Skater Skirt,Women,6,17,2,1,90,Apparel,http://ecx.images-amazon.com/images/I/41agCJNCd8L._SL75_.jpg,1706
+93,B01B8L258E,Classic Elastic Adult Tutu Skirt,Women,6,13,1,1,109,Apparel,http://ecx.images-amazon.com/images/I/41vgtR67CvL._SL75_.jpg,2058
+94,B01JUN7V9K,NINEWE Women's White Contrast Polka Dot Print Maxi Skirt,Women,6,73.99,2,1,110,Apparel,http://ecx.images-amazon.com/images/I/510t4kgzJEL._SL75_.jpg,1629
+95,B00L9Q5CWK,V28 Women Full/ankle Length Elastic Pleated Retro Maxi Chiffon Long Skirt,Women,6,49,1,2,111,Apparel,http://ecx.images-amazon.com/images/I/41XZY0dAZJL._SL75_.jpg,2595
+96,B017IIKQSW,Wedding Planning Women's A Line Short Knee Length Tutu Tulle Prom Party Skirt,Women,3,27,1,1,112,Apparel,http://ecx.images-amazon.com/images/I/41zCf6AVEpL._SL75_.jpg,1541
+97,B00XVXMIIU,Thanth Womens Elastic Waist Band Scuba Stretchy Fabric Pencil Skirt,Women,6,16,2,3,113,Apparel,http://ecx.images-amazon.com/images/I/312W4huXhaL._SL75_.jpg,1178
+98,B00GZ66IQS,MBJ Womens Basic Versatile Stretchy Flared Skater Skirt - Made in USA,Women,6,14,3,2,72,Apparel,http://ecx.images-amazon.com/images/I/31jCZEzGx9L._SL75_.jpg,200
+99,B01KWIIOQQ,Dearlovers Women African Floral Print Casual A Line Maxi Skirt,Women,6,25,3,4,114,Apparel,http://ecx.images-amazon.com/images/I/51c1Q-ortfL._SL75_.jpg,4197
+100,B015QQEZ62,Face N Face Women's High Waisted A line Street Skirt Skater Pleated Full Midi Skirt,Women,6,30,2,1,115,Apparel,http://ecx.images-amazon.com/images/I/419UIMLm1EL._SL75_.jpg,263
+101,B011K36OM8,Women's Basic Solid Versatile Stretchy Flared Casual Mini Skater Skirt,Women,6,19.0,3,4,54,Apparel,http://ecx.images-amazon.com/images/I/41pbvVRuEWL._SL75_.jpg,309
+102,B01A7JR1VY,TRENDY UNITED Women's Rayon Spandex High waist Shirring Maxi Skirt with Pockets,Women,6,28,3,5,116,Apparel,http://ecx.images-amazon.com/images/I/31%2Bw9VMoDAL._SL75_.jpg,2017
+103,B00XZ3EF0U,LL Womens Solid Flare Midi Skirt - Made in USA,Women,6,45,2,1,81,Apparel,http://ecx.images-amazon.com/images/I/31iCS%2B1HcwL._SL75_.jpg,2602
+104,B01FP2SXG0,Afibi Women Full/ankle Length Blending Maxi Chiffon Long Skirt Beach Skirt,Women,6,20,1,4,117,Apparel,http://ecx.images-amazon.com/images/I/51A4TXj15BL._SL75_.jpg,2324
+105,B01EW101U6,H&C Women's Elastic Waist Stretchy Office Pencil Skirt Made in USA,Women,6,18,1,3,91,Apparel,http://ecx.images-amazon.com/images/I/41bgV15-JpL._SL75_.jpg,1044
+106,B01LJJDFC0,Annflat Women's African Print Casual A-Line Maxi Skirt Flared Skirt Multisize,Women,6,34,3,2,118,Apparel,http://ecx.images-amazon.com/images/I/510F9ar0VtL._SL75_.jpg,1536
+107,B01EY9NSRE,ROMWE Women's Retro Vintage Summer Chiffon Pleat Maxi Long Skirt Dress,Women,7,39,1,2,119,Apparel,http://ecx.images-amazon.com/images/I/41LHu71lagL._SL75_.jpg,2434
+108,B00NFYPCAG,Women's Below the Knee Pencil Skirt for Office Wear - Made in USA,Women,6,29.99,3,5,120,Apparel,http://ecx.images-amazon.com/images/I/31jjyDaVnXL._SL75_.jpg,1198
+109,B01K9MXL6S,Urban CoCo Women's High Waist Stretch Bodycon Pencil Skirt,Women,6,19,3,1,54,Apparel,http://ecx.images-amazon.com/images/I/41JkSr-jjBL._SL75_.jpg,587
+110,B00XLZ7ITW,Red Hanger Women's Stylish Solid Long Maxi Skirt - Made In USA,Women,6,45.99,2,2,121,Apparel,http://ecx.images-amazon.com/images/I/41GEynBMExL._SL75_.jpg,2793
+111,B01FV26VMW,Just Love Womans Pajamas Shorts - PJs - Sleepwear,Women,3,19,2,2,122,Apparel,http://ecx.images-amazon.com/images/I/51H0wifp0yL._SL75_.jpg,4134
+112,B00TP88VS6,iHeartRaves Metallic Rave Booty Dance Shorts,Women,3,32.52,1,2,123,Apparel,http://ecx.images-amazon.com/images/I/41MCZvN4iSL._SL75_.jpg,3378
+113,B01GK5K1PC,HyBrid & Company Womens Super Comfy Bermuda Walking Shorts,Women,3,19,3,1,124,Apparel,http://ecx.images-amazon.com/images/I/41AS4aXZSgL._SL75_.jpg,12056
+114,B01CHXGCPO,Simplicity Women Solid Colored Elastic Drawstring Waistband Summer Shorts,Women,3,29,3,4,125,Apparel,http://ecx.images-amazon.com/images/I/51Nd%2BVd6w%2BL._SL75_.jpg,13630
+115,B01BZF9MRA,ToBeInStyle Women's Lace Shorts,Women,3,40,3,1,100,Apparel,http://ecx.images-amazon.com/images/I/51eoczU3pGL._SL75_.jpg,6135
+116,B01MRF9QR0,Just Love Women's Plush Pajama Shorts - PJS - Pajamas,Women,3,46,3,3,122,Apparel,http://ecx.images-amazon.com/images/I/41xVocapc%2BL._SL75_.jpg,38912
+117,B01LPSUZX2,YMING Women's PU Faux Leather Elastic Waist Loose Shorts Or Skirt,Women,3,45.99,2,5,126,Apparel,http://ecx.images-amazon.com/images/I/51iq7kVzFDL._SL75_.jpg,31335
+118,B01EVYAPN2,HyBrid & Company Womens Butt lifting Super Comfy Stretch Twill Shorts,Women,3,42,1,2,91,Apparel,http://ecx.images-amazon.com/images/I/313cbW4BUWL._SL75_.jpg,15577
+119,B006LVYXW8,Dickies Women's 11-Inch Relaxed Cargo Short,Women,3,48.0,2,2,21,Apparel,http://ecx.images-amazon.com/images/I/41Dz6YpEw7L._SL75_.jpg,8723
+120,B013WBF9W2,Lee Women's Relaxed Fit Avey Knit Waist Cargo Bermuda Short,Women,3,54.0,2,5,4,Apparel,http://ecx.images-amazon.com/images/I/41ysjuCiRRL._SL75_.jpg,15706
+121,B013WBF9JU,Lee Women's Natural-Fit Jenna Short,Women,3,50.0,1,2,4,Apparel,http://ecx.images-amazon.com/images/I/41Cn5CayRrL._SL75_.jpg,13626
+122,B00L2QA7OK,RubyK Womens High Waisted Sailor Shorts with Stretch,Women,3,25,2,5,127,Apparel,http://ecx.images-amazon.com/images/I/31PD%2Bkcu-IL._SL75_.jpg,10421
+123,B01IDKTWR0,PattyCandy Womens Comfort Fit Pull-On Bermuda Shorts,Women,3,22,3,4,128,Apparel,http://ecx.images-amazon.com/images/I/31JNTH4nbaL._SL75_.jpg,15768
+124,B01AJM0A3A,Riders by Lee Indigo Women's 6-Inch Denim Cuffed Short with Belt,Women,3,16.99,2,5,129,Apparel,http://ecx.images-amazon.com/images/I/31hqj-XbKJL._SL75_.jpg,7835
+125,B00XJU74NY,Calvin Klein Jeans Women's Linen Shorts,Women,2,35.0,1,4,38,Apparel,http://ecx.images-amazon.com/images/I/419EvpPqAcL._SL75_.jpg,17055
+126,B00L2DVRC4,Levi's Women's Bermuda Short,Women,3,44.0,3,1,18,Apparel,http://ecx.images-amazon.com/images/I/31B0b0QwL3L._SL75_.jpg,12492
+127,B00KH99JK6,HDE Women's Solid Color Ultra Stretch Fitted Low Rise Moleton Denim Booty Shorts,Women,3,21,3,4,90,Apparel,http://ecx.images-amazon.com/images/I/31Oz1dpXyUL._SL75_.jpg,7041
+128,B01MG88AKO,HyBrid & Company Womens Perfectly Shaping Butt lift Stretch Bermuda Shorts,Women,3,23,2,2,91,Apparel,None,37372
+129,B01E61CD1C,Rekucci Women's "Ease Into Comfort" Stretchable Pull-On 5" Slimming Tab Short,Women,3,12,3,4,99,Apparel,http://ecx.images-amazon.com/images/I/312wcVQCBnL._SL75_.jpg,12876
+130,B0147TDFEC,Emmalise Women's Summer Casual Stretchy Shorts,Women,3,26,1,1,69,Apparel,None,12132
+131,B00Q459EZM,Lee Women's Relaxed-Fit Bermuda Short,Women,3,54.0,2,1,4,Apparel,http://ecx.images-amazon.com/images/I/31iq5XqzYVL._SL75_.jpg,11564
+132,B00P2T87XG,Women's Elastic Waist White Outline Active Lounge Shorts,Women,3,26,1,3,130,Apparel,http://ecx.images-amazon.com/images/I/41tUE664FTL._SL75_.jpg,4454
+133,B01ETSZ2LA,KMystic Cotton Blend Drawstring Basic Sports Shorts,Women,3,48,12,3,131,Apparel,None,10425
+134,B00H4N12G2,MBJ Womens Active Soft Zip Up Fleece Hoodie Sweater Jacket,Women,5,48,3,3,72,Apparel,http://ecx.images-amazon.com/images/I/41CocO0NJ8L._SL75_.jpg,3157
+135,B014R2V6WC,Womens Ladies First B Yourself Limited Edition Print Fleece Hoodie Crop Top,Women,5,25,2,3,132,Apparel,http://ecx.images-amazon.com/images/I/41%2B3ydrMwAL._SL75_.jpg,3038
+136,B016Y3AV8C,AJ FASHION Women's Wifey Shirt Letter Print Off the Shoulder Slouchy Pullovers,Women,5,46,1,2,133,Apparel,http://ecx.images-amazon.com/images/I/41eyny-5tPL._SL75_.jpg,1996
+137,B01JG1KN9G,Timeson Women Long Sleeve V Neck Pullover Kangaroo Pocket Sweatshirt Hoodie,Women,5,12,1,2,134,Apparel,http://ecx.images-amazon.com/images/I/41lPxynMhIL._SL75_.jpg,640
+138,B01LZDE8PH,The Rae Sweatshirt by Emi-Jay,Women,5,28,3,4,135,Apparel,None,2129
+139,B019GBLXY0,Joeoy Women's Loose Striped Long Sleeve Crop Top Sweatshirt,Women,4,45,3,3,136,Apparel,http://ecx.images-amazon.com/images/I/31oA9iKsPaL._SL75_.jpg,1876
+140,B00FLKSGAU,Weatherproof womens Courtney Burnout Hooded Pullover Blend Fleece (W1162),Women,5,37.8,1,5,137,Apparel,http://ecx.images-amazon.com/images/I/51kRpgG3UtL._SL75_.jpg,3576
+141,B01LYXAQ2G,Womens Holiday Shirt,Women,4,29,1,3,138,Apparel,http://ecx.images-amazon.com/images/I/51Moe-OZJ-L._SL75_.jpg,3213
+142,B0192JCTG2,Timeson Womens Long Sleeve Knitted Panel Hooded Casual Sweatshirt,Women,5,49,3,2,134,Apparel,http://ecx.images-amazon.com/images/I/41%2BXoYFVa%2BL._SL75_.jpg,541
+143,B016Y3AZPQ,AJ FASHION Women's Sexy Pullover Lips Print Casual Off the Shoulder Slouchy Shirt,Women,5,44,3,2,133,Apparel,http://ecx.images-amazon.com/images/I/41UvUsJfZKL._SL75_.jpg,1696
+144,B01HT32HD8,Bepei Womens Long Sleeve Tunic Sweatshirt String Hoodie With Pocket,Women,5,25,3,4,139,Apparel,http://ecx.images-amazon.com/images/I/41Syim-f9LL._SL75_.jpg,1859
+145,B013KVV1NA,TL Women's Solid Warm Thin Thermal Knitted Casual Zip-Up Hoodie Jacket,Women,5,11,1,1,140,Apparel,http://ecx.images-amazon.com/images/I/41ybvEqwaHL._SL75_.jpg,978
+146,B014KO2KUO,DJT Womens 2-in-1 Color Block Hoodie Casual Shirt Top,Women,5,29,1,1,141,Apparel,http://ecx.images-amazon.com/images/I/41KL0ZQRnoL._SL75_.jpg,3975
+147,B00HIILFPG,Tom's Ware Women Slim fit Zip-up Hoodie Jacket,Women,5,22,3,3,17,Apparel,http://ecx.images-amazon.com/images/I/419qwfo0OIL._SL75_.jpg,1426
+148,B008OPI4U6,Alternative Women's Slouchy Pullover Sweatshirt,Women,5,40.0,1,1,142,Apparel,http://ecx.images-amazon.com/images/I/41hHfz8dcHL._SL75_.jpg,3411
+149,B019RKKNPU,SAYM Unisex Simulation Printing Galaxy Pocket Hooded Sweatshirt,Women,5,41,3,1,143,Apparel,http://ecx.images-amazon.com/images/I/51UOAztu2iL._SL75_.jpg,1219
+150,B016RQNBDS,Fashion Essentials-womens Unisex Rudolph Print 3d Nose Pom Pom Christmas Jumper,Women,4,24,2,1,144,Apparel,http://ecx.images-amazon.com/images/I/51-M1rF0VDL._SL75_.jpg,613
+151,B01M0HRP4J,Timeson Women's V-Neck Long Sleeve Pullover Hoodies with Kangaroo Pocket,Women,5,12,2,4,134,Apparel,http://ecx.images-amazon.com/images/I/41mpFuFafFL._SL75_.jpg,2148
+152,B0159VCH1E,DJT Womens Oblique Zipper Slim Fit Hoodie Jacket,Women,5,39,1,1,141,Apparel,http://ecx.images-amazon.com/images/I/41bWM7rgtQL._SL75_.jpg,510
+153,B017LEOOXQ,KSJK Unisex Funny Print Ugly Christmas Sweater Jumper,Women,5,30,1,3,145,Apparel,http://ecx.images-amazon.com/images/I/51W8Tu-2U6L._SL75_.jpg,1120
+154,B00KHB8HSY,ShoSho Women's Plus Size Basic Leggings,Women,8,47,2,4,146,Apparel,http://ecx.images-amazon.com/images/I/31cz8O8j-qL._SL75_.jpg,160
+155,B01KGSBCG6,NYFC Premium Ultra Soft Printed Leggings Regular and Plus Size 40 Different Prints,Women,8,31,1,5,147,Apparel,http://ecx.images-amazon.com/images/I/41nbPW-hVgL._SL75_.jpg,398
+156,B016XKDUP2,90 Degree By Reflex Fleece Lined Leggings - Yoga Pants,Women,1,35,3,4,148,Apparel,http://ecx.images-amazon.com/images/I/31zPUzru-QL._SL75_.jpg,174
+157,B014RVVPQU,Leggings Depot Basic Solid Plain Full Leggings Stretch 128,Women,8,49,3,4,149,Apparel,http://ecx.images-amazon.com/images/I/31aSJGNbBmL._SL75_.jpg,526
+158,B0179H5DZ8,Romastory Women's Winter Warm Velvet Elastic Leggings,Women,8,23,1,3,150,Apparel,None,30
+159,B00Z9PEITK,Baleaf Women's Ankle Legging Inner Pocket Non See-through Fabric,Women,8,34,3,2,151,Apparel,http://ecx.images-amazon.com/images/I/31UHnx%2BPM6L._SL75_.jpg,134
+160,B0196SY7CS,Like a Boss Printed Side Stretchy Legging Trousers,Women,1,47,2,5,132,Apparel,http://ecx.images-amazon.com/images/I/31ypYH%2B6dyL._SL75_.jpg,1315
+161,B00X6CYBGI,Women's Free to Live Seamless Fleece Lined Leggings,Women,8,27,14,4,75,Apparel,http://ecx.images-amazon.com/images/I/41QFh-yxP0L._SL75_.jpg,29
+162,B01JBQM4I4,High Waist Leggings for Women Stretch Tights-Seamless,Women,8,Navy,2,5,49,Apparel,http://ecx.images-amazon.com/images/I/41scj7CjiJL._SL75_.jpg,155
+163,B00KZD9I64,Hue Women's Curvy Fit Jeans Leggings,Women,2,44.0,2,3,152,Apparel,http://ecx.images-amazon.com/images/I/41xj-f8jACL._SL75_.jpg,288
+164,B016JVXO2E,SEJORA Fleece Lined Leggings - High Waisted Slimming Thick Tights - Many Colors,Women,8,19.99,3,4,153,Apparel,http://ecx.images-amazon.com/images/I/31dhYsvoL-L._SL75_.jpg,9
+165,B0155WQ55Q,YourStyle Stretchy Slim Fit Skinny Long Jegging Pants(S-3XL),Women,2,33,2,3,154,Apparel,None,806
+166,B01HIY4E8E,D&K Monarchy Seamless Full Length Leggings,Women,8,30.0,1,4,155,Apparel,http://ecx.images-amazon.com/images/I/31p8GemY73L._SL75_.jpg,568
+167,B00NOU3VYK,No Nonsense Women's Denim Legging,Women,8,15.99,3,3,79,Apparel,http://ecx.images-amazon.com/images/I/317O9Ht3lFL._SL75_.jpg,275
+168,B015IO2R1M,Everbellus Sexy Womens Faux Leather High Waisted Leggings,Women,8,33,3,3,156,Apparel,http://ecx.images-amazon.com/images/I/31ELH5PpG6L._SL75_.jpg,507
+169,B01283D8LY,Viv Collection Women's Seasonal High Quality Printed Leggings for Fall/Winter,Women,8,46,1,3,98,Apparel,None,146
+170,B01L0PZ120,3-Pack Fleece Lined Thick Brushed Leggings Thights by Homma,Women,8,45.0,1,5,157,Apparel,None,1752
+171,B0193RCGIE,PLUS SIZE High Quality Printed Leggings,Women,8,46,2,2,98,Apparel,None,622
+172,B01M7PWPWQ,Always Women's Solid Color Full Length High Waist Leggings,Women,8,43,1,5,158,Apparel,None,777
+173,B018KTPCE6,Lush Moda Seamless Full Length Basic Leggings - Variety of Colors,Women,8,20,2,5,159,Apparel,http://ecx.images-amazon.com/images/I/51qlhElPeHL._SL75_.jpg,501
+174,B01675EUHK,VIV Collection Women's Solid High Waisted Fleece Leggings for Fall/Winter,Women,8,36,2,5,98,Apparel,http://ecx.images-amazon.com/images/I/31kDK7JrjcL._SL75_.jpg,487
+175,B00HMBYZHO,High Quality Printed Leggings,Women,8,43,3,3,98,Apparel,http://ecx.images-amazon.com/images/I/41DTLFI1PsL._SL75_.jpg,38

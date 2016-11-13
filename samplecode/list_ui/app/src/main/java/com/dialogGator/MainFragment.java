@@ -1,11 +1,13 @@
 package com.dialogGator;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -23,6 +25,7 @@ public class MainFragment extends Fragment {
     }
 
     private List<Product> products = DataProvider.productList;
+    public static final String PRODUCT_ID = "PRODUCT_ID";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,6 +50,15 @@ public class MainFragment extends Fragment {
                 this.getContext(), R.layout.list_item, products);
         ListView lv = (ListView) rootView.findViewById(R.id.listView);
         lv.setAdapter(adapter);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(MainFragment.this.getContext(), DetailActivity.class);
+                Product product = products.get(position);
+                intent.putExtra(PRODUCT_ID, product.getProductId());
+                startActivity(intent);
+            }
+        });
         return rootView;
     }
 
