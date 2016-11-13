@@ -2,9 +2,13 @@ package com.navigationtest.dialogGator;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
+import android.speech.SpeechRecognizer;
 import android.speech.tts.TextToSpeech;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,62 +18,54 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, RecognitionListener {
+    private Intent intent;
+    private SpeechRecognizer speechInput;
+    private TextToSpeech t1;
     TextView tv1;
-    TextToSpeech t1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        tv1= (TextView)findViewById(R.id.TextView1);
-
+        tv1 = (TextView) findViewById(R.id.TextView1);
         setSupportActionBar(toolbar);
+        intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, "en");
+        intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
+        //intent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, this.getPackageName());
+        speechInput = SpeechRecognizer.createSpeechRecognizer(this);
+        speechInput.setRecognitionListener(this);
+
+
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+               /* Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();*/
-                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-                intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "How can I help you?");
-                intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS,1);
-                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.ENGLISH);
-                startActivityForResult(intent, 1);
+                try{
+                    Log.i("Without Service","onClick");
+                    speechInput.startListening(intent);
 
-            }
-        });
-
-        t1 = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener(){
-
-
-            @Override
-            public void onInit(int status) {
-                if(status!=TextToSpeech.ERROR){
-                    t1.setLanguage(Locale.ENGLISH);
+                }
+                catch (Exception e)
+                {
+                    Log.i("Without Service","onClickException");
                 }
             }
         });
 
-        Button b1 = (Button) findViewById(R.id.button);
-        b1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String toSpeak = tv1.getText().toString();
-                Toast.makeText(getApplicationContext(), toSpeak, Toast.LENGTH_SHORT).show();
-                t1.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
-            }
-        });
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -79,6 +75,7 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
     }
 
     @Override
@@ -138,24 +135,88 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    @Override
+    /*@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        try{
+            if (requestCode==1){
+                ArrayList<String> results;
+                results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                String text = results.get(0).replace("'","");
+                tv1.setText(text);
 
-        if (requestCode==1){
-            ArrayList<String> results;
-            results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-            String text = results.get(0).replace("'","");
-            tv1.setText(text);
+            }
+        }catch(Exception e)
 
+        {
+            tv1.setText("No input value!");
         }
+    }*/
+
+    public void onResults(Bundle results) {
+        ArrayList<String> matches = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
+
+        final String spokenSentence = matches.get(0);
+        Log.i("Without Service",spokenSentence);
+        tv1.setText(spokenSentence);
+        t1 = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener(){
+
+
+            @Override
+            public void onInit(int status) {
+                if(status!=TextToSpeech.ERROR){
+                    t1.setLanguage(Locale.ENGLISH);
+                }
+            }
+        });
+        Snackbar snackbar = Snackbar.make(findViewById(R.id.content_main), spokenSentence, Snackbar.LENGTH_INDEFINITE)
+                .setAction("TTS", new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v) {
+                        t1.speak(spokenSentence, TextToSpeech.QUEUE_FLUSH, null);
+                    }
+                });
+        snackbar.show();
+
     }
 
-    /*public void onPause(){
-        if(t1 !=null){
-            t1.stop();
-            t1.shutdown();
-        }
-        super.onPause();
-    }*/
+    @Override
+    public void onEndOfSpeech() {
+
+    }
+
+    @Override
+    public void onReadyForSpeech(Bundle params) {
+
+    }
+
+    @Override
+    public void onBeginningOfSpeech() {
+
+    }
+
+    @Override
+    public void onRmsChanged(float rmsdB) {
+
+    }
+
+    @Override
+    public void onBufferReceived(byte[] buffer) {
+
+    }
+
+    @Override
+    public void onError(int error) {
+
+    }
+
+    @Override
+    public void onPartialResults(Bundle partialResults) {
+
+    }
+
+    @Override
+    public void onEvent(int eventType, Bundle params) {
+
+    }
 }
