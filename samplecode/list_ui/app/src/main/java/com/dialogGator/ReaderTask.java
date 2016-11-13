@@ -32,6 +32,6 @@ public class ReaderTask extends AsyncTask< HashMap<String, String>, Void, ArrayL
         super.onPostExecute(result);
 
         if (result != null && postTaskListener != null)
-            postTaskListener.onPostTask(result);
+            postTaskListener.onPostTask(result, mContext);
     }
 }

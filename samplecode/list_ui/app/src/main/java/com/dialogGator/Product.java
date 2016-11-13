@@ -4,7 +4,7 @@ import static java.lang.Integer.parseInt;
 
 public class Product {
 
-    public int id;
+    public String id;
     public String title;
     public String gender;
     public String category;
@@ -17,7 +17,7 @@ public class Product {
     public Product(){}
     public Product(String itemId, String name, String description, double price)
     {
-        this.id = parseInt(itemId);
+        this.id = itemId;
         this.title = name;
         this.price = price;
     }
@@ -29,7 +29,7 @@ public class Product {
 
     public String getProductId()
     {
-        return Integer.toString(id);
+        return id;
     }
 
     public String getDescription()

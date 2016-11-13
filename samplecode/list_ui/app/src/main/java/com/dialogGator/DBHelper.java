@@ -53,7 +53,7 @@ public class DBHelper extends SQLiteOpenHelper
         while (data.moveToNext())
         {
             Product product = new Product();
-            product.id = (data.getInt(0));
+            product.id = Integer.toString(data.getInt(0));
             product.title = (data.getString(1));
             product.category = (data.getString(2));
             product.brand = (data.getString(3));
@@ -97,6 +97,8 @@ public class DBHelper extends SQLiteOpenHelper
     {
         try
         {
+            boolean isDbFound = this.openDataBase();
+            this.close();
             return this.getReadableDatabase().rawQuery(sql, null);
             //Cursor mCur = mDataBase.rawQuery(sql, null);
             //return mCur;
@@ -136,6 +138,7 @@ public class DBHelper extends SQLiteOpenHelper
             if(_tableNames.contains(attribute))
             {
                 whereClause += NewWhereClause(whereClause);
+                Log.i("ProductMap", searchBox.get(attribute).toString());
                 String attributeValue = searchBox.get(attribute);
                 int valueLength = attributeValue.length();
                 whereClause += "LOWER(" + attribute + ".Name) LIKE '%" + attributeValue.substring(0, Math.min(3, valueLength)).toLowerCase() + "%'";
