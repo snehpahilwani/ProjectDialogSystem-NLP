@@ -29,7 +29,6 @@ public class MainFragment extends Fragment {
         // Required empty public constructor
     }
 
-    private List<Product> products = DataProvider.productList;
     public static final String PRODUCT_ID = "PRODUCT_ID";
 
     @Override
@@ -37,34 +36,23 @@ public class MainFragment extends Fragment {
                              Bundle savedInstanceState) {
        final View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-        /*final Button mainButton = (Button) rootView.findViewById(R.id.main_button);
-        mainButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                mainButton.setBackgroundColor(getContext().getResources().getColor(R.color.colorAccent));
-            }
-        });*/
         // Inflate the layout for this fragment
-        String[] items = getResources().getStringArray(R.array.clothing);
-//        ArrayAdapter<String> adapter =
-//                new ArrayAdapter<>(this,
-//                        android.R.layout.simple_list_item_1,
-//                        android.R.id.text1, items);
+        //String[] items = getResources().getStringArray(R.array.clothing);
 
         PostTaskListener<ArrayList<Product>> postTaskListener = new PostTaskListener<ArrayList<Product>>() {
             @Override
-            public void onPostTask(ArrayList<Product> result, Context mContext) {
-                products = result;
+            public void onPostTask(final ArrayList<Product> result, Context mContext) {
+                //products = result;
+                ((ListenerTask) getActivity().getApplication()).setProductList(result);
                 ProductListAdapter adapter = new ProductListAdapter(
-                        mContext, R.layout.list_item, products);
+                        getActivity(), R.layout.list_item, result);
                 ListView lv = (ListView) rootView.findViewById(R.id.listView);
                 lv.setAdapter(adapter);
                 lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Intent intent = new Intent(MainFragment.this.getContext(), DetailActivity.class);
-                        Product product = products.get(position);
+                        Product product = result.get(position);
                         intent.putExtra(PRODUCT_ID, product.getProductId());
                         startActivity(intent);
                     }
@@ -75,8 +63,10 @@ public class MainFragment extends Fragment {
 //        ListenerTask lt = new ListenerTask();
 //        lt.setPostTaskListener(postTaskListener);
         ((ListenerTask) getActivity().getApplication()).setPostTaskListener(postTaskListener);
+        DataProvider dp = new DataProvider(this.getActivity());
+        dp.getProducts();
         //postTaskListener.onPostTask(DataProvider.getFilteredList("1"),this.getContext());
-        ProductListAdapter adapter = new ProductListAdapter(
+        /*ProductListAdapter adapter = new ProductListAdapter(
                 this.getContext(), R.layout.list_item, products);
         ListView lv = (ListView) rootView.findViewById(R.id.listView);
         lv.setAdapter(adapter);
@@ -88,9 +78,13 @@ public class MainFragment extends Fragment {
                 intent.putExtra(PRODUCT_ID, product.getProductId());
                 startActivity(intent);
             }
-        });
+        });*/
         return rootView;
+
+
     }
+
+
 
 
 }

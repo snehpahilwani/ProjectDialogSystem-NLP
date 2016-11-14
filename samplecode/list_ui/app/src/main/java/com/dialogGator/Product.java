@@ -12,6 +12,9 @@ public class Product {
     public String color;
     public String size;
     public String brand;
+
+
+
     public String imgUrl;
 
     public Product(){}
@@ -21,7 +24,13 @@ public class Product {
         this.title = name;
         this.price = price;
     }
+    public String getImgUrl() {
+        return imgUrl;
+    }
 
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
     public String getName()
     {
         return title;
@@ -34,7 +43,8 @@ public class Product {
 
     public String getDescription()
     {
-        return "No Description";
+        //return "Our boy-cut jeans are for men and women who appreciate that skate park fashions aren’t just for skaters.  Made from the softest and most flexible organic cotton denim";
+    return "";
     }
 
     public double getPrice()

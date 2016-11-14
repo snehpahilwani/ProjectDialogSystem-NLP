@@ -80,6 +80,8 @@ public class DBHelper extends SQLiteOpenHelper
             Native sqlite in android does not support any function for fuzzy string matching
             TODO : Move to a remote MySQL db
             */
+
+                int addFlag = 1;
                 for (String attribute : attributeSet) {
                     Field field = null;
                     try {
@@ -95,10 +97,12 @@ public class DBHelper extends SQLiteOpenHelper
                         e.printStackTrace();
                     }
                     String rhs = searchBox.get(attribute);
-                    if (EditDistance.findEditDistance(lhs.toLowerCase(), rhs.toLowerCase()) >= 70) {
-                        products.add(product);
+                    if (EditDistance.findEditDistance(lhs.toLowerCase(), rhs.toLowerCase()) <= 70) {
+                        addFlag = 0;
+                        break;
                     }
                 }
+                if(addFlag == 1)products.add(product);
             }
         }
         catch (Exception e)

@@ -7,10 +7,13 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,6 +22,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.NumberFormat;
+import java.util.List;
 
 public class DetailActivity extends AppCompatActivity {
     Bitmap b;
@@ -30,9 +34,16 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        Product product= new Product();
         String productId = getIntent().getStringExtra(MainFragment.PRODUCT_ID);
-        Product product = DataProvider.productMap.get(productId);
+        /*DataProvider dp = new DataProvider(this);
+        dp.getProducts();*/
+        List<Product> products =  ((ListenerTask) getApplication()).getProductList();
+        for(Product prod : products){
+            if(prod.getProductId().equalsIgnoreCase(productId)){
+                product=prod;
+            }
+        }
 
         TextView tv = (TextView) findViewById(R.id.nameText);
         tv.setText(product.getName());
@@ -46,7 +57,7 @@ public class DetailActivity extends AppCompatActivity {
         priceText.setText(price);
 
         img = (ImageView) findViewById(R.id.imageView);
-        new DownloadImageTask(img).execute("http://pbs.twimg.com/profile_images/614526496112144385/O_p28XM2.jpg");
+        new DownloadImageTask(img).execute(product.getImgUrl());
         //b= getbmpfromURL("http://pbs.twimg.com/profile_images/614526496112144385/O_p28XM2.jpg");
         //img.setImageBitmap(b);
 
@@ -60,6 +71,11 @@ public class DetailActivity extends AppCompatActivity {
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        Window window = this.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(ContextCompat.getColor(this, R.color.main_bg_color));
     }
 
     public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
