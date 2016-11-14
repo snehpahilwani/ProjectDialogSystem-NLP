@@ -58,14 +58,20 @@ public class APIAITaskAgent {
                             case "clothes.product":
                                 PostTaskListener postTaskListener = init(activity);
                                 final ReaderTask readerTask = new ReaderTask(activity.getApplicationContext(),postTaskListener);
-                                if(result.getParameters().get("items").toString().contains("\""))
-                                 ProductAttributes.productMap.put("category", result.getParameters().get("items").toString().replaceAll("\"",""));
-                                else
-                                    ProductAttributes.productMap.put("category", result.getParameters().get("items").toString());
-
+                                if (!result.getParameters().isEmpty()) {
+                                    if (result.getParameters().get("items").toString().contains("\""))
+                                        ProductAttributes.productMap.put("category", result.getParameters().get("items").toString().replaceAll("\"", ""));
+                                    else
+                                        ProductAttributes.productMap.put("category", result.getParameters().get("items").toString());
+                                    TTS.speak(speech);
+                                    readerTask.execute(ProductAttributes.productMap);
+                                }
+                                else{
+                                    speech= "I couldn't understand the item you said. What would you like to buy?";
+                                    TTS.speak(speech);
+                                }
                                 speech = speech;// + "Who would like to buy it for? Men or Women?";
-                                TTS.speak(speech);
-                                readerTask.execute(ProductAttributes.productMap);
+
                                 break;
                             case "clothes.startwithname":
                                 TTS.speak(speech);
@@ -146,13 +152,15 @@ public class APIAITaskAgent {
                     }
                 }
                 catch (Exception e){
-                        Toast.makeText(activity,e.toString(),Toast.LENGTH_LONG).show();
+                        Log.e("DialogError", e.toString());
+                        aiDialog.close();
                 }
             }
 
             @Override
             public void onError(AIError error) {
-                Toast.makeText(activity, error.toString(), Toast.LENGTH_SHORT).show();
+                Log.e("DialogError", error.toString());
+//                Toast.makeText(activity, error.toString(), Toast.LENGTH_SHORT).show();
                 aiDialog.close();
             }
 
