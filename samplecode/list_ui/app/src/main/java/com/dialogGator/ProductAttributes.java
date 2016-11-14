@@ -9,7 +9,7 @@ import javax.inject.Singleton;
 /**
  * Created by yash on 12/11/16.
  */
-public class ProductAttributes extends Application {
+public class ProductAttributes {
     public static HashMap productMap;
 
     public static void init(){
