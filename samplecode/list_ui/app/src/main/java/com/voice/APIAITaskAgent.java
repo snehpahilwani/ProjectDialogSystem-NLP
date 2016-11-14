@@ -58,7 +58,11 @@ public class APIAITaskAgent {
                             case "clothes.product":
                                 PostTaskListener postTaskListener = init(activity);
                                 final ReaderTask readerTask = new ReaderTask(activity.getApplicationContext(),postTaskListener);
-                                ProductAttributes.productMap.put("category", result.getParameters().get("items").toString().replaceAll("\"",""));
+                                if(result.getParameters().get("items").toString().contains("\""))
+                                 ProductAttributes.productMap.put("category", result.getParameters().get("items").toString().replaceAll("\"",""));
+                                else
+                                    ProductAttributes.productMap.put("category", result.getParameters().get("items").toString());
+
                                 speech = speech;// + "Who would like to buy it for? Men or Women?";
                                 TTS.speak(speech);
                                 readerTask.execute(ProductAttributes.productMap);
