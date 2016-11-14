@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +24,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MainFragment extends Fragment {
+public class MainFragment extends Fragment implements FragmentOnBackClickInterface{
 
 
     public MainFragment() {
@@ -60,31 +62,29 @@ public class MainFragment extends Fragment {
             }
         };
 
-//        ListenerTask lt = new ListenerTask();
-//        lt.setPostTaskListener(postTaskListener);
+
         ((ListenerTask) getActivity().getApplication()).setPostTaskListener(postTaskListener);
         DataProvider dp = new DataProvider(this.getActivity());
         dp.getProducts();
-        //postTaskListener.onPostTask(DataProvider.getFilteredList("1"),this.getContext());
-        /*ProductListAdapter adapter = new ProductListAdapter(
-                this.getContext(), R.layout.list_item, products);
-        ListView lv = (ListView) rootView.findViewById(R.id.listView);
-        lv.setAdapter(adapter);
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(MainFragment.this.getContext(), DetailActivity.class);
-                Product product = products.get(position);
-                intent.putExtra(PRODUCT_ID, product.getProductId());
-                startActivity(intent);
-            }
-        });*/
-        return rootView;
 
+        return rootView;
 
     }
 
+    @Override
+    public void onClick() {
 
+    }
+
+    /*@Override
+    public void onBackPressed()
+    {
+        MainFragment fragment = new MainFragment();
+        FragmentTransaction fragmentTransaction =
+                this.getFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, fragment);
+        fragmentTransaction.commit();
+    }*/
 
 
 }

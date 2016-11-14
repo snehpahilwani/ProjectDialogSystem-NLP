@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.voice.APIAITaskAgent;
 import com.voice.TTS;
@@ -40,9 +41,16 @@ public class MainActivity extends AppCompatActivity
         MainFragment fragment = new MainFragment();
         android.support.v4.app.FragmentTransaction fragmentTransaction =
                 getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, fragment);
+        fragmentTransaction.replace(R.id.fragment_container, fragment,"scheduleFragment");
+        //fragmentTransaction.addToBackStack("scheduleFragment");
         fragmentTransaction.commit();
 
+        /*FragmentTransaction fragmentTransaction =  getActivity().getSupportFragmentManager().beginTransaction();
+        Fragment scheduleFragment = new ScheduleFragment();
+        fragmentTransaction.replace(R.id.content_container, scheduleFragment, "scheduleFragment");
+        fragmentTransaction.addToBackStack("scheduleFragment");
+        fragmentTransaction.commit();
+        */
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -83,7 +91,11 @@ public class MainActivity extends AppCompatActivity
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.main_bg_color));
+
+
     }
+
+
 
 
     @Override
@@ -94,12 +106,35 @@ public class MainActivity extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
+/*
+            int count = getFragmentManager().getBackStackEntryCount();
+
+            if (count == 0) {
+                super.onBackPressed();
+                //additional code
+            } else {
+                getFragmentManager().popBackStack();
+            }*/
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+
+        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.action_search);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainFragment fragment = new MainFragment();
+                android.support.v4.app.FragmentTransaction fragmentTransaction =
+                        getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_container, fragment,"scheduleFragment");
+                //fragmentTransaction.addToBackStack("scheduleFragment");
+                fragmentTransaction.commit();
+            }
+        });*/
         return true;
     }
 
@@ -113,6 +148,15 @@ public class MainActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }
+        else if(id==R.id.action_search){
+            //Toast.makeText(this, "Hello!", Toast.LENGTH_LONG).show();
+            MainFragment fragment = new MainFragment();
+            android.support.v4.app.FragmentTransaction fragmentTransaction =
+                    getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container, fragment,"scheduleFragment");
+            //fragmentTransaction.addToBackStack("scheduleFragment");
+            fragmentTransaction.commit();
         }
 
         return super.onOptionsItemSelected(item);
@@ -129,7 +173,8 @@ public class MainActivity extends AppCompatActivity
             MainFragment fragment = new MainFragment();
             android.support.v4.app.FragmentTransaction fragmentTransaction =
                     getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container, fragment);
+            fragmentTransaction.replace(R.id.fragment_container, fragment,"scheduleFragment");
+            //fragmentTransaction.addToBackStack("scheduleFragment");
             fragmentTransaction.commit();
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
