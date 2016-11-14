@@ -34,7 +34,7 @@ public class TTS {
                 @Override
                 public void onInit(int i) {
                     //textToSpeech.setLanguage(Locale.);
-                    TTS.speak("Hi, I am virtual sa. What would you like to buy today?");
+                    TTS.speak("Hi, I am Regina. What would you like to buy today?");
                 }
             });
         }
