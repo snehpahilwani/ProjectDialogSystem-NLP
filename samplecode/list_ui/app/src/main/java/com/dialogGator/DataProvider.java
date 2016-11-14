@@ -1,16 +1,28 @@
 package com.dialogGator;
 
+import android.app.Activity;
+import android.content.Context;
+
+import com.voice.TTS;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public final class DataProvider {
+import com.dialogGator.ProductAttributes;
+import com.dialogGator.ReaderTask;
+
+public class DataProvider {
 
     public static List<Product> productList = new ArrayList<>();
-    public static Map<String, Product> productMap = new HashMap<>();
+    public static HashMap<String, String> productMap = new HashMap<String, String>();
+    private Activity activity;
 
-    static {
+    public DataProvider(Activity activity){
+        this.activity = activity;
+    }
+
+   /* static {
 
         addProduct("shirt101",
                 "Cross-back training tank",
@@ -83,8 +95,18 @@ public final class DataProvider {
         Product item = new Product(itemId, name, description, price);
         productList.add(item);
         productMap.put(itemId, item);
+    }*/
+   public void getProducts() {
+        PostTaskListener<ArrayList<Product>> postTaskListener = ((ListenerTask) activity.getApplication()).getPostTaskListener();
+        final ReaderTask readerTask = new ReaderTask(activity.getApplicationContext(), postTaskListener);
+       // productMap.put("","");
+        readerTask.execute(productMap);
     }
 
+//    public static List<Product> getProductList{
+//        getProducts();
+//        return
+//    }
     public static List<String> getProductNames() {
         List<String> list = new ArrayList<>();
         for (Product product : productList) {

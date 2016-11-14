@@ -6,6 +6,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.dialogGator.DBHelper;
+import com.dialogGator.ListenerTask;
 import com.dialogGator.PostTaskListener;
 import com.dialogGator.Product;
 import com.dialogGator.ProductAttributes;
@@ -38,28 +39,26 @@ public class APIAITaskAgent {
         aiDialog = new AIDialog(activity, aiConfiguration);
         Log.i("HashMap", String.valueOf(ProductAttributes.productMap));
 
-        final PostTaskListener<ArrayList<Product>> postTaskListener = new PostTaskListener<ArrayList<Product>>() {
-            @Override
-            public void onPostTask(ArrayList<Product> result, Context context ) {
-                Log.i("Result", result.toString());
-            }
-        };
+//        final PostTaskListener<ArrayList<Product>> postTaskListener = new PostTaskListener<ArrayList<Product>>() {
+//            @Override
+//            public void onPostTask(ArrayList<Product> result, Context context ) {
+//                Log.i("Result", result.toString());
+//            }
+//        };
 
         aiDialog.setResultsListener(new AIDialog.AIDialogListener() {
             @Override
             public void onResult(AIResponse response) {
                 try {
                     if (!response.isError()){
-                        final ReaderTask readerTask = new ReaderTask(activity.getApplicationContext(),postTaskListener);
+//                        final ReaderTask readerTask = new ReaderTask(activity.getApplicationContext(),postTaskListener);
                         Result result =  response.getResult();
                         String speech = result.getFulfillment().getSpeech();
                         switch (result.getAction()) {
                             case "clothes.product":
-                                if(result.getParameters().get("items").toString().toLowerCase().contains("\""))
-                                    ProductAttributes.productMap.put("category", result.getParameters().get("items").toString().replaceAll("\"",""));
-                                else
-                                    ProductAttributes.productMap.put("category", result.getParameters().get("items").toString());
-
+                                PostTaskListener postTaskListener = init(activity);
+                                final ReaderTask readerTask = new ReaderTask(activity.getApplicationContext(),postTaskListener);
+                                ProductAttributes.productMap.put("category", result.getParameters().get("items").toString().replaceAll("\"",""));
                                 speech = speech;// + "Who would like to buy it for? Men or Women?";
                                 TTS.speak(speech);
                                 readerTask.execute(ProductAttributes.productMap);
@@ -161,5 +160,19 @@ public class APIAITaskAgent {
     }
     public void startRecognition(){
         aiDialog.showAndListen();
+    }
+
+    public PostTaskListener<ArrayList<Product>> init (Activity activity){
+       // ListenerTask lt = new ListenerTask();
+        PostTaskListener<ArrayList<Product>> postTaskListener = ((ListenerTask) activity.getApplication()).getPostTaskListener();
+
+        return postTaskListener;
+//        ArrayList<Product> searchList = new ArrayList<>();
+//        Product item = new Product("vest101",
+//                "Thermal vest",
+//                "Our thermal vest, made from organic bamboo with recycled plastic down filling, is a favorite of both men and women. You’ll help the environment, and have a wear-easy piece for many occasions.",
+//                95);
+//        searchList.add(item);
+////        postTaskListener.onPostTask(searchList,activity.getApplicationContext());
     }
 }
