@@ -13,6 +13,7 @@ import com.dialogGator.ProductAttributes;
 import com.dialogGator.ReaderTask;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -58,14 +59,20 @@ public class APIAITaskAgent {
                             case "clothes.product":
                                 PostTaskListener postTaskListener = init(activity);
                                 final ReaderTask readerTask = new ReaderTask(activity.getApplicationContext(),postTaskListener);
-                                if(result.getParameters().get("items").toString().contains("\""))
-                                 ProductAttributes.productMap.put("category", result.getParameters().get("items").toString().replaceAll("\"",""));
-                                else
-                                    ProductAttributes.productMap.put("category", result.getParameters().get("items").toString());
-
+                                if (!result.getParameters().isEmpty()) {
+                                    if (result.getParameters().get("items").toString().contains("\""))
+                                        ProductAttributes.productMap.put("category", result.getParameters().get("items").toString().replaceAll("\"", ""));
+                                    else
+                                        ProductAttributes.productMap.put("category", result.getParameters().get("items").toString());
+                                    TTS.speak(speech);
+                                    readerTask.execute(ProductAttributes.productMap);
+                                }
+                                else{
+                                    speech= getRandomUtterance();
+                                    TTS.speak(speech);
+                                }
                                 speech = speech;// + "Who would like to buy it for? Men or Women?";
-                                TTS.speak(speech);
-                                readerTask.execute(ProductAttributes.productMap);
+
                                 break;
                             case "clothes.startwithname":
                                 TTS.speak(speech);
@@ -146,13 +153,15 @@ public class APIAITaskAgent {
                     }
                 }
                 catch (Exception e){
-                        Toast.makeText(activity,e.toString(),Toast.LENGTH_LONG).show();
+                        Log.e("DialogError", e.toString());
+                        aiDialog.close();
                 }
             }
 
             @Override
             public void onError(AIError error) {
-                Toast.makeText(activity, error.toString(), Toast.LENGTH_SHORT).show();
+                Log.e("DialogError", error.toString());
+//                Toast.makeText(activity, error.toString(), Toast.LENGTH_SHORT).show();
                 aiDialog.close();
             }
 
@@ -171,12 +180,19 @@ public class APIAITaskAgent {
         PostTaskListener<ArrayList<Product>> postTaskListener = ((ListenerTask) activity.getApplication()).getPostTaskListener();
 
         return postTaskListener;
-//        ArrayList<Product> searchList = new ArrayList<>();
-//        Product item = new Product("vest101",
-//                "Thermal vest",
-//                "Our thermal vest, made from organic bamboo with recycled plastic down filling, is a favorite of both men and women. You’ll help the environment, and have a wear-easy piece for many occasions.",
-//                95);
-//        searchList.add(item);
-////        postTaskListener.onPostTask(searchList,activity.getApplicationContext());
+    }
+
+    public String getRandomUtterance(){
+        String [] arr = {"I couldn't understand the item you said. What would you like to buy?",
+                "I couldn't find the product you just said. What would you like to buy?",
+                "Please choose an item from Pant, Jean, Short, Shirt, Jacket, Skirt, Dress or Legging.",
+                "Oops. That's not a valid item. Please select one of Pant, Jean, Short, Shirt, Jacket, Skirt, Dress or Legging."};
+        Random random = new Random();
+
+        // randomly selects an index from the arr
+        int select = random.nextInt(arr.length);
+
+        // prints out the value at the randomly selected index
+       return arr[select];
     }
 }
