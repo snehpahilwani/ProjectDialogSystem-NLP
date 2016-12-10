@@ -28,14 +28,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Clothing item name"
-            android:textSize="24sp" />
+            android:textStyle="bold"
+            android:textSize="14sp" />
+        <TextView
+            android:id="@+id/productNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/priceText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="#ff0000"
             android:text="$28.00"
-            android:textSize="20sp" />
+            android:textSize="12sp" />
 
     </LinearLayout>
 

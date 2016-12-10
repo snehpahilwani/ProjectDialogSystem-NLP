@@ -43,8 +43,8 @@ public class Product {
 
     public String getDescription()
     {
-        //return "Our boy-cut jeans are for men and women who appreciate that skate park fashions aren’t just for skaters.  Made from the softest and most flexible organic cotton denim";
-    return "";
+        return "Our boy-cut jeans are for men and women who appreciate that skate park fashions aren’t just for skaters.  Made from the softest and most flexible organic cotton denim";
+    //return "";
     }
 
     public double getPrice()
