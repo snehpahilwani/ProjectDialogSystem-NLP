@@ -13,6 +13,7 @@ import com.dialogGator.ProductAttributes;
 import com.dialogGator.ReaderTask;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 import javax.inject.Inject;
@@ -55,100 +56,193 @@ public class APIAITaskAgent {
 //                        final ReaderTask readerTask = new ReaderTask(activity.getApplicationContext(),postTaskListener);
                         Result result =  response.getResult();
                         String speech = result.getFulfillment().getSpeech();
-                        switch (result.getAction()) {
-                            case "clothes.product":
-                                PostTaskListener postTaskListener = init(activity);
-                                final ReaderTask readerTask = new ReaderTask(activity.getApplicationContext(),postTaskListener);
-                                if (!result.getParameters().isEmpty()) {
-                                    if (result.getParameters().get("items").toString().contains("\""))
-                                        ProductAttributes.productMap.put("category", result.getParameters().get("items").toString().replaceAll("\"", ""));
-                                    else
-                                        ProductAttributes.productMap.put("category", result.getParameters().get("items").toString());
-                                    TTS.speak(speech);
-                                    readerTask.execute(ProductAttributes.productMap);
-                                }
-                                else{
-                                    speech= getRandomUtterance();
-                                    TTS.speak(speech);
-                                }
-                                speech = speech;// + "Who would like to buy it for? Men or Women?";
+                        if(result.getParameters().get("help")!= null){
+                            TTS.speak("You can say \"I want a shirt\" or you can choose from Pant, Jean, Short, " +
+                                    "Shirt, Jacket, Skirt, Dress or Legging. You can start over by saying \"start over\".");
+                        }
+                        else if(result.getParameters().get("purpose")!= null){
+                            TTS.speak("Hi, I am Reena. I am your shopping assistant and can assist you in buying clothes. " +
+                                    "I can show you our collection of Pants, Jeans, Shorts, Shirts, Jackets, Skirts, Dresses and Leggings.");
+                        }
+                        else {
+                            switch (result.getAction()) {
+                                case "open.prompt":
+                                    PostTaskListener postTaskListener = init(activity);
+                                    final ReaderTask readerTask = new ReaderTask(activity.getApplicationContext(), postTaskListener);
+                                    if (!result.getParameters().isEmpty() && ProductAttributes.productMap.get("open_done") != "1") {
+                                        String[] queryItemsList = getQueryItems(result.getParameters());
+                                        if (queryItemsList != null) {
+                                            speech = getNextDialogue();
+                                            TTS.speak(speech);
+                                            ProductAttributes.productMap.put("open_done", "1");
+                                            readerTask.execute(ProductAttributes.productMap);
+                                        } else {
+                                            speech = getRandomUtterance();
+                                            TTS.speak(speech);
+                                        }
+                                    }
+                                    if (ProductAttributes.productMap.get("open_done") == "1") {
+                                        speech = getNextDialogue();
+                                        TTS.speak(speech);
+                                    } else {
+                                        speech = getRandomUtterance();
+                                        TTS.speak(speech);
+                                    }
+                                    break;
+                                case "clothes.product":
+                                    PostTaskListener postTaskListener_prod = init(activity);
+                                    final ReaderTask readerTask_prod = new ReaderTask(activity.getApplicationContext(), postTaskListener_prod);
+                                    if (!result.getParameters().isEmpty()) {
+                                        if (result.getParameters().get("items").toString().contains("\""))
+                                            ProductAttributes.productMap.put("category", result.getParameters().get("items").toString().replaceAll("\"", ""));
+                                        else
+                                            ProductAttributes.productMap.put("category", result.getParameters().get("items").toString());
+                                        TTS.speak(speech);
+                                        readerTask_prod.execute(ProductAttributes.productMap);
+                                    } else {
+                                        speech = getRandomUtterance();
+                                        TTS.speak(speech);
+                                    }
 
-                                break;
-                            case "clothes.startwithname":
-                                TTS.speak(speech);
-                                //TTS.speak();
-                                break;
-                            case "clothes.color":
-                                ProductAttributes.productMap.put("color",result.getParameters().values());
-                                speech = speech + "Are you looking for any specific brand? If yes what brand?";
-                                TTS.speak(speech);
-                                break;
-                            case "clothes.size":
-                                ProductAttributes.productMap.put("size",result.getParameters().values());
-                                //ProductAttributes.productMap.put("pricestart",result.getParameters().values());
-                                speech = speech + "What price range are you looking for?";
-                                TTS.speak(speech);
-                                break;
-                            case "clothes.brand":
-                                ProductAttributes.productMap.put("brand",result.getParameters().values());
-                                TTS.speak(speech);
-                                TTS.stopSpeaking();
-                                break;
-                            case "clothes.priceless":
-                                ProductAttributes.productMap.put("priceStart","0");
-                                ProductAttributes.productMap.put("priceEnd",result.getParameters().values());
-                                speech = speech + "Do you have any colour in mind? If yes what color?";
-                                TTS.speak(speech);
-                                break;
-                            case "clothes.pricegreater":
-                                ProductAttributes.productMap.put("priceStart",result.getParameters().values());
-                                ProductAttributes.productMap.put("priceEnd","999999999999");
-                                speech = speech + "Do you have any colour in mind? If yes what color?";
-                                TTS.speak(speech);
-                                break;
-                            case "clothes.pricevalue":
-                                ProductAttributes.productMap.put("priceStart",result.getParameters().values());
-                                ProductAttributes.productMap.put("priceEnd",result.getParameters().values());
-                                speech = speech + "Do you have any colour in mind? If yes what color?";
-                                TTS.speak(speech);
-                                break;
-                            case "clothes.pricebetween":
-                                ProductAttributes.productMap.put("priceStart",result.getParameters().get("rangestart"));
-                                ProductAttributes.productMap.put("priceEnd",result.getParameters().get("rangeend"));
-                                speech = speech + "Do you have any colour in mind? If yes what color?";
-                                TTS.speak(speech);
-                                break;
-                            case "clothes.gender":
-                                ProductAttributes.productMap.put("gender",result.getParameters().values());
-                                speech = speech + "What size would you like to see?";
-                                TTS.speak(speech);
-                                break;
-                            case "clothes.add":
-                                TTS.speak(speech);
-                                break;
-                            case "clothes.orders":
-                                TTS.speak(speech);
-                                break;
-                            case "clothes.remove":
-                                TTS.speak(speech);
-                                break;
-                            case "clothes.viewlogs":
-                                TTS.speak(speech);
-                                break;
-                            case "clothes.more":
-                                TTS.speak(speech);
-                                break;
-                            case "clothes.filters":
-                                TTS.speak(speech);
-                                break;
-                            case "clothes.clearfilters":
-                                TTS.speak(speech);
-                                break;
-                            case "clothes.product-number":
-                                TTS.speak(speech);
-                                break;
-                            default:
-                                TTS.speak(speech);
+                                    break;
+                                case "clothes.gender":
+                                    PostTaskListener postTaskListener_gender = init(activity);
+                                    final ReaderTask readerTask_gender = new ReaderTask(activity.getApplicationContext(), postTaskListener_gender);
+                                    if (!result.getParameters().isEmpty()) {
+                                        if (result.getParameters().get("gender").toString().contains("\""))
+                                            ProductAttributes.productMap.put("gender", result.getParameters().get("gender").toString().replaceAll("\"", ""));
+                                        else
+                                            ProductAttributes.productMap.put("gender", result.getParameters().get("gender").toString());
+                                        speech = getNextDialogue();
+                                        TTS.speak(speech);
+                                        readerTask_gender.execute(ProductAttributes.productMap);
+                                    } else {
+                                        speech = getRandomUtterance();
+                                        TTS.speak(speech);
+                                    }
+                                    break;
+                                case "clothes.size":
+                                    PostTaskListener postTaskListener_size = init(activity);
+                                    final ReaderTask readerTask_size = new ReaderTask(activity.getApplicationContext(), postTaskListener_size);
+                                    if (!result.getParameters().isEmpty()) {
+                                        if (result.getParameters().get("size").toString().contains("\""))
+                                            ProductAttributes.productMap.put("size", result.getParameters().get("size").toString().replaceAll("\"", ""));
+                                        else
+                                            ProductAttributes.productMap.put("size", result.getParameters().get("size").toString());
+                                        speech = getNextDialogue();
+                                        TTS.speak(speech);
+                                        readerTask_size.execute(ProductAttributes.productMap);
+                                    } else {
+                                        speech = getRandomUtterance();
+                                        TTS.speak(speech);
+                                    }
+                                    break;
+
+                                case "clothes.pricevalue":
+                                    PostTaskListener postTaskListener_price = init(activity);
+                                    final ReaderTask readerTask_price = new ReaderTask(activity.getApplicationContext(), postTaskListener_price);
+                                    if (!result.getParameters().isEmpty()) {
+                                        if (result.getParameters().get("price") != null) {
+                                            if (result.getParameters().get("price").toString().contains("\""))
+                                                ProductAttributes.productMap.put("priceStart", result.getParameters().get("price").toString().replaceAll("\"", ""));
+                                            else
+                                                ProductAttributes.productMap.put("priceStart", result.getParameters().get("price").toString());
+
+                                            if (result.getParameters().get("price").toString().contains("\""))
+                                                ProductAttributes.productMap.put("priceEnd", result.getParameters().get("price").toString().replaceAll("\"", ""));
+                                            else
+                                                ProductAttributes.productMap.put("priceEnd", result.getParameters().get("price").toString());
+                                        } else {
+                                            if (result.getParameters().get("rangestart") == null) {
+                                                ProductAttributes.productMap.put("priceStart", "0");
+                                            } else if (result.getParameters().get("rangestart").toString().contains("\""))
+                                                ProductAttributes.productMap.put("priceStart", result.getParameters().get("rangestart").toString().replaceAll("\"", ""));
+                                            else
+                                                ProductAttributes.productMap.put("priceStart", result.getParameters().get("rangestart").toString());
+
+                                            if (result.getParameters().get("rangeend") == null) {
+                                                ProductAttributes.productMap.put("priceEnd", "9999999");
+                                            } else if (result.getParameters().get("rangeend").toString().contains("\""))
+                                                ProductAttributes.productMap.put("priceEnd", result.getParameters().get("rangeend").toString().replaceAll("\"", ""));
+                                            else
+                                                ProductAttributes.productMap.put("priceEnd", result.getParameters().get("rangeend").toString());
+                                        }
+                                        speech = getNextDialogue();
+                                        TTS.speak(speech);
+                                        readerTask_price.execute(ProductAttributes.productMap);
+                                    } else {
+                                        speech = getRandomUtterance();
+                                        TTS.speak(speech);
+                                    }
+                                    TTS.speak(speech);
+                                    break;
+
+                                case "clothes.color":
+                                    PostTaskListener postTaskListener_color = init(activity);
+                                    final ReaderTask readerTask_color = new ReaderTask(activity.getApplicationContext(), postTaskListener_color);
+                                    if (!result.getParameters().isEmpty()) {
+                                        if (result.getParameters().get("color").toString().contains("\""))
+                                            ProductAttributes.productMap.put("color", result.getParameters().get("color").toString().replaceAll("\"", ""));
+                                        else
+                                            ProductAttributes.productMap.put("color", result.getParameters().get("color").toString());
+                                        speech = getNextDialogue();
+                                        TTS.speak(speech);
+                                        readerTask_color.execute(ProductAttributes.productMap);
+                                    } else {
+                                        speech = getRandomUtterance();
+                                        TTS.speak(speech);
+                                    }
+                                    break;
+
+                                case "clothes.brand":
+                                    PostTaskListener postTaskListener_brand = init(activity);
+                                    final ReaderTask readerTask_brand = new ReaderTask(activity.getApplicationContext(), postTaskListener_brand);
+                                    if (!result.getParameters().isEmpty()) {
+                                        if (result.getParameters().get("brand").toString().contains("\""))
+                                            ProductAttributes.productMap.put("brand", result.getParameters().get("brand").toString().replaceAll("\"", ""));
+                                        else
+                                            ProductAttributes.productMap.put("brand", result.getParameters().get("brand").toString());
+                                        speech = getNextDialogue();
+                                        TTS.speak(speech);
+                                        readerTask_brand.execute(ProductAttributes.productMap);
+                                    } else {
+                                        speech = getRandomUtterance();
+                                        TTS.speak(speech);
+                                    }
+                                    break;
+                                ///////////////////////////////////////////
+                                case "clothes.add":
+                                    TTS.speak(speech);
+                                    break;
+                                case "clothes.orders":
+                                    TTS.speak(speech);
+                                    break;
+                                case "clothes.remove":
+                                    TTS.speak(speech);
+                                    break;
+                                case "clothes.viewlogs":
+                                    TTS.speak(speech);
+                                    break;
+                                case "clothes.more":
+                                    TTS.speak(speech);
+                                    break;
+                                case "clothes.filters":
+                                    TTS.speak(speech);
+                                    break;
+                                case "clothes.start-over":
+                                    clearFilters();
+                                    TTS.speak("Ok, I have cleared all filters. Please start with selecting " +
+                                            "an item from Pant, Jean, Short, Shirt, Jacket, Skirt, Dress or Legging.");
+                                    break;
+                                case "clothes.product-number":
+                                    TTS.speak(speech);
+                                    break;
+                                case "clothes.startwithname":
+                                    TTS.speak(speech);
+                                    break;
+                                default:
+                                    TTS.speak(speech);
+                            }
                         }
                     }
                 }
@@ -157,6 +251,7 @@ public class APIAITaskAgent {
                         aiDialog.close();
                 }
             }
+
 
             @Override
             public void onError(AIError error) {
@@ -167,7 +262,7 @@ public class APIAITaskAgent {
 
             @Override
             public void onCancelled() {
-
+                Log.i("tag","here");
             }
         });
     }
@@ -194,5 +289,47 @@ public class APIAITaskAgent {
 
         // prints out the value at the randomly selected index
        return arr[select];
+    }
+
+    public String[] getQueryItems(HashMap queryMap){
+        if(queryMap!=null) {
+            String queryItems = queryMap.get("query").toString();
+            String[] queryItemsList = queryItems.split(" ");
+            return queryItemsList;
+        }
+        else return null;
+    }
+
+    public String getNextDialogue(){
+        String utterance = "";
+        ProductAttributes.productMap.put("category", "shirt");
+        ProductAttributes.productMap.put("color", "blue");
+        HashMap productMap = ProductAttributes.productMap;
+        if(productMap.get("category")==null){
+            utterance = "Next, what product do you want? You can choose from shirts, shorts, pants, jeans, dresses, skirts, jackets or leggings.";
+        }
+        else if(productMap.get("gender")==null){
+            utterance = "Ok. Who do you want to buy it for? Men or Women?";
+        }
+        else if(productMap.get("size")==null){
+            utterance = "Great, What size do you want it in?";
+        }
+        else if(productMap.get("price")==null && productMap.get("priceStart")==null){
+            utterance = "Ok. What price range are you looking for?";
+        }
+        else if(productMap.get("color")==null){
+            utterance = "Next, can you tell me the color you want it in?";
+        }
+        else if(productMap.get("brand")==null){
+            utterance = "Ok. Do you have any brand in mind?";
+        }
+        else
+            utterance = "These are the filtered items. Please select a product number.";
+        return utterance;
+    }
+
+    public void clearFilters(){
+        ProductAttributes.productMap.clear();
+        ProductAttributes.productMap.put("open_done", "0");
     }
 }

@@ -253,5 +253,10 @@ public class DBHelper extends SQLiteOpenHelper
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
     {}
+
+    public HashMap populateMapOnOpenPrompt(String[] query){
+        HashMap productMap = new HashMap();
+        return null;
+    }
 }
 
