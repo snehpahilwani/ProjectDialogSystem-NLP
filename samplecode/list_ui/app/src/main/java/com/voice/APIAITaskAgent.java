@@ -52,19 +52,17 @@ public class APIAITaskAgent {
             @Override
             public void onResult(AIResponse response) {
                 try {
-                    if (!response.isError()){
+                    if (!response.isError()) {
 //                        final ReaderTask readerTask = new ReaderTask(activity.getApplicationContext(),postTaskListener);
-                        Result result =  response.getResult();
+                        Result result = response.getResult();
                         String speech = result.getFulfillment().getSpeech();
-                        if(result.getParameters().get("help")!= null){
-                            TTS.speak("You can say \"I want a shirt\" or you can choose from Pant, Jean, Short, " +
+                        if (result.getParameters().get("help") != null) {
+                            TTS.speak("Hello. You can say \"I want a shirt\" or you can choose from Pant, Jean, Short, " +
                                     "Shirt, Jacket, Skirt, Dress or Legging. You can start over by saying \"start over\".");
-                        }
-                        else if(result.getParameters().get("purpose")!= null){
+                        } else if (result.getParameters().get("purpose") != null) {
                             TTS.speak("Hi, I am Reena. I am your shopping assistant and can assist you in buying clothes. " +
                                     "I can show you our collection of Pants, Jeans, Shorts, Shirts, Jackets, Skirts, Dresses and Leggings.");
-                        }
-                        else {
+                        } else {
                             switch (result.getAction()) {
                                 case "open.prompt":
                                     PostTaskListener postTaskListener = init(activity);
@@ -81,13 +79,15 @@ public class APIAITaskAgent {
                                             TTS.speak(speech);
                                         }
                                     }
-                                    if (ProductAttributes.productMap.get("open_done") == "1") {
-                                        speech = getNextDialogue();
-                                        TTS.speak(speech);
-                                    } else {
+                                    else if (ProductAttributes.productMap.get("open_done") == "1") {
                                         speech = getRandomUtterance();
+                                        //speech = getNextDialogue();
                                         TTS.speak(speech);
                                     }
+//                                    else {
+//                                        speech = getRandomUtterance();
+//                                        TTS.speak(speech);
+//                                    }
                                     break;
                                 case "clothes.product":
                                     PostTaskListener postTaskListener_prod = init(activity);
@@ -211,6 +211,9 @@ public class APIAITaskAgent {
                                     }
                                     break;
                                 ///////////////////////////////////////////
+                                case "clothes.repeatdialog":
+                                    TTS.speak(findDialogue(ProductAttributes.productMap.get("prevDialog").toString()));
+                                    break;
                                 case "clothes.add":
                                     TTS.speak(speech);
                                     break;
@@ -245,10 +248,9 @@ public class APIAITaskAgent {
                             }
                         }
                     }
-                }
-                catch (Exception e){
-                        Log.e("DialogError", e.toString());
-                        aiDialog.close();
+                } catch (Exception e) {
+                    Log.e("DialogError", e.toString());
+                    aiDialog.close();
                 }
             }
 
@@ -262,7 +264,7 @@ public class APIAITaskAgent {
 
             @Override
             public void onCancelled() {
-                Log.i("tag","here");
+                Log.i("tag", "here");
             }
         });
     }
@@ -278,10 +280,10 @@ public class APIAITaskAgent {
     }
 
     public String getRandomUtterance(){
-        String [] arr = {"I couldn't understand the item you said. What would you like to buy?",
-                "I couldn't find the product you just said. What would you like to buy?",
-                "Please choose an item from Pant, Jean, Short, Shirt, Jacket, Skirt, Dress or Legging.",
-                "Oops. That's not a valid item. Please select one of Pant, Jean, Short, Shirt, Jacket, Skirt, Dress or Legging."};
+        String [] arr = {"I couldn't understand what you just said. Please say it again?",
+                "I couldn't find the answer you just said. Can you repeat it?",
+                "That is not a valid option. For help, please say \"help\".",
+                "I am lost. Can you please repeat that? If you are stuck, please say \"help\". To start over, say \"start over\""};
         Random random = new Random();
 
         // randomly selects an index from the arr
@@ -306,30 +308,68 @@ public class APIAITaskAgent {
         ProductAttributes.productMap.put("color", "blue");
         HashMap productMap = ProductAttributes.productMap;
         if(productMap.get("category")==null){
-            utterance = "Next, what product do you want? You can choose from shirts, shorts, pants, jeans, dresses, skirts, jackets or leggings.";
+            utterance = findDialogue("1");
+            ProductAttributes.productMap.put("prevDialog", "1");
         }
         else if(productMap.get("gender")==null){
-            utterance = "Ok. Who do you want to buy it for? Men or Women?";
+            utterance = findDialogue("2");
+            ProductAttributes.productMap.put("prevDialog", "2");
         }
         else if(productMap.get("size")==null){
-            utterance = "Great, What size do you want it in?";
+            utterance = findDialogue("3");
+            ProductAttributes.productMap.put("prevDialog", "3");
         }
         else if(productMap.get("price")==null && productMap.get("priceStart")==null){
-            utterance = "Ok. What price range are you looking for?";
+            utterance = findDialogue("4");
+            ProductAttributes.productMap.put("prevDialog", "4");
         }
         else if(productMap.get("color")==null){
-            utterance = "Next, can you tell me the color you want it in?";
+            utterance = findDialogue("5");
+            ProductAttributes.productMap.put("prevDialog", "5");
         }
         else if(productMap.get("brand")==null){
-            utterance = "Ok. Do you have any brand in mind?";
+            utterance = findDialogue("6");
+            ProductAttributes.productMap.put("prevDialog", "6");
         }
-        else
-            utterance = "These are the filtered items. Please select a product number.";
+        else{
+            utterance = findDialogue("7");
+            ProductAttributes.productMap.put("prevDialog", "7");
+        }
         return utterance;
     }
 
     public void clearFilters(){
         ProductAttributes.productMap.clear();
         ProductAttributes.productMap.put("open_done", "0");
+    }
+
+    public String findDialogue(String value){
+        String utterance = "";
+        switch (value){
+            case "1":
+                utterance = "Next, what product do you want? You can choose from shirts, " +
+                        "shorts, pants, jeans, dresses, skirts, jackets or leggings.";
+                break;
+            case "2":
+                utterance = "Ok. Who do you want to buy it for? Men or Women?";
+                break;
+            case "3":
+                utterance = "Great, What size do you want it in?";
+                break;
+            case "4":
+                utterance = "Ok. What price range are you looking for?";
+                break;
+            case "5":
+                utterance = "Next, can you tell me the color you want it in?";
+                break;
+            case "6":
+                utterance = "Ok. Do you have any brand in mind?";
+                break;
+            case "7":
+                utterance = "These are the filtered items. Please select a product number.";
+                break;
+
+        }
+        return utterance;
     }
 }
