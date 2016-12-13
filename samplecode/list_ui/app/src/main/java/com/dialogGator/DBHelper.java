@@ -13,6 +13,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.text.TextUtils;
 import android.util.Log;
 
 public class DBHelper extends SQLiteOpenHelper
@@ -152,25 +153,27 @@ public class DBHelper extends SQLiteOpenHelper
 
         String whereClause = "";
 
-        for(String attribute : attributeSet)
+        if(attributeSet.size() == 1 && attributeSet.iterator().next().toLowerCase() == "id")
         {
-            if(_tableNames.contains(attribute))
-            {
-                whereClause += NewWhereClause(whereClause);
-                Log.i("ProductMap", searchBox.get(attribute).toString());
-                String attributeValue = searchBox.get(attribute);
-                int valueLength = attributeValue.length();
-                whereClause += "LOWER(" + attribute + ".Name) LIKE '%" + attributeValue.substring(0, Math.min(3, valueLength)).toLowerCase() + "%'";
-            }
-            else if(attribute == "priceStart")
-            {
-                whereClause += NewWhereClause(whereClause);
-                whereClause += "price >= " + searchBox.get(attribute);
-            }
-            else if(attribute == "priceEnd")
-            {
-                whereClause += NewWhereClause(whereClause);
-                whereClause += "price <= " + searchBox.get(attribute);
+            int val = Integer.parseInt(searchBox.get(attributeSet.iterator().next()));
+            whereClause += " P.Id = " + Integer.toString(val);
+        }
+        else
+        {
+            for (String attribute : attributeSet) {
+                if (_tableNames.contains(attribute)) {
+                    whereClause += NewWhereClause(whereClause);
+                    Log.i("ProductMap", searchBox.get(attribute).toString());
+                    String attributeValue = searchBox.get(attribute);
+                    int valueLength = attributeValue.length();
+                    whereClause += "LOWER(" + attribute + ".Name) LIKE '%" + attributeValue.substring(0, Math.min(3, valueLength)).toLowerCase() + "%'";
+                } else if (attribute == "priceStart") {
+                    whereClause += NewWhereClause(whereClause);
+                    whereClause += "price >= " + searchBox.get(attribute);
+                } else if (attribute == "priceEnd") {
+                    whereClause += NewWhereClause(whereClause);
+                    whereClause += "price <= " + searchBox.get(attribute);
+                }
             }
         }
         return query + whereClause;
@@ -255,8 +258,42 @@ public class DBHelper extends SQLiteOpenHelper
     {}
 
     public HashMap populateMapOnOpenPrompt(String[] query){
-        HashMap productMap = new HashMap();
-        return null;
+        HashMap<String, String> frame = BuildFrame(query);
+        return frame.size() > 0 ? frame : null;
+    }
+
+    private HashMap<String, String> BuildFrame(String[] query)
+    {
+        String searchTerms = "(" + TextUtils.join(",", query) + ")";
+        String queryS = "";
+        for(String tableName : _tableNames)
+        {
+            if(!queryS.isEmpty()) queryS += " UNION ";
+            queryS += "Select '" + tableName + "' AS Attribute, Name from " + tableName + " where Name in " + searchTerms;
+        }
+
+        boolean db = openDataBase();
+        HashMap<String, String> frame = new HashMap<String, String>();
+        Cursor data = readData(queryS);
+        try
+        {
+            while (data.moveToNext())
+            {
+                String attr = data.getString(0);
+                String val = data.getString(1);
+                if (!frame.containsKey(attr))
+                {
+                    frame.put(attr, val);
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Log.e(TAG, e.toString());
+        }
+        close();
+        return frame;
+
     }
 }
 
