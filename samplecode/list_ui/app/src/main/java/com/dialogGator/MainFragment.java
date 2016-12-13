@@ -74,7 +74,7 @@ public class MainFragment extends Fragment implements FragmentOnBackClickInterfa
                         attri = pair.getKey().toString();
 //                        Log.i("Chutzpah", pair.getKey() + " = " + pair.getValue());
                         if(attri.contains("category") || attri.contains("brand") || attri.contains("color") || attri.contains("gender") || attri.contains("size") || attri.contains("priceEnd") || attri.contains("priceStart")) {
-                            attributes = pair.getValue() + " " +attributes;
+                            attributes = pair.getValue() + ", " +attributes;
                         }
                     }
 
