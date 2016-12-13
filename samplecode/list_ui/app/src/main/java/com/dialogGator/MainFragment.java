@@ -71,11 +71,13 @@ public class MainFragment extends Fragment implements FragmentOnBackClickInterfa
                     String attri = "";
                     while (it.hasNext()) {
                         Map.Entry pair = (Map.Entry) it.next();
-                        attri = pair.getValue().toString();
-                        if(attri.contains("brand") || attri.contains("color") || attri.contains("gender") || attri.contains("size") || attri.contains("priceEnd") || attri.contains("priceStart")) {
-                            attributes = pair.getValue() + " ";
+                        attri = pair.getKey().toString();
+//                        Log.i("Chutzpah", pair.getKey() + " = " + pair.getValue());
+                        if(attri.contains("category") || attri.contains("brand") || attri.contains("color") || attri.contains("gender") || attri.contains("size") || attri.contains("priceEnd") || attri.contains("priceStart")) {
+                            attributes = pair.getValue() + " " +attributes;
                         }
                     }
+
                 }
                 Log.i("df",attributes);
                 Toolbar searchBar = (Toolbar) getActivity().findViewById(R.id.search_bar);

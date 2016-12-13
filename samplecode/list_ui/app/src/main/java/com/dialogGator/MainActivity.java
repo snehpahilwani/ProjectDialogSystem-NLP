@@ -157,6 +157,7 @@ public class MainActivity extends AppCompatActivity
             android.support.v4.app.FragmentTransaction fragmentTransaction =
                     getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, fragment,"scheduleFragment");
+            APIAITaskAgent.clearFilters();
             //fragmentTransaction.addToBackStack("scheduleFragment");
             fragmentTransaction.commit();
         }
