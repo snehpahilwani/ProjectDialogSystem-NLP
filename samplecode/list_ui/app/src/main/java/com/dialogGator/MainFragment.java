@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +20,10 @@ import android.widget.ListView;
 import com.voice.APIAITaskAgent;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -59,6 +64,22 @@ public class MainFragment extends Fragment implements FragmentOnBackClickInterfa
                         startActivity(intent);
                     }
                 });
+                String attributes="";
+                final HashMap productMap = ProductAttributes.productMap;
+                if(productMap!=null) {
+                    Iterator it = productMap.entrySet().iterator();
+                    String attri = "";
+                    while (it.hasNext()) {
+                        Map.Entry pair = (Map.Entry) it.next();
+                        attri = pair.getValue().toString();
+                        if(attri.contains("brand") || attri.contains("color") || attri.contains("gender") || attri.contains("size") || attri.contains("priceEnd") || attri.contains("priceStart")) {
+                            attributes = pair.getValue() + " ";
+                        }
+                    }
+                }
+                Log.i("df",attributes);
+                Toolbar searchBar = (Toolbar) getActivity().findViewById(R.id.search_bar);
+                searchBar.setTitle("Filters: "+ attributes);
             }
         };
 

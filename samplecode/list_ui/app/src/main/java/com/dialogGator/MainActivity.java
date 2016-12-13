@@ -56,7 +56,9 @@ public class MainActivity extends AppCompatActivity
 
         TTS.init(getApplicationContext());
         ProductAttributes.init();
-
+        String attributes = "";
+        Toolbar searchBar = (Toolbar) findViewById(R.id.search_bar);
+        searchBar.setTitle("Filters: "+ attributes);
         //DBHelper.getInstance(getApplicationContext());
         final APIAITaskAgent apiaiTaskAgent = new APIAITaskAgent(this);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
