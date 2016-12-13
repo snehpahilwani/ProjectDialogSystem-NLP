@@ -96,6 +96,9 @@ public class APIAITaskAgent {
                                         flag_ground=0;
                                         correctASR= correctASR+1;
                                         setAttrValue(prevAttrValue);
+                                        PostTaskListener postTaskListener_prod = init(activity);
+                                        final ReaderTask readerTask_prod = new ReaderTask(activity.getApplicationContext(), postTaskListener_prod);
+                                        readerTask_prod.execute(ProductAttributes.productMap);
                                         TTS.speak(getNextDialogue());
                                     }
                                     else if (flag_ground==1 && result.getResolvedQuery().toString().equals("no")){
