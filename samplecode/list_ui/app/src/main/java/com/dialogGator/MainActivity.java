@@ -5,6 +5,7 @@ import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
+import android.view.MotionEvent;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,6 +20,9 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.amlcurran.showcaseview.OnShowcaseEventListener;
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.voice.APIAITaskAgent;
 import com.voice.TTS;
 
@@ -34,6 +38,8 @@ public class MainActivity extends AppCompatActivity
 
     NavigationView navigationView = null;
     Toolbar toolbar = null;
+    ShowcaseView.Builder showcaseView;
+    final int SHOWCASEVIEW_ID = 28;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +93,7 @@ public class MainActivity extends AppCompatActivity
         */
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        showShowCaseView();
         TTS.init(getApplicationContext());
         ProductAttributes.init();
         String attributes = "";
@@ -231,24 +237,52 @@ public class MainActivity extends AppCompatActivity
             //fragmentTransaction.addToBackStack("scheduleFragment");
             fragmentTransaction.commit();
             // Handle the camera action
-        } /*else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_gallery) {
             //Set the fragment initially
-            GalleryFragment fragment = new GalleryFragment();
+            UniversalFragment fragment = new UniversalFragment();
             android.support.v4.app.FragmentTransaction fragmentTransaction =
                     getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, fragment);
             fragmentTransaction.commit();
 
-        }*/
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
-//        TTS.stopSpeaking();
-//    }
+    public void showShowCaseView()
+    {
+        showcaseView = new ShowcaseView.Builder(this).withMaterialShowcase()
+                .setTarget(new ViewTarget(R.id.fab, this)).setContentTitle("Test")
+                .setContentText("This is where you start speaking")
+                .setStyle(R.style.ShowCaseTitleStyle)
+                .singleShot(SHOWCASEVIEW_ID)
+                .setShowcaseEventListener(new OnShowcaseEventListener() {
+                    @Override
+                    public void onShowcaseViewHide(ShowcaseView showcaseView) {
+
+                    }
+
+                    @Override
+                    public void onShowcaseViewDidHide(ShowcaseView showcaseView) {
+
+                    }
+
+                    @Override
+                    public void onShowcaseViewShow(ShowcaseView showcaseView) {
+
+                    }
+
+                    @Override
+                    public void onShowcaseViewTouchBlocked(MotionEvent motionEvent) {
+
+                    }
+                });
+
+        showcaseView.build();
+    }
+
+
 }
