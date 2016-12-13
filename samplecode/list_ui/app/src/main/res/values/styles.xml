@@ -13,11 +13,27 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-   <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
-       <item name="android:textSize">15sp</item>
-   </style>
+
+    <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name = "ShowCaseViewStyle" parent="ShowcaseView.Light">
+        <item name = "sv_backgroundColor">@color/showCaseBackground</item>
+        <item name = "sv_showcaseColor">@color/colorAccent</item>
+        <item name = "sv_buttonText">Some Button Text</item>
+        <item name = "sv_tintButtonColor">true</item>
+        <item name = "sv_titleTextAppearance">@style/ShowCaseTitleStyle</item>
+
+    </style>
+
+    <style name = "ShowCaseTitleStyle" parent="TextAppearance.ShowcaseView.Title.Light">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#fff</item>
+    </style>
 
 </resources>
