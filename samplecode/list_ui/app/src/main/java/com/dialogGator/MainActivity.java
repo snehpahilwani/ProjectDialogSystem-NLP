@@ -1,6 +1,7 @@
 package com.dialogGator;
 
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
@@ -21,6 +22,8 @@ import android.widget.Toast;
 import com.voice.APIAITaskAgent;
 import com.voice.TTS;
 
+import java.io.IOException;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -45,6 +48,37 @@ public class MainActivity extends AppCompatActivity
         //fragmentTransaction.addToBackStack("scheduleFragment");
         fragmentTransaction.commit();
 
+        //Setup Logging
+        if ( isExternalStorageWritable() ) {
+
+            File appDirectory = new File( Environment.getExternalStorageDirectory() + "/VirtualSA" );
+            File logDirectory = new File( appDirectory + "/log" );
+            File logFile = new File( logDirectory, "logcat" + System.currentTimeMillis() + ".txt" );
+
+            // create app folder
+            if ( !appDirectory.exists() ) {
+                appDirectory.mkdir();
+            }
+
+            // create log folder
+            if ( !logDirectory.exists() ) {
+                logDirectory.mkdir();
+            }
+
+            // clear the previous logcat and then write the new one to the file
+            try {
+                Process process = Runtime.getRuntime().exec("logcat -c");
+                process = Runtime.getRuntime().exec("logcat -f " + logFile);
+            } catch ( IOException e ) {
+                e.printStackTrace();
+            }
+
+        } else if ( isExternalStorageReadable() ) {
+            // only readable
+        } else {
+            // not accessible
+        }
+
         /*FragmentTransaction fragmentTransaction =  getActivity().getSupportFragmentManager().beginTransaction();
         Fragment scheduleFragment = new ScheduleFragment();
         fragmentTransaction.replace(R.id.content_container, scheduleFragment, "scheduleFragment");
@@ -56,7 +90,9 @@ public class MainActivity extends AppCompatActivity
 
         TTS.init(getApplicationContext());
         ProductAttributes.init();
-
+        String attributes = "";
+        Toolbar searchBar = (Toolbar) findViewById(R.id.search_bar);
+        searchBar.setTitle("Filters: "+ attributes);
         //DBHelper.getInstance(getApplicationContext());
         final APIAITaskAgent apiaiTaskAgent = new APIAITaskAgent(this);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -95,7 +131,24 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    /* Checks if external storage is available for read and write */
+    public boolean isExternalStorageWritable() {
+        String state = Environment.getExternalStorageState();
+        if ( Environment.MEDIA_MOUNTED.equals( state ) ) {
+            return true;
+        }
+        return false;
+    }
 
+    /* Checks if external storage is available to at least read */
+    public boolean isExternalStorageReadable() {
+        String state = Environment.getExternalStorageState();
+        if ( Environment.MEDIA_MOUNTED.equals( state ) ||
+                Environment.MEDIA_MOUNTED_READ_ONLY.equals( state ) ) {
+            return true;
+        }
+        return false;
+    }
 
 
     @Override
@@ -155,6 +208,7 @@ public class MainActivity extends AppCompatActivity
             android.support.v4.app.FragmentTransaction fragmentTransaction =
                     getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, fragment,"scheduleFragment");
+            APIAITaskAgent.clearFilters();
             //fragmentTransaction.addToBackStack("scheduleFragment");
             fragmentTransaction.commit();
         }

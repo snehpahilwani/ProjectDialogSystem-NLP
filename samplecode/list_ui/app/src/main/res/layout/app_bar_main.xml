@@ -10,14 +10,19 @@
         android:layout_width="match_parent" android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar android:id="@+id/toolbar"
-            android:layout_width="match_parent" android:layout_height="?attr/actionBarSize"
+            android:layout_width="match_parent" android:layout_height="42dp"
             android:background="@android:color/holo_blue_dark" app:popupTheme="@style/AppTheme.PopupOverlay" />
+        <android.support.v7.widget.Toolbar android:id="@+id/search_bar"
+            android:layout_width="match_parent" android:layout_height="42dp"
+            app:titleTextAppearance="@style/Toolbar.TitleText"
+            android:background="@android:color/holo_blue_dark" app:popupTheme="@style/AppTheme.PopupOverlay" />
+
 
     </android.support.design.widget.AppBarLayout>
 
     <FrameLayout
         android:id="@+id/fragment_container"
-        android:layout_marginTop="55dp"
+        android:layout_marginTop="85dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
