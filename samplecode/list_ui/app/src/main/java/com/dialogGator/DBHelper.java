@@ -264,12 +264,16 @@ public class DBHelper extends SQLiteOpenHelper
 
     private HashMap<String, String> BuildFrame(String[] query)
     {
-        String searchTerms = "(" + TextUtils.join(",", query) + ")";
-        String queryS = "";
+        String searchTerms = "('%" + TextUtils.join("%'),('%", query) + "%')";
+        String queryS = "CREATE TEMP TABLE patterns (pattern VARCHAR(20)); ";
+        queryS += "INSERT INTO patterns VALUES " + searchTerms + ";";
+        int index = 0;
         for(String tableName : _tableNames)
         {
-            if(!queryS.isEmpty()) queryS += " UNION ";
-            queryS += "Select '" + tableName + "' AS Attribute, Name from " + tableName + " where Name in " + searchTerms;
+            index++;
+            if(index > 1) queryS += " UNION ";
+            queryS += "Select '" + tableName + "' AS Attribute, Name from " + tableName
+                    + " JOIN patterns p ON (Name LIKE p.pattern) ";
         }
 
         boolean db = openDataBase();

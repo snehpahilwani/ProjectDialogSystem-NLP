@@ -430,11 +430,12 @@ public class APIAITaskAgent {
         return utterance;
     }
 
-    public void clearFilters(){
+    public static void clearFilters(){
         ProductAttributes.productMap.clear();
         ProductAttributes.productMap.put("open_done", "0");
         prevAttrValue = "";
         flag_ground = 0;
+        context=0; //TODO
     }
 
     public String findDialogue(String value){
