@@ -52,8 +52,8 @@ public class APIAITaskAgent {
     public static int correctASR = 0;
     public static int incorrectASR = 0;
     public static String prevAttrValue= "";
+    public static int flag_prodsearch=1;
     public static int context = 0;
-    public static String TAG = "APIAI";
     @Inject
     public APIAITaskAgent(final Activity activity){
         AIConfiguration aiConfiguration =  new AIConfiguration(
@@ -78,29 +78,21 @@ public class APIAITaskAgent {
 //                        final ReaderTask readerTask = new ReaderTask(activity.getApplicationContext(),postTaskListener);
                         Result result = response.getResult();
                         String speech = result.getFulfillment().getSpeech();
-
-                        Log.i(TAG, "User : " + result.getResolvedQuery().toString());
-                        if (result.getParameters().get("help") != null) {
-                            Log.i(TAG, "User: Help");
+                        if (result.getParameters().get("help") != null || result.getResolvedQuery().contains("help")) {
                             TTS.speak("Hello. You can say \"I want a shirt\" or you can choose from Pant, Jean, Short, " +
                                     "Shirt, Jacket, Skirt, Dress or Legging. You can start over by saying \"start over\".");
-                            Log.i(TAG, "System: Help response");
                         } else if (result.getParameters().get("purpose") != null) {
-                            Log.i(TAG, "System: No Purpose");
                             TTS.speak("Hi, I am Reena. I am your shopping assistant and can assist you in buying clothes. " +
-                                    "I can show you our collection of Pants, Jeans, Shorts, Shirts, Jackets, Skirts, Dresses and Leggings.");
+                                    "I can show you our collection of Pants, Shorts, Shirts and other items.");
                         }
                         else if(checkValidContext(result.getAction().toString())==false){
-                            Log.i(TAG, "System: Invalid Option");
                             TTS.speak("This is not a valid option.");
                             TTS.speak(findDialogue(ProductAttributes.productMap.get("prevDialog").toString()));
                             //TTS.speak(getNextDialogue());
                         }else {
                             switch (result.getAction()) {
                                 case "open.prompt":
-                                    Log.i(TAG, "Mode: open prompt");
                                     if(flag_ground==1 && result.getResolvedQuery().toString().equals("yes")){
-                                        Log.i(TAG, "ASR: Correct Count : " + Integer.toString(correctASR));
                                         flag_ground=0;
                                         correctASR= correctASR+1;
                                         setAttrValue(prevAttrValue);
@@ -110,14 +102,43 @@ public class APIAITaskAgent {
                                         TTS.speak(getNextDialogue());
                                     }
                                     else if (flag_ground==1 && result.getResolvedQuery().toString().equals("no")){
-                                        Log.i(TAG, "ASR: Incorrect Count : " + Integer.toString(incorrectASR));
                                         flag_ground=0;
                                         incorrectASR = incorrectASR+1;
                                         TTS.speak(findDialogue(ProductAttributes.productMap.get("prevDialog").toString()));
                                     }
                                     else if(result.getResolvedQuery().toString().equals("no")){
-                                        Log.i(TAG, "System: No Grounding : User response : no");
                                         setAttrValue("");
+                                    }
+                                    else if(context==1){
+                                        //handle clothes product here!!
+                                        PostTaskListener postTaskListener_prod = init(activity);
+                                        final ReaderTask readerTask_prod = new ReaderTask(activity.getApplicationContext(), postTaskListener_prod);
+                                        if (!result.getParameters().isEmpty()) {
+                                            HashMap tempMap = new HashMap();
+                                            String trainedAIString= AItrain(result.getResolvedQuery().toString());
+                                            if (trainedAIString.contains("\""))
+                                                tempMap.put("category", trainedAIString.replaceAll("\"", ""));
+                                            else
+                                                tempMap.put("category", trainedAIString);
+                                            //TTS.speak(speech);
+                                            if (checkResultsNotZero(activity,tempMap) && flag_prodsearch==1) {
+                                                toggleProdSearchFlag();
+                                                if (trainedAIString.contains("\""))
+                                                    ProductAttributes.productMap.put("category", trainedAIString.replaceAll("\"", ""));
+                                                else
+                                                    ProductAttributes.productMap.put("category", trainedAIString);
+
+                                                if(checkResultsNotZero(activity,ProductAttributes.productMap) && flag_prodsearch==0){
+                                                    toggleProdSearchFlag();
+                                                    speech = getNextDialogue();
+                                                    TTS.speak(speech);
+                                                    readerTask_prod.execute(ProductAttributes.productMap);
+                                                }
+                                            }
+                                        } else {
+                                            speech = getRandomUtterance();
+                                            TTS.speak(speech);
+                                        }
                                     }
                                     else {
                                         PostTaskListener postTaskListener = init(activity);
@@ -125,7 +146,6 @@ public class APIAITaskAgent {
                                         if (!result.getParameters().isEmpty() && ProductAttributes.productMap.get("open_done") != "1") {
                                             String[] queryItemsList = getQueryItems(result.getParameters());
                                             if (queryItemsList != null) {
-                                                Log.i(TAG, "System: Open prompt : With Item");
                                                 //DBHelper.getInstance(activity.getApplicationContext()).populateMapOnOpenPrompt(queryItemsList);
                                                 HashMap resultMap = DBHelper.getInstance(activity.getApplicationContext()).populateMapOnOpenPrompt(queryItemsList);
                                                 if (checkIfItemExists(resultMap)){
@@ -133,17 +153,15 @@ public class APIAITaskAgent {
                                                     if (checkResultsNotZero(activity,resultMap)){
                                                         readerTask.execute(resultMap);//TODO
                                                         speech = getNextDialogue();
-                                                         TTS.speak(speech);
+                                                        TTS.speak(speech);
                                                     }
                                                 }
 
                                             } else {
-                                                Log.i(TAG, "System: Open prompt : Without Item");
                                                 speech = getRandomUtterance();
                                                 TTS.speak(speech);
                                             }
                                         } else if (ProductAttributes.productMap.get("open_done") == "1") {
-                                            Log.i(TAG, "System: Open prompt : Invalid Option");
                                             speech = "This is not a valid option. If you want to start over, say \"start over\".";
                                             //speech = getNextDialogue();
                                             TTS.speak(speech);
@@ -151,98 +169,101 @@ public class APIAITaskAgent {
                                     }
                                     break;
                                 case "clothes.product":
-                                    Log.i(TAG, "System: Close Prompt : Filter : Category");
                                     PostTaskListener postTaskListener_prod = init(activity);
                                     final ReaderTask readerTask_prod = new ReaderTask(activity.getApplicationContext(), postTaskListener_prod);
                                     if (!result.getParameters().isEmpty()) {
-                                        Log.i(TAG, "System: Close Prompt : Filter : Category : HasValue");
-                                        if (result.getParameters().get("items").toString().contains("\""))
-                                            ProductAttributes.productMap.put("category", result.getParameters().get("items").toString().replaceAll("\"", ""));
+                                        HashMap tempMap = new HashMap();
+                                        if (result.getResolvedQuery().toString().contains("\""))
+                                            tempMap.put("category", result.getResolvedQuery().toString().replaceAll("\"", ""));
                                         else
-                                            ProductAttributes.productMap.put("category", result.getParameters().get("items").toString());
-                                        TTS.speak(speech);
-                                        if (checkResultsNotZero(activity,ProductAttributes.productMap))
-                                            readerTask_prod.execute(ProductAttributes.productMap);
+                                            tempMap.put("category", result.getResolvedQuery().toString());
+                                        //TTS.speak(speech);
+                                        if (checkResultsNotZero(activity,tempMap) && flag_prodsearch==1) {
+                                            toggleProdSearchFlag();
+                                            if (result.getResolvedQuery().toString().contains("\""))
+                                                ProductAttributes.productMap.put("category", result.getResolvedQuery().toString().replaceAll("\"", ""));
+                                            else
+                                                ProductAttributes.productMap.put("category", result.getResolvedQuery().toString());
+
+                                            if(checkResultsNotZero(activity,ProductAttributes.productMap) && flag_prodsearch==0){
+                                                toggleProdSearchFlag();
+                                                speech = getNextDialogue();
+                                                TTS.speak(speech);
+                                                readerTask_prod.execute(ProductAttributes.productMap);
+                                            }
+                                        }
                                     } else {
-                                        Log.i(TAG, "System: Close Prompt : Filter : Category : NoValue");
                                         speech = getRandomUtterance();
                                         TTS.speak(speech);
                                     }
-
                                     break;
                                 case "clothes.gender":
-                                    Log.i(TAG, "System: Close Prompt : Filter : Gender");
                                     if(flag_ground==0 && randomizeGrounding()==1){
-                                        Log.i(TAG, "System: Close Prompt : Filter : Gender : Ground");
                                         groundDialog(result.getParameters().get("gender").toString());
                                     }
                                     else {
                                         PostTaskListener postTaskListener_gender = init(activity);
                                         final ReaderTask readerTask_gender = new ReaderTask(activity.getApplicationContext(), postTaskListener_gender);
                                         if (!result.getParameters().isEmpty()) {
-                                            Log.i(TAG, "System: Close Prompt : Filter : Gender : HasValue");
                                             if (result.getParameters().get("gender").toString().contains("\""))
                                                 ProductAttributes.productMap.put("gender", result.getParameters().get("gender").toString().replaceAll("\"", ""));
                                             else
                                                 ProductAttributes.productMap.put("gender", result.getParameters().get("gender").toString());
-                                            speech = getNextDialogue();
-                                            TTS.speak(speech);
-                                            if (checkResultsNotZero(activity,ProductAttributes.productMap))
-                                             readerTask_gender.execute(ProductAttributes.productMap);
+
+                                            if (checkResultsNotZero(activity,ProductAttributes.productMap)){
+                                                speech = getNextDialogue();
+                                                TTS.speak(speech);
+                                                readerTask_gender.execute(ProductAttributes.productMap);
+                                            }
                                         } else {
-                                            Log.i(TAG, "System: Close Prompt : Filter : Gender : NoValue");
                                             speech = getRandomUtterance();
                                             TTS.speak(speech);
                                         }
                                     }
                                     break;
                                 case "clothes.size":
-                                    Log.i(TAG, "System: Close Prompt : Filter : Size");
                                     if(flag_ground==0 && randomizeGrounding()==1){
-                                        Log.i(TAG, "System: Close Prompt : Filter : Size : Ground");
                                         groundDialog(result.getParameters().get("size").toString());
                                     }
                                     else {
                                         PostTaskListener postTaskListener_size = init(activity);
                                         final ReaderTask readerTask_size = new ReaderTask(activity.getApplicationContext(), postTaskListener_size);
                                         if (!result.getParameters().isEmpty()) {
-                                            Log.i(TAG, "System: Close Prompt : Filter : Size : HasValue");
                                             if (result.getParameters().get("size").toString().contains("\""))
                                                 ProductAttributes.productMap.put("size", result.getParameters().get("size").toString().replaceAll("\"", ""));
                                             else
                                                 ProductAttributes.productMap.put("size", result.getParameters().get("size").toString());
-                                            speech = getNextDialogue();
-                                            TTS.speak(speech);
-                                            if (checkResultsNotZero(activity,ProductAttributes.productMap))
+
+                                            if (checkResultsNotZero(activity,ProductAttributes.productMap)) {
+                                                speech = getNextDialogue();
+                                                TTS.speak(speech);
                                                 readerTask_size.execute(ProductAttributes.productMap);
+                                            }
                                         } else {
-                                            Log.i(TAG, "System: Close Prompt : Filter : Size : NoValue");
                                             speech = getRandomUtterance();
                                             TTS.speak(speech);
                                         }
                                     }
                                     break;
                                 case "clothes.color":
-                                    Log.i(TAG, "System: Close Prompt : Filter : Color");
                                     if(flag_ground==0 && randomizeGrounding()==1){
-                                        Log.i(TAG, "System: Close Prompt : Filter : Color : Ground");
                                         groundDialog(result.getParameters().get("color").toString());
                                     }
                                     else {
                                         PostTaskListener postTaskListener_color = init(activity);
                                         final ReaderTask readerTask_color = new ReaderTask(activity.getApplicationContext(), postTaskListener_color);
                                         if (!result.getParameters().isEmpty()) {
-                                            Log.i(TAG, "System: Close Prompt : Filter : Color : HasValue");
                                             if (result.getParameters().get("color").toString().contains("\""))
                                                 ProductAttributes.productMap.put("color", result.getParameters().get("color").toString().replaceAll("\"", ""));
                                             else
                                                 ProductAttributes.productMap.put("color", result.getParameters().get("color").toString());
-                                            speech = getNextDialogue();
-                                            TTS.speak(speech);
-                                            if (checkResultsNotZero(activity,ProductAttributes.productMap))
+
+                                            if (checkResultsNotZero(activity,ProductAttributes.productMap)){
+                                                speech = getNextDialogue();
+                                                TTS.speak(speech);
                                                 readerTask_color.execute(ProductAttributes.productMap);
+                                            }
                                         } else {
-                                            Log.i(TAG, "System: Close Prompt : Filter : Color : NoValue");
                                             speech = getRandomUtterance();
                                             TTS.speak(speech);
                                         }
@@ -250,13 +271,10 @@ public class APIAITaskAgent {
                                     break;
 
                                 case "clothes.pricevalue":
-                                    Log.i(TAG, "System: Close Prompt : Filter : Price");
                                     PostTaskListener postTaskListener_price = init(activity);
                                     final ReaderTask readerTask_price = new ReaderTask(activity.getApplicationContext(), postTaskListener_price);
                                     if (!result.getParameters().isEmpty()) {
                                         if (result.getParameters().get("price") != null) {
-
-                                            Log.i(TAG, "System: Close Prompt : Filter : Price : HasValue");
 //                                                if (result.getParameters().get("price").toString().contains("\""))
 //                                                    ProductAttributes.productMap.put("priceStart", result.getParameters().get("price").toString().replaceAll("\"", ""));
 //                                                else
@@ -283,10 +301,12 @@ public class APIAITaskAgent {
                                         }
                                         speech = getNextDialogue();
                                         TTS.speak(speech);
-                                        if (checkResultsNotZero(activity,ProductAttributes.productMap))
+                                        if (checkResultsNotZero(activity,ProductAttributes.productMap)) {
+                                            speech = getNextDialogue();
+                                            TTS.speak(speech);
                                             readerTask_price.execute(ProductAttributes.productMap);
+                                        }
                                     } else {
-                                        Log.i(TAG, "System: Close Prompt : Filter : Price : NoValue");
                                         speech = getRandomUtterance();
                                         TTS.speak(speech);
                                     }
@@ -295,7 +315,6 @@ public class APIAITaskAgent {
                                     break;
 
                                 case "clothes.brand":
-                                    Log.i(TAG, "System: Close Prompt : Filter : Brand");
                                     if(flag_ground==0 && randomizeGrounding()==1){
                                         groundDialog(result.getParameters().get("brand").toString());
                                     }
@@ -303,17 +322,18 @@ public class APIAITaskAgent {
                                         PostTaskListener postTaskListener_brand = init(activity);
                                         final ReaderTask readerTask_brand = new ReaderTask(activity.getApplicationContext(), postTaskListener_brand);
                                         if (!result.getParameters().isEmpty()) {
-                                            Log.i(TAG, "System: Close Prompt : Filter : Brand : HasValue");
                                             if (result.getParameters().get("brand").toString().contains("\""))
                                                 ProductAttributes.productMap.put("brand", result.getParameters().get("brand").toString().replaceAll("\"", ""));
                                             else
                                                 ProductAttributes.productMap.put("brand", result.getParameters().get("brand").toString());
                                             speech = getNextDialogue();
                                             TTS.speak(speech);
-                                            if (checkResultsNotZero(activity,ProductAttributes.productMap))
+                                            if (checkResultsNotZero(activity,ProductAttributes.productMap)) {
+                                                speech = getNextDialogue();
+                                                TTS.speak(speech);
                                                 readerTask_brand.execute(ProductAttributes.productMap);
+                                            }
                                         } else {
-                                            Log.i(TAG, "System: Close Prompt : Filter : Brand : NoValue");
                                             speech = getRandomUtterance();
                                             TTS.speak(speech);
                                         }
@@ -342,7 +362,6 @@ public class APIAITaskAgent {
                                     TTS.speak(speech);
                                     break;
                                 case "clothes.start-over":
-                                    Log.i(TAG, "System: Start Over");
                                     clearFilters();
                                     PostTaskListener postTaskListener_clear = init(activity);
                                     final ReaderTask readerTask_clear = new ReaderTask(activity.getApplicationContext(), postTaskListener_clear);
@@ -359,21 +378,21 @@ public class APIAITaskAgent {
 //                                        if (result.getParameters().get("productnum").toString().contains("\""))
                                         String idVal=  result.getParameters().get("productnum").toString().replaceAll("\"", "");
                                         if(isInteger(idVal)){
-                                            Log.i(TAG, "System: Item Search : HasId");
                                             ProductAttributes.productMap.put("id", result.getParameters().get("productnum").toString().replaceAll("\"", ""));
-                                            if (checkResultsNotZero(activity,ProductAttributes.productMap))
+                                            if (checkResultsNotZero(activity,ProductAttributes.productMap)) {
+                                                speech = "Ok. Sure.";
+                                                TTS.speak(speech);
                                                 readerTask_prodNum.execute(ProductAttributes.productMap);
+                                            }
                                         }
                                         else {
-                                            Log.i(TAG, "System: Item Search : NoId");
                                             TTS.speak("Sorry, that's not a valid number. Please say" +
                                                     " \"Open product number\" followed by the product number");
                                         }
 
 //                                        else
 //                                            ProductAttributes.productMap.put("id", result.getParameters().get("productnum").toString());
-                                        speech = "Ok. Sure.";
-                                        TTS.speak(speech);
+
                                     } else {
                                         speech = getRandomUtterance();
                                         TTS.speak(speech);
@@ -497,27 +516,28 @@ public class APIAITaskAgent {
         switch (value){
             case "1":
                 utterance = "What product do you want? You can choose from shirts, " +
-                        "shorts, pants, jeans, dresses, skirts, jackets or leggings.";
+                        "shorts, pants, jeans and other items.";
+                context=1;
                 break;
             case "2":
                 utterance = "Ok. Who do you want to buy it for? Men or Women?";
-                context=1;
+                context=2;
                 break;
             case "3":
                 utterance = "Great, What size do you want it in?";
-                context=2;
+                context=3;
                 break;
             case "4":
                 utterance = "Next, can you tell me the color you want it in?";
-                context=3;
+                context=4;
                 break;
             case "5":
                 utterance = "Ok. What price range are you looking for?";
-                context=4;
+                context=5;
                 break;
             case "6":
                 utterance = "Ok. Do you have a brand in mind?";
-                context=5;
+                context=6;
                 break;
             case "7":
                 utterance = "These are the filtered items. To open a product say \"Open product\" followed by product number.";
@@ -530,7 +550,7 @@ public class APIAITaskAgent {
     public boolean checkIfItemExists(HashMap modifiedHashMap){
         if (modifiedHashMap==null){
             TTS.speak("Sorry, I couldn't find that item. Please select an item from " +
-                    "Pants, Jeans, Shorts, Shirts, Jackets, Skirts, Dresses and Leggings. ");
+                    "Pants, Jeans, Shorts, Shirts and other items. ");
             return false;
         }
         else {
@@ -594,19 +614,22 @@ public class APIAITaskAgent {
         //5 brand
 //        boolean test = APIAIContext.toString().contains("open.prompt");
 //        APIAIContext = APIAIContext.replace("\\u0000", "");
-        if(APIAIContext.contains("clothes.gender") && context!=1){
+        if(APIAIContext.contains("clothes.product") && context!=1){
             return false;
         }
-        else if(APIAIContext.contains("clothes.size") && context!=2){
+        if(APIAIContext.contains("clothes.gender") && context!=2){
             return false;
         }
-        else if(APIAIContext.contains("clothes.color") && context!=3){
+        else if(APIAIContext.contains("clothes.size") && context!=3){
             return false;
         }
-        else if(APIAIContext.contains("clothes.pricevalue") && context!=4){
+        else if(APIAIContext.contains("clothes.color") && context!=4){
             return false;
         }
-        else if(APIAIContext.contains("clothes.brand") && context!=5){
+        else if(APIAIContext.contains("clothes.pricevalue") && context!=5){
+            return false;
+        }
+        else if(APIAIContext.contains("clothes.brand") && context!=6){
             return false;
         }
         return true;
@@ -641,8 +664,51 @@ public class APIAITaskAgent {
         if(DBHelper.getInstance(activity).GetResultSize(productMap)>0){
             return true;
         }
-        TTS.speak("Sorry, there are no filtered items. Please start over by saying \"start over\"");
+        if (context!=1)
+            TTS.speak("Sorry, there are no filtered items. Please start over by saying \"start over\"");
+        else if(context==1){
+            if(flag_prodsearch==0)
+                TTS.speak("Sorry, there are no filtered items. Please start over by saying \"start over\"");
+            else if (flag_prodsearch==1)
+                TTS.speak("Sorry that's not a valid item. You can choose from Shirts, Pants, Shorts and other items.");
+        }
+        //else
         return false;
+    }
+
+    public void toggleProdSearchFlag(){
+        if (flag_prodsearch==1)
+            flag_prodsearch=0;
+        else if (flag_prodsearch==0)
+            flag_prodsearch=1;
+    }
+
+    public String AItrain(String userQuery){
+        if(userQuery.toLowerCase().contains("sharks")){
+            return userQuery.toLowerCase().replace("sharks","shirt");
+        }
+        else if(userQuery.toLowerCase().contains("shots")){
+            return userQuery.toLowerCase().replace("shots","short");
+        }
+        else if(userQuery.toLowerCase().contains("sharps")){
+            return userQuery.toLowerCase().replace("sharks","shirts");
+        }
+        if(userQuery.toLowerCase().contains("jaket")){
+            return userQuery.toLowerCase().replace("jaket","jacket");
+        }
+        if(userQuery.toLowerCase().contains("record")){
+            return userQuery.toLowerCase().replace("record","jacket");
+        }
+        if(userQuery.toLowerCase().contains("red")){
+            return userQuery.toLowerCase().replace("red","red ");
+        }
+        if(userQuery.toLowerCase().contains("blue")){
+            return userQuery.toLowerCase().replace("blue","blue ");
+        }
+        if(userQuery.toLowerCase().contains("bend")){
+            return userQuery.toLowerCase().replace("bend","pant");
+        }
+        else return userQuery;
     }
 }
 
