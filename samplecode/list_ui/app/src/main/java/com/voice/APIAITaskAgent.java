@@ -52,7 +52,7 @@ public class APIAITaskAgent {
     public static int correctASR = 0;
     public static int incorrectASR = 0;
     public static String prevAttrValue= "";
-    public static int context = 1;
+    public static int context = 0;
     @Inject
     public APIAITaskAgent(final Activity activity){
         AIConfiguration aiConfiguration =  new AIConfiguration(
@@ -118,9 +118,11 @@ public class APIAITaskAgent {
                                                 HashMap resultMap = DBHelper.getInstance(activity.getApplicationContext()).populateMapOnOpenPrompt(queryItemsList);
                                                 if (checkIfItemExists(resultMap)){
                                                     ProductAttributes.productMap.put("open_done", "1");
-                                                    readerTask.execute(resultMap);//TODO
-                                                    speech = getNextDialogue();
-                                                    TTS.speak(speech);
+                                                    if (checkResultsNotZero(activity,resultMap)){
+                                                        readerTask.execute(resultMap);//TODO
+                                                        speech = getNextDialogue();
+                                                         TTS.speak(speech);
+                                                    }
                                                 }
 
                                             } else {
@@ -143,7 +145,8 @@ public class APIAITaskAgent {
                                         else
                                             ProductAttributes.productMap.put("category", result.getParameters().get("items").toString());
                                         TTS.speak(speech);
-                                        readerTask_prod.execute(ProductAttributes.productMap);
+                                        if (checkResultsNotZero(activity,ProductAttributes.productMap))
+                                            readerTask_prod.execute(ProductAttributes.productMap);
                                     } else {
                                         speech = getRandomUtterance();
                                         TTS.speak(speech);
@@ -164,7 +167,8 @@ public class APIAITaskAgent {
                                                 ProductAttributes.productMap.put("gender", result.getParameters().get("gender").toString());
                                             speech = getNextDialogue();
                                             TTS.speak(speech);
-                                            readerTask_gender.execute(ProductAttributes.productMap);
+                                            if (checkResultsNotZero(activity,ProductAttributes.productMap))
+                                             readerTask_gender.execute(ProductAttributes.productMap);
                                         } else {
                                             speech = getRandomUtterance();
                                             TTS.speak(speech);
@@ -185,7 +189,8 @@ public class APIAITaskAgent {
                                                 ProductAttributes.productMap.put("size", result.getParameters().get("size").toString());
                                             speech = getNextDialogue();
                                             TTS.speak(speech);
-                                            readerTask_size.execute(ProductAttributes.productMap);
+                                            if (checkResultsNotZero(activity,ProductAttributes.productMap))
+                                                readerTask_size.execute(ProductAttributes.productMap);
                                         } else {
                                             speech = getRandomUtterance();
                                             TTS.speak(speech);
@@ -206,7 +211,8 @@ public class APIAITaskAgent {
                                                 ProductAttributes.productMap.put("color", result.getParameters().get("color").toString());
                                             speech = getNextDialogue();
                                             TTS.speak(speech);
-                                            readerTask_color.execute(ProductAttributes.productMap);
+                                            if (checkResultsNotZero(activity,ProductAttributes.productMap))
+                                                readerTask_color.execute(ProductAttributes.productMap);
                                         } else {
                                             speech = getRandomUtterance();
                                             TTS.speak(speech);
@@ -245,7 +251,8 @@ public class APIAITaskAgent {
                                         }
                                         speech = getNextDialogue();
                                         TTS.speak(speech);
-                                        readerTask_price.execute(ProductAttributes.productMap);
+                                        if (checkResultsNotZero(activity,ProductAttributes.productMap))
+                                            readerTask_price.execute(ProductAttributes.productMap);
                                     } else {
                                         speech = getRandomUtterance();
                                         TTS.speak(speech);
@@ -268,7 +275,8 @@ public class APIAITaskAgent {
                                                 ProductAttributes.productMap.put("brand", result.getParameters().get("brand").toString());
                                             speech = getNextDialogue();
                                             TTS.speak(speech);
-                                            readerTask_brand.execute(ProductAttributes.productMap);
+                                            if (checkResultsNotZero(activity,ProductAttributes.productMap))
+                                                readerTask_brand.execute(ProductAttributes.productMap);
                                         } else {
                                             speech = getRandomUtterance();
                                             TTS.speak(speech);
@@ -315,7 +323,8 @@ public class APIAITaskAgent {
                                         String idVal=  result.getParameters().get("productnum").toString().replaceAll("\"", "");
                                         if(isInteger(idVal)){
                                             ProductAttributes.productMap.put("id", result.getParameters().get("productnum").toString().replaceAll("\"", ""));
-                                            readerTask_prodNum.execute(ProductAttributes.productMap);
+                                            if (checkResultsNotZero(activity,ProductAttributes.productMap))
+                                                readerTask_prodNum.execute(ProductAttributes.productMap);
                                         }
                                         else {
                                             TTS.speak("Sorry, that's not a valid number. Please say" +
@@ -401,8 +410,8 @@ public class APIAITaskAgent {
         String utterance = "";
 
         //TODO
-        ProductAttributes.productMap.put("category", "shirt");
-        ProductAttributes.productMap.put("color", "blue");
+//        ProductAttributes.productMap.put("category", "shirt");
+//        ProductAttributes.productMap.put("color", "blue");
 
         HashMap productMap = ProductAttributes.productMap;
         if(productMap.get("category")==null){
@@ -441,7 +450,7 @@ public class APIAITaskAgent {
         ProductAttributes.productMap.put("open_done", "0");
         prevAttrValue = "";
         flag_ground = 0;
-        context=1; //TODO
+        context=0; //TODO
     }
 
     public String findDialogue(String value){
@@ -472,7 +481,7 @@ public class APIAITaskAgent {
                 context=5;
                 break;
             case "7":
-                utterance = "These are the filtered items. Please select a product number.";
+                utterance = "These are the filtered items. To open a product say \"Open product\" followed by product number.";
                 break;
 
         }
@@ -506,6 +515,7 @@ public class APIAITaskAgent {
     }
 
     public void setAttrValue(String value){
+        value = value.replace("\"","");
         if (ProductAttributes.productMap.get("prevDialog") == "2") {
             ProductAttributes.productMap.put("gender", value);
         } else if (ProductAttributes.productMap.get("prevDialog") == "3") {
@@ -585,8 +595,15 @@ public class APIAITaskAgent {
     }
     public HashMap getEmptyHashMap(){
         HashMap emptyMap = new HashMap();
-        emptyMap.put("","");
         return emptyMap;
+    }
+
+    public boolean checkResultsNotZero(Activity activity, HashMap productMap){
+        if(DBHelper.getInstance(activity).GetResultSize(productMap)>0){
+            return true;
+        }
+        TTS.speak("Sorry, there are no filtered items. Please start over by saying \"start over\"");
+        return false;
     }
 }
 
