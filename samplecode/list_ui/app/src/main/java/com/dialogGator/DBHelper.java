@@ -57,6 +57,14 @@ public class DBHelper extends SQLiteOpenHelper
         }
     }
 
+    public int GetResultSize(Map<String, String> searchBox){
+        boolean db = openDataBase();
+        ArrayList<Product> products = new ArrayList<Product>();
+        String queryString = GetQueryString(searchBox);
+        Cursor data = readData(queryString);
+        return data.getCount();
+    }
+
     public ArrayList<Product> Query(Map<String, String> searchBox) {
         boolean db = openDataBase();
         ArrayList<Product> products = new ArrayList<Product>();
@@ -74,6 +82,7 @@ public class DBHelper extends SQLiteOpenHelper
                 product.size = (data.getString(5));
                 product.color = (data.getString(6));
                 product.imgUrl = (data.getString(7));
+                product.gender = (data.getString(8));
 
                 Set<String> attributeSet = searchBox.keySet();
 
@@ -84,23 +93,26 @@ public class DBHelper extends SQLiteOpenHelper
 
                 int addFlag = 1;
                 for (String attribute : attributeSet) {
-                    Field field = null;
-                    try {
-                        field = Product.class.getDeclaredField(attribute);
-                    } catch (NoSuchFieldException e) {
-                        e.printStackTrace();
-                    }
-                    field.setAccessible(true);
-                    String lhs = null;
-                    try {
-                        lhs = (String) field.get(product);
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
-                    }
-                    String rhs = searchBox.get(attribute);
-                    if (EditDistance.findEditDistance(lhs.toLowerCase(), rhs.toLowerCase()) <= 70) {
-                        addFlag = 0;
-                        break;
+                    if(_tableNames.contains(attribute) || attribute == "gender")
+                    {
+                        Field field = null;
+                        try {
+                            field = Product.class.getDeclaredField(attribute);
+                        } catch (NoSuchFieldException e) {
+                            e.printStackTrace();
+                        }
+                        field.setAccessible(true);
+                        String lhs = null;
+                        try {
+                            lhs = (String) field.get(product);
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                        }
+                        String rhs = searchBox.get(attribute);
+                        if (EditDistance.findEditDistance(lhs.toLowerCase(), rhs.toLowerCase()) <= 70) {
+                            addFlag = 0;
+                            break;
+                        }
                     }
                 }
                 if(addFlag == 1)products.add(product);
@@ -144,7 +156,8 @@ public class DBHelper extends SQLiteOpenHelper
                 "Price," +
                 "size.Name," +
                 "color.Name," +
-                "ImgUrl " +
+                "ImgUrl," +
+                "gender " +
                 "from product P " +
                 "inner join category on category.Id = categoryId " +
                 "inner join brand on brand.Id = brandId " +
@@ -173,6 +186,10 @@ public class DBHelper extends SQLiteOpenHelper
                 } else if (attribute == "priceEnd") {
                     whereClause += NewWhereClause(whereClause);
                     whereClause += "price <= " + searchBox.get(attribute);
+                } else if (attribute == "gender") {
+                    String val = searchBox.get(attribute);
+                    whereClause += NewWhereClause(whereClause);
+                    whereClause += "gender LIKE '%" + val.substring(0, Math.min(3, val.length())).toLowerCase() + "%'";
                 }
             }
         }
@@ -264,21 +281,30 @@ public class DBHelper extends SQLiteOpenHelper
 
     private HashMap<String, String> BuildFrame(String[] query)
     {
-        String searchTerms = "('%" + TextUtils.join("%'),('%", query) + "%')";
-        String query1 = "CREATE TEMP TABLE patterns (pattern VARCHAR(20)); ";
+        String searchTerms = "";
+        int index = 0;
+        for(String term : query)
+        {
+            index++;
+            if(index > 1) searchTerms += ",";
+            searchTerms += "('%" + term.substring(0, Math.min(3, term.length())) + "%','" + term + "')";
+        }
+        String query1 = "CREATE TEMP TABLE patterns (pattern VARCHAR(20), term VARCHAR(20)); ";
         String query2 = "INSERT INTO patterns VALUES " + searchTerms + ";";
         String query3 = "";
-        int index = 0;
+        index = 0;
         for(String tableName : _tableNames)
         {
             index++;
             if(index > 1) query3 += " UNION ";
-            query3 += "Select '" + tableName + "' AS Attribute, Name from " + tableName
+            query3 += "Select '" + tableName + "' AS Attribute, Name, p.term from " + tableName
                     + " JOIN patterns p ON (Name LIKE p.pattern) ";
         }
 
         boolean db = openDataBase();
         HashMap<String, String> frame = new HashMap<String, String>();
+        HashMap<String, Float> termDist = new HashMap<String, Float>();
+        HashMap<String, String> termAttr = new HashMap<String, String>();
         mDataBase.beginTransaction();
         mDataBase.execSQL(query1);
         mDataBase.execSQL(query2);
@@ -289,9 +315,23 @@ public class DBHelper extends SQLiteOpenHelper
             {
                 String attr = data.getString(0);
                 String val = data.getString(1);
-                if (!frame.containsKey(attr))
+                String term = data.getString(2);
+                float d = EditDistance.findEditDistance(term, val);
+                if (termDist.containsKey(term))
+                {
+                    if(d > termDist.get(term))
+                    {
+                        frame.remove(termAttr.get(term));
+                        frame.put(attr, val);
+                        termDist.put(term, d);
+                        termAttr.put(term, attr);
+                    }
+                }
+                else if(d >= 70)
                 {
                     frame.put(attr, val);
+                    termAttr.put(term, attr);
+                    termDist.put(term, d);
                 }
             }
         }
