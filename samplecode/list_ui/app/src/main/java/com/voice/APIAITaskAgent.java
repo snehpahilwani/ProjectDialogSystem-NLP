@@ -52,7 +52,7 @@ public class APIAITaskAgent {
     public static int correctASR = 0;
     public static int incorrectASR = 0;
     public static String prevAttrValue= "";
-    public static int context = 0;
+    public static int context = 1;
     @Inject
     public APIAITaskAgent(final Activity activity){
         AIConfiguration aiConfiguration =  new AIConfiguration(
@@ -115,10 +115,10 @@ public class APIAITaskAgent {
                                         if (!result.getParameters().isEmpty() && ProductAttributes.productMap.get("open_done") != "1") {
                                             String[] queryItemsList = getQueryItems(result.getParameters());
                                             if (queryItemsList != null) {
-                                                ProductAttributes.productMap.put("open_done", "1");
                                                 //DBHelper.getInstance(activity.getApplicationContext()).populateMapOnOpenPrompt(queryItemsList);
                                                 HashMap resultMap = DBHelper.getInstance(activity.getApplicationContext()).populateMapOnOpenPrompt(queryItemsList);
                                                 if (checkIfItemExists(resultMap)){
+                                                    ProductAttributes.productMap.put("open_done", "1");
                                                     readerTask.execute(resultMap);//TODO
                                                     speech = getNextDialogue();
                                                     TTS.speak(speech);
@@ -216,42 +216,42 @@ public class APIAITaskAgent {
                                     break;
 
                                 case "clothes.pricevalue":
-                                        PostTaskListener postTaskListener_price = init(activity);
-                                        final ReaderTask readerTask_price = new ReaderTask(activity.getApplicationContext(), postTaskListener_price);
-                                        if (!result.getParameters().isEmpty()) {
-                                            if (result.getParameters().get("price") != null) {
+                                    PostTaskListener postTaskListener_price = init(activity);
+                                    final ReaderTask readerTask_price = new ReaderTask(activity.getApplicationContext(), postTaskListener_price);
+                                    if (!result.getParameters().isEmpty()) {
+                                        if (result.getParameters().get("price") != null) {
 //                                                if (result.getParameters().get("price").toString().contains("\""))
 //                                                    ProductAttributes.productMap.put("priceStart", result.getParameters().get("price").toString().replaceAll("\"", ""));
 //                                                else
-                                                ProductAttributes.productMap.put("priceStart", getPriceAttr(result.getParameters().get("price"), "price"));
+                                            ProductAttributes.productMap.put("priceStart", getPriceAttr(result.getParameters().get("price"), "price"));
 
 //                                                if (result.getParameters().get("price").toString().contains("\""))
 //                                                    ProductAttributes.productMap.put("priceEnd", result.getParameters().get("price").toString().replaceAll("\"", ""));
 //                                                else
-                                                    ProductAttributes.productMap.put("priceEnd", getPriceAttr(result.getParameters().get("price"), "price"));
-                                            } else {
-                                                if (result.getParameters().get("rangestart") == null) {
-                                                    ProductAttributes.productMap.put("priceStart", "0");
-                                                } //else if (result.getParameters().get("rangestart").toString().contains("\""))
-//                                                    ProductAttributes.productMap.put("priceStart", result.getParameters().get("rangestart").toString().replaceAll("\"", ""));
-                                                  else
-                                                    ProductAttributes.productMap.put("priceStart", getPriceAttr(result.getParameters().get("rangestart"), "rangestart"));
-
-                                                if (result.getParameters().get("rangeend") == null) {
-                                                    ProductAttributes.productMap.put("priceEnd", "9999999");
-                                                } //else if (result.getParameters().get("rangeend").toString().contains("\""))
-//                                                    ProductAttributes.productMap.put("priceEnd", result.getParameters().get("rangeend").toString().replaceAll("\"", ""));
-                                                else
-                                                    ProductAttributes.productMap.put("priceEnd", getPriceAttr(result.getParameters().get("rangeend"), "rangeend"));
-                                            }
-                                            speech = getNextDialogue();
-                                            TTS.speak(speech);
-                                            readerTask_price.execute(ProductAttributes.productMap);
+                                            ProductAttributes.productMap.put("priceEnd", getPriceAttr(result.getParameters().get("price"), "price"));
                                         } else {
-                                            speech = getRandomUtterance();
-                                            TTS.speak(speech);
+                                            if (result.getParameters().get("rangestart") == null) {
+                                                ProductAttributes.productMap.put("priceStart", "0");
+                                            } //else if (result.getParameters().get("rangestart").toString().contains("\""))
+//                                                    ProductAttributes.productMap.put("priceStart", result.getParameters().get("rangestart").toString().replaceAll("\"", ""));
+                                            else
+                                                ProductAttributes.productMap.put("priceStart", getPriceAttr(result.getParameters().get("rangestart"), "rangestart"));
+
+                                            if (result.getParameters().get("rangeend") == null) {
+                                                ProductAttributes.productMap.put("priceEnd", "9999999");
+                                            } //else if (result.getParameters().get("rangeend").toString().contains("\""))
+//                                                    ProductAttributes.productMap.put("priceEnd", result.getParameters().get("rangeend").toString().replaceAll("\"", ""));
+                                            else
+                                                ProductAttributes.productMap.put("priceEnd", getPriceAttr(result.getParameters().get("rangeend"), "rangeend"));
                                         }
+                                        speech = getNextDialogue();
                                         TTS.speak(speech);
+                                        readerTask_price.execute(ProductAttributes.productMap);
+                                    } else {
+                                        speech = getRandomUtterance();
+                                        TTS.speak(speech);
+                                    }
+                                    TTS.speak(speech);
 
                                     break;
 
@@ -328,7 +328,7 @@ public class APIAITaskAgent {
                                         speech = getRandomUtterance();
                                         TTS.speak(speech);
                                     }
-                                break;
+                                    break;
                                 case "clothes.startwithname":
                                     TTS.speak(speech);
                                     break;
@@ -362,7 +362,7 @@ public class APIAITaskAgent {
     }
 
     public PostTaskListener<ArrayList<Product>> init (Activity activity){
-       // ListenerTask lt = new ListenerTask();
+        // ListenerTask lt = new ListenerTask();
         PostTaskListener<ArrayList<Product>> postTaskListener = ((ListenerTask) activity.getApplication()).getPostTaskListener();
 
         return postTaskListener;
@@ -379,13 +379,17 @@ public class APIAITaskAgent {
         int select = random.nextInt(arr.length);
 
         // prints out the value at the randomly selected index
-       return arr[select];
+        return arr[select];
     }
 
     public String[] getQueryItems(HashMap queryMap){
         if(queryMap!=null) {
-            String queryItems = queryMap.get("query").toString();
+            String queryItems = queryMap.get("query").toString().toLowerCase();
+            queryItems = queryItems.replace("\"","");
+            queryItems = queryItems.replace("[","");
+            queryItems = queryItems.replace("]","");
             String[] queryItemsList = queryItems.split(" ");
+
             return queryItemsList;
         }
         else return null;
@@ -435,7 +439,7 @@ public class APIAITaskAgent {
         ProductAttributes.productMap.put("open_done", "0");
         prevAttrValue = "";
         flag_ground = 0;
-        context=0; //TODO
+        context=1; //TODO
     }
 
     public String findDialogue(String value){
@@ -494,24 +498,24 @@ public class APIAITaskAgent {
             while (it.hasNext()) {
                 Map.Entry pair = (Map.Entry) it.next();
                 ProductAttributes.productMap.put(pair.getKey(), pair.getValue());
-                it.remove(); // avoids a ConcurrentModificationException
+                //it.remove(); // avoids a ConcurrentModificationException
             }
         }
     }
 
     public void setAttrValue(String value){
-            if (ProductAttributes.productMap.get("prevDialog") == "2") {
-                ProductAttributes.productMap.put("gender", value);
-            } else if (ProductAttributes.productMap.get("prevDialog") == "3") {
-                ProductAttributes.productMap.put("size", value);
-            } else if (ProductAttributes.productMap.get("prevDialog") == "4") {
-                ProductAttributes.productMap.put("color", value);
-            } else if (ProductAttributes.productMap.get("prevDialog") == "5") {
-                ProductAttributes.productMap.put("priceStart", value);
-                ProductAttributes.productMap.put("priceEnd", value);
-            } else if (ProductAttributes.productMap.get("prevDialog") == "6") {
-                ProductAttributes.productMap.put("brand", value);
-            }
+        if (ProductAttributes.productMap.get("prevDialog") == "2") {
+            ProductAttributes.productMap.put("gender", value);
+        } else if (ProductAttributes.productMap.get("prevDialog") == "3") {
+            ProductAttributes.productMap.put("size", value);
+        } else if (ProductAttributes.productMap.get("prevDialog") == "4") {
+            ProductAttributes.productMap.put("color", value);
+        } else if (ProductAttributes.productMap.get("prevDialog") == "5") {
+            ProductAttributes.productMap.put("priceStart", value);
+            ProductAttributes.productMap.put("priceEnd", value);
+        } else if (ProductAttributes.productMap.get("prevDialog") == "6") {
+            ProductAttributes.productMap.put("brand", value);
+        }
     }
 
     public void groundDialog(String value){
@@ -539,26 +543,22 @@ public class APIAITaskAgent {
         //5 brand
 //        boolean test = APIAIContext.toString().contains("open.prompt");
 //        APIAIContext = APIAIContext.replace("\\u0000", "");
-        if(APIAIContext.contains("clothes.gender") && context==1){
-            return true;
-        }
-        else if(APIAIContext.contains("clothes.size") && context==2){
-            return true;
-        }
-        else if(APIAIContext.contains("clothes.color") && context==3){
-            return true;
-        }
-        else if(APIAIContext.contains("clothes.pricevalue") && context==4){
-            return true;
-        }
-        else if(APIAIContext.contains("clothes.brand") && context==5){
-            return true;
-        }
-        else if (APIAIContext.contains("open.prompt")){
-            return true;
-        }
-
+        if(APIAIContext.contains("clothes.gender") && context!=1){
             return false;
+        }
+        else if(APIAIContext.contains("clothes.size") && context!=2){
+            return false;
+        }
+        else if(APIAIContext.contains("clothes.color") && context!=3){
+            return false;
+        }
+        else if(APIAIContext.contains("clothes.pricevalue") && context!=4){
+            return false;
+        }
+        else if(APIAIContext.contains("clothes.brand") && context!=5){
+            return false;
+        }
+        return true;
     }
 
     public String getPriceAttr(JsonElement priceJSONElement, String param){
@@ -568,7 +568,7 @@ public class APIAITaskAgent {
             JsonObject testObj = (JsonObject) testArray.get(0);
             String test = testObj.get("amount").toString();
             return priceJSONElement.getAsString();
-            }
+        }
         else return "";
 
     }
@@ -581,6 +581,8 @@ public class APIAITaskAgent {
             return false;
         }
     }
+
+
 }
 
 //try {

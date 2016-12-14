@@ -156,7 +156,7 @@ public class DBHelper extends SQLiteOpenHelper
         if(attributeSet.size() == 1 && attributeSet.iterator().next().toLowerCase() == "id")
         {
             int val = Integer.parseInt(searchBox.get(attributeSet.iterator().next()));
-            whereClause += " P.Id = " + Integer.toString(val);
+            whereClause += " where P.Id = " + Integer.toString(val);
         }
         else
         {
@@ -191,7 +191,7 @@ public class DBHelper extends SQLiteOpenHelper
         boolean mDataBaseExist = checkDataBase();
         if(!mDataBaseExist)
         {
-            this.getReadableDatabase();
+            this.getWritableDatabase();
             this.close();
             try
             {
@@ -236,7 +236,7 @@ public class DBHelper extends SQLiteOpenHelper
     {
         String mPath = DB_PATH + DB_NAME;
         //Log.v("mPath", mPath);
-        mDataBase = SQLiteDatabase.openDatabase(mPath, null, SQLiteDatabase.OPEN_READONLY);
+        mDataBase = SQLiteDatabase.openDatabase(mPath, null, SQLiteDatabase.OPEN_READWRITE);
         //mDataBase = SQLiteDatabase.openDatabase(mPath, null, SQLiteDatabase.NO_LOCALIZED_COLLATORS);
         return mDataBase != null;
     }
@@ -265,20 +265,24 @@ public class DBHelper extends SQLiteOpenHelper
     private HashMap<String, String> BuildFrame(String[] query)
     {
         String searchTerms = "('%" + TextUtils.join("%'),('%", query) + "%')";
-        String queryS = "CREATE TEMP TABLE patterns (pattern VARCHAR(20)); ";
-        queryS += "INSERT INTO patterns VALUES " + searchTerms + ";";
+        String query1 = "CREATE TEMP TABLE patterns (pattern VARCHAR(20)); ";
+        String query2 = "INSERT INTO patterns VALUES " + searchTerms + ";";
+        String query3 = "";
         int index = 0;
         for(String tableName : _tableNames)
         {
             index++;
-            if(index > 1) queryS += " UNION ";
-            queryS += "Select '" + tableName + "' AS Attribute, Name from " + tableName
+            if(index > 1) query3 += " UNION ";
+            query3 += "Select '" + tableName + "' AS Attribute, Name from " + tableName
                     + " JOIN patterns p ON (Name LIKE p.pattern) ";
         }
 
         boolean db = openDataBase();
         HashMap<String, String> frame = new HashMap<String, String>();
-        Cursor data = readData(queryS);
+        mDataBase.beginTransaction();
+        mDataBase.execSQL(query1);
+        mDataBase.execSQL(query2);
+        Cursor data = readData(query3);
         try
         {
             while (data.moveToNext())
@@ -295,6 +299,7 @@ public class DBHelper extends SQLiteOpenHelper
         {
             Log.e(TAG, e.toString());
         }
+        mDataBase.endTransaction();
         close();
         return frame;
 
