@@ -50,38 +50,46 @@ public class MainFragment extends Fragment implements FragmentOnBackClickInterfa
             @Override
             public void onPostTask(final ArrayList<Product> result, Context mContext) {
                 //products = result;
-                ((ListenerTask) getActivity().getApplication()).setProductList(result);
-                ProductListAdapter adapter = new ProductListAdapter(
-                        getActivity(), R.layout.list_item, result);
-                ListView lv = (ListView) rootView.findViewById(R.id.listView);
-                lv.setAdapter(adapter);
-                lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (result.size() != 0) {
+                    ((ListenerTask) getActivity().getApplication()).setProductList(result);
+                    ProductListAdapter adapter = new ProductListAdapter(
+                            getActivity(), R.layout.list_item, result);
+                    ListView lv = (ListView) rootView.findViewById(R.id.listView);
+                    lv.setAdapter(adapter);
+                    lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Intent intent = new Intent(MainFragment.this.getContext(), DetailActivity.class);
+                            Product product = result.get(position);
+                            intent.putExtra(PRODUCT_ID, product.getProductId());
+                            startActivity(intent);
+                        }
+                    });
+                    if (result.size() == 1) {
                         Intent intent = new Intent(MainFragment.this.getContext(), DetailActivity.class);
-                        Product product = result.get(position);
+                        Product product = result.get(0);
                         intent.putExtra(PRODUCT_ID, product.getProductId());
                         startActivity(intent);
                     }
-                });
-                String attributes="";
-                final HashMap productMap = ProductAttributes.productMap;
-                if(productMap!=null) {
-                    Iterator it = productMap.entrySet().iterator();
-                    String attri = "";
-                    while (it.hasNext()) {
-                        Map.Entry pair = (Map.Entry) it.next();
-                        attri = pair.getKey().toString();
+                    String attributes = "";
+                    final HashMap productMap = ProductAttributes.productMap;
+                    if (productMap != null) {
+                        Iterator it = productMap.entrySet().iterator();
+                        String attri = "";
+                        while (it.hasNext()) {
+                            Map.Entry pair = (Map.Entry) it.next();
+                            attri = pair.getKey().toString();
 //                        Log.i("Chutzpah", pair.getKey() + " = " + pair.getValue());
                         if(attri.contains("category") || attri.contains("brand") || attri.contains("color") || attri.contains("gender") || attri.contains("size") || attri.contains("priceEnd") || attri.contains("priceStart")) {
                             attributes = pair.getValue() + ", " +attributes;
                         }
                     }
 
+                    }
+                    Log.i("df", attributes);
+                    Toolbar searchBar = (Toolbar) getActivity().findViewById(R.id.search_bar);
+                    searchBar.setTitle("Filters: " + attributes);
                 }
-                Log.i("df",attributes);
-                Toolbar searchBar = (Toolbar) getActivity().findViewById(R.id.search_bar);
-                searchBar.setTitle("Filters: "+ attributes);
             }
         };
 
