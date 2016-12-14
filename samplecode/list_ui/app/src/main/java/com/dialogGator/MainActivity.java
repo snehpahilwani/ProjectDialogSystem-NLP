@@ -69,8 +69,8 @@ public class MainActivity extends AppCompatActivity
                 .setTarget(new ViewTarget(findViewById(R.id.fab)))
                 .setStyle(R.style.ShowCaseViewStyle)
                 .setOnClickListener(this)
-                .setContentText("Tap this button to speak.")
-                .setContentTitle("Speak")
+                .setContentText("\n\nTap the button to speak.\n\nYou can ask for the product you want to buy.\n\nExample: Show me a blue shirt.\n\nSay 'Open product number 123' for product details.\n\nSay 'Help!' if you need help with something.\n\nSay 'Start Over' to clear all filters.")
+                .setContentTitle("Things you can say.")
                 .build();
         showcaseView.setButtonPosition(lps);
         //Setup Logging
