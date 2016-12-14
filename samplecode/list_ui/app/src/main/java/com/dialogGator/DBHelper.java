@@ -21,7 +21,7 @@ public class DBHelper extends SQLiteOpenHelper
     private static DBHelper sInstance;
 
     private static final Set<String> _tableNames = new HashSet<String>(Arrays.asList("brand", "category", "color", "size"));
-    private static String TAG = "DataBaseHelper"; // Tag just for the LogCat window
+    private static String TAG = "DataBase"; // Tag just for the LogCat window
     //destination path (location) of our database on device
     private static String DB_PATH = "";
     private static String DB_NAME ="Dialog.db";// Database name
@@ -58,15 +58,18 @@ public class DBHelper extends SQLiteOpenHelper
     }
 
     public int GetResultSize(Map<String, String> searchBox){
+        Log.i(TAG, "Result Size Called");
         boolean db = openDataBase();
         ArrayList<Product> products = new ArrayList<Product>();
         String queryString = GetQueryString(searchBox);
         Cursor data = readData(queryString);
+        Log.i(TAG, "Result Size Returned:" + data.getCount());
         return data.getCount();
     }
 
     public ArrayList<Product> Query(Map<String, String> searchBox) {
         boolean db = openDataBase();
+        Log.i(TAG, "Query Products Called");
         ArrayList<Product> products = new ArrayList<Product>();
         String queryString = GetQueryString(searchBox);
         Cursor data = readData(queryString);
@@ -123,6 +126,7 @@ public class DBHelper extends SQLiteOpenHelper
             Log.e(TAG, e.toString());
         }
         close();
+        Log.i(TAG, "Query Products Resturned:" + Integer.toString(products.size()));
         return products;
     }
 
@@ -193,6 +197,7 @@ public class DBHelper extends SQLiteOpenHelper
                 }
             }
         }
+        Log.i(TAG, "Product query : " + query + whereClause);
         return query + whereClause;
     }
 
@@ -281,6 +286,7 @@ public class DBHelper extends SQLiteOpenHelper
 
     private HashMap<String, String> BuildFrame(String[] query)
     {
+        Log.i(TAG, "Build-Frame called : " + query.toString());
         String searchTerms = "";
         int index = 0;
         for(String term : query)
@@ -341,6 +347,7 @@ public class DBHelper extends SQLiteOpenHelper
         }
         mDataBase.endTransaction();
         close();
+        Log.i(TAG, "Build-Frame returned : " + frame.toString());
         return frame;
 
     }

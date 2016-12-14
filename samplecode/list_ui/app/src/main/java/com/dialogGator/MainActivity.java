@@ -60,11 +60,11 @@ public class MainActivity extends AppCompatActivity
         //fragmentTransaction.addToBackStack("scheduleFragment");
         fragmentTransaction.commit();
         //To Handle ShowCaseView positions
-        //\int margin = ((Number) (getResources().getDisplayMetrics().density * 16)).intValue();
+        int margin = ((Number) (getResources().getDisplayMetrics().density * 16)).intValue();
         fab = (FloatingActionButton) findViewById(R.id.fab);
         RelativeLayout.LayoutParams lps = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-
-        lps.setMargins(400, 800, 200, 200);
+        lps.setMargins(margin, 1550, margin, margin);
+        //lps.setMargins(400, 800, 200, 200);
         showcaseView = new ShowcaseView.Builder(this).withMaterialShowcase()
                 .setTarget(new ViewTarget(findViewById(R.id.fab)))
                 .setStyle(R.style.ShowCaseViewStyle)
