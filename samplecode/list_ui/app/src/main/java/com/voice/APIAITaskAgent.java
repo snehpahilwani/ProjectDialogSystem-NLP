@@ -94,7 +94,7 @@ public class APIAITaskAgent {
                         else if(checkValidContext(result.getAction().toString())==false){
                             Log.i(TAG, "System: Invalid Option");
                             TTS.speak("This is not a valid option.");
-                            TTS.speak(findDialogue(ProductAttributes.productMap.get("prevDialog").toString()));
+                            TTS.speak(getCorrectContextDialogue(ProductAttributes.productMap.get("prevDialog").toString()));
                             //TTS.speak(getNextDialogue());
                         }else {
                             switch (result.getAction()) {
@@ -143,8 +143,8 @@ public class APIAITaskAgent {
                                                     toggleProdSearchFlag();
                                                     speech = getNextDialogue();
                                                     TTS.speak(speech);
-                                                    readerTask_prod.execute(ProductAttributes.productMap);
                                                 }
+                                                readerTask_prod.execute(ProductAttributes.productMap);
                                             }
                                         } else {
                                             speech = getRandomUtterance();
@@ -163,10 +163,11 @@ public class APIAITaskAgent {
                                                 if (checkIfItemExists(resultMap)){
                                                     ProductAttributes.productMap.put("open_done", "1");
                                                     if (checkResultsNotZero(activity,resultMap)){
-                                                        readerTask.execute(resultMap);//TODO
                                                         speech = getNextDialogue();
                                                         TTS.speak(speech);
                                                     }
+                                                    readerTask.execute(resultMap);//TODO
+
                                                 }
 
                                             } else {
@@ -176,7 +177,7 @@ public class APIAITaskAgent {
                                             }
                                         } else if (ProductAttributes.productMap.get("open_done") == "1") {
                                             Log.i(TAG, "System: Open prompt : Invalid Option");
-                                            speech = "This is not a valid option. If you want to start over, say \"start over\".";
+                                            TTS.speak(getCorrectContextDialogue(ProductAttributes.productMap.get("prevDialog").toString()));
                                             //speech = getNextDialogue();
                                             TTS.speak(speech);
                                         }
@@ -205,8 +206,9 @@ public class APIAITaskAgent {
                                                 toggleProdSearchFlag();
                                                 speech = getNextDialogue();
                                                 TTS.speak(speech);
-                                                readerTask_prod.execute(ProductAttributes.productMap);
                                             }
+                                            readerTask_prod.execute(ProductAttributes.productMap);
+
                                         }
                                     } else {
                                         Log.i(TAG, "System: Close Prompt : Filter : Category : NoValue");
@@ -233,8 +235,9 @@ public class APIAITaskAgent {
                                             if (checkResultsNotZero(activity,ProductAttributes.productMap)){
                                                 speech = getNextDialogue();
                                                 TTS.speak(speech);
-                                                readerTask_gender.execute(ProductAttributes.productMap);
                                             }
+                                            readerTask_gender.execute(ProductAttributes.productMap);
+
                                         } else {
                                             Log.i(TAG, "System: Close Prompt : Filter : Gender : NoValue");
                                             speech = getRandomUtterance();
@@ -261,8 +264,9 @@ public class APIAITaskAgent {
                                             if (checkResultsNotZero(activity,ProductAttributes.productMap)) {
                                                 speech = getNextDialogue();
                                                 TTS.speak(speech);
-                                                readerTask_size.execute(ProductAttributes.productMap);
                                             }
+                                            readerTask_size.execute(ProductAttributes.productMap);
+
                                         } else {
                                             Log.i(TAG, "System: Close Prompt : Filter : Size : NoValue");
                                             speech = getRandomUtterance();
@@ -289,8 +293,9 @@ public class APIAITaskAgent {
                                             if (checkResultsNotZero(activity,ProductAttributes.productMap)){
                                                 speech = getNextDialogue();
                                                 TTS.speak(speech);
-                                                readerTask_color.execute(ProductAttributes.productMap);
                                             }
+                                            readerTask_color.execute(ProductAttributes.productMap);
+
                                         } else {
                                             Log.i(TAG, "System: Close Prompt : Filter : Color : NoValue");
                                             speech = getRandomUtterance();
@@ -336,14 +341,15 @@ public class APIAITaskAgent {
                                         if (checkResultsNotZero(activity,ProductAttributes.productMap)) {
                                             speech = getNextDialogue();
                                             TTS.speak(speech);
-                                            readerTask_price.execute(ProductAttributes.productMap);
                                         }
+                                        readerTask_price.execute(ProductAttributes.productMap);
+
                                     } else {
                                         Log.i(TAG, "System: Close Prompt : Filter : Price : NoValue");
                                         speech = getRandomUtterance();
                                         TTS.speak(speech);
                                     }
-                                    TTS.speak(speech);
+//                                    TTS.speak(speech);
 
                                     break;
 
@@ -366,8 +372,9 @@ public class APIAITaskAgent {
                                             if (checkResultsNotZero(activity,ProductAttributes.productMap)) {
                                                 speech = getNextDialogue();
                                                 TTS.speak(speech);
-                                                readerTask_brand.execute(ProductAttributes.productMap);
                                             }
+                                            readerTask_brand.execute(ProductAttributes.productMap);
+
                                         } else {
                                             Log.i(TAG, "System: Close Prompt : Filter : Brand : NoValue");
                                             speech = getRandomUtterance();
@@ -377,7 +384,7 @@ public class APIAITaskAgent {
                                     break;
                                 ///////////////////////////////////////////
                                 case "clothes.repeatdialog":
-                                    TTS.speak(findDialogue(ProductAttributes.productMap.get("prevDialog").toString()));
+                                    TTS.speak(getCorrectContextDialogue(ProductAttributes.productMap.get("prevDialog").toString()));
                                     break;
                                 case "clothes.add":
                                     TTS.speak(speech);
@@ -493,6 +500,7 @@ public class APIAITaskAgent {
     public String[] getQueryItems(HashMap queryMap){
         if(queryMap!=null) {
             String queryItems = queryMap.get("query").toString().toLowerCase();
+            queryItems=AItrain(queryItems);
             queryItems = queryItems.replace("\"","");
             queryItems = queryItems.replace("[","");
             queryItems = queryItems.replace("]","");
@@ -723,14 +731,14 @@ public class APIAITaskAgent {
     }
 
     public String AItrain(String userQuery){
-        if(userQuery.toLowerCase().contains("sharks")){
-            return userQuery.toLowerCase().replace("sharks","shirt");
+        if(userQuery.toLowerCase().contains("shark")){
+            return userQuery.toLowerCase().replace("shark","shirt");
         }
-        else if(userQuery.toLowerCase().contains("shots")){
-            return userQuery.toLowerCase().replace("shots","short");
+        else if(userQuery.toLowerCase().contains("shot")){
+            return userQuery.toLowerCase().replace("shot","short");
         }
-        else if(userQuery.toLowerCase().contains("sharps")){
-            return userQuery.toLowerCase().replace("sharks","shirts");
+        else if(userQuery.toLowerCase().contains("sharp")){
+            return userQuery.toLowerCase().replace("sharp","shirts");
         }
         if(userQuery.toLowerCase().contains("jaket")){
             return userQuery.toLowerCase().replace("jaket","jacket");
@@ -748,6 +756,44 @@ public class APIAITaskAgent {
             return userQuery.toLowerCase().replace("bend","pant");
         }
         else return userQuery;
+    }
+
+    public String getCorrectContextDialogue(String value){
+        String invalidPrompt = "That is not a valid option. ";
+        String utterance = "";
+        switch (value){
+            case "1":
+                utterance = "What product do you want? You can choose from shirts, " +
+                        "shorts, pants, jeans and other items.";
+                context=1;
+                break;
+            case "2":
+                utterance = "Who do you want to buy it for? Men or Women?";
+                context=2;
+                break;
+            case "3":
+                utterance = "What size do you want it in?";
+                context=3;
+                break;
+            case "4":
+                utterance = "Can you tell me the color you want it in?";
+                context=4;
+                break;
+            case "5":
+                utterance = "What price range are you looking for?";
+                context=5;
+                break;
+            case "6":
+                utterance = "Do you have a brand in mind?";
+                context=6;
+                break;
+            case "7":
+                utterance = "These are the filtered items. To open a product say \"Open product\" followed by product number.";
+                break;
+
+        }
+        utterance = invalidPrompt+utterance;
+        return utterance;
     }
 }
 
