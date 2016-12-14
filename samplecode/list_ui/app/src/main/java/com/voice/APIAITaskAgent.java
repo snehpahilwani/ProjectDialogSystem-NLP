@@ -87,7 +87,6 @@ public class APIAITaskAgent {
                         else if(checkValidContext(result.getAction().toString())==false){
                             TTS.speak("This is not a valid option.");
                             TTS.speak(findDialogue(ProductAttributes.productMap.get("prevDialog").toString()));
-                            TTS.speak(findDialogue(ProductAttributes.productMap.get("prevDialog").toString()));
                             //TTS.speak(getNextDialogue());
                         }else {
                             switch (result.getAction()) {
@@ -300,6 +299,9 @@ public class APIAITaskAgent {
                                     break;
                                 case "clothes.start-over":
                                     clearFilters();
+                                    PostTaskListener postTaskListener_clear = init(activity);
+                                    final ReaderTask readerTask_clear = new ReaderTask(activity.getApplicationContext(), postTaskListener_clear);
+                                    readerTask_clear.execute(getEmptyHashMap());
                                     TTS.speak("Ok, I have cleared all filters. Please start with selecting " +
                                             "an item from Pant, Jean, Short, Shirt, Jacket, Skirt, Dress or Legging.");
                                     break;
@@ -581,8 +583,11 @@ public class APIAITaskAgent {
             return false;
         }
     }
-
-
+    public HashMap getEmptyHashMap(){
+        HashMap emptyMap = new HashMap();
+        emptyMap.put("","");
+        return emptyMap;
+    }
 }
 
 //try {
