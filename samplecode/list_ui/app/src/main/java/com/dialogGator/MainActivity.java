@@ -15,8 +15,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,11 +38,13 @@ import java.util.HashMap;
 import javax.inject.Singleton;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     NavigationView navigationView = null;
     Toolbar toolbar = null;
-    ShowcaseView.Builder showcaseView;
+    ShowcaseView showcaseView;
+    FloatingActionButton fab = null;
+    private int counter = 0;
     final int SHOWCASEVIEW_ID = 28;
 
     @Override
@@ -53,7 +59,20 @@ public class MainActivity extends AppCompatActivity
         fragmentTransaction.replace(R.id.fragment_container, fragment,"scheduleFragment");
         //fragmentTransaction.addToBackStack("scheduleFragment");
         fragmentTransaction.commit();
+        //To Handle ShowCaseView positions
+        //\int margin = ((Number) (getResources().getDisplayMetrics().density * 16)).intValue();
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        RelativeLayout.LayoutParams lps = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
+        lps.setMargins(400, 800, 200, 200);
+        showcaseView = new ShowcaseView.Builder(this).withMaterialShowcase()
+                .setTarget(new ViewTarget(findViewById(R.id.fab)))
+                .setStyle(R.style.ShowCaseViewStyle)
+                .setOnClickListener(this)
+                .setContentText("Tap this button to speak.")
+                .setContentTitle("Speak")
+                .build();
+        showcaseView.setButtonPosition(lps);
         //Setup Logging
         if ( isExternalStorageWritable() ) {
 
@@ -93,7 +112,7 @@ public class MainActivity extends AppCompatActivity
         */
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        showShowCaseView();
+
         TTS.init(getApplicationContext());
         ProductAttributes.init();
         String attributes = "";
@@ -101,11 +120,11 @@ public class MainActivity extends AppCompatActivity
         searchBar.setTitle("Filters: "+ attributes);
         //DBHelper.getInstance(getApplicationContext());
         final APIAITaskAgent apiaiTaskAgent = new APIAITaskAgent(this);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 TTS.stopSpeaking();
+                showcaseView.hide();
                 apiaiTaskAgent.startRecognition();
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
@@ -252,37 +271,14 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    public void showShowCaseView()
-    {
-        showcaseView = new ShowcaseView.Builder(this).withMaterialShowcase()
-                .setTarget(new ViewTarget(R.id.fab, this)).setContentTitle("Test")
-                .setContentText("This is where you start speaking")
-                .setStyle(R.style.ShowCaseTitleStyle)
-                .singleShot(SHOWCASEVIEW_ID)
-                .setShowcaseEventListener(new OnShowcaseEventListener() {
-                    @Override
-                    public void onShowcaseViewHide(ShowcaseView showcaseView) {
 
-                    }
 
-                    @Override
-                    public void onShowcaseViewDidHide(ShowcaseView showcaseView) {
+    @Override
+    public void onClick(View v) {
 
-                    }
-
-                    @Override
-                    public void onShowcaseViewShow(ShowcaseView showcaseView) {
-
-                    }
-
-                    @Override
-                    public void onShowcaseViewTouchBlocked(MotionEvent motionEvent) {
-
-                    }
-                });
-
-        showcaseView.build();
+        showcaseView.hide();
     }
+
 
 
 }
