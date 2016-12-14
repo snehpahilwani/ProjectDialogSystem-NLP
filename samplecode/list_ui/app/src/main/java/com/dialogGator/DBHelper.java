@@ -21,6 +21,7 @@ public class DBHelper extends SQLiteOpenHelper
     private static DBHelper sInstance;
 
     private static final Set<String> _tableNames = new HashSet<String>(Arrays.asList("brand", "category", "color", "size"));
+    private static final Set<String> _tabNames = new HashSet<String>(Arrays.asList("brand", "category", "color", "size", "gender"));
     private static String TAG = "DataBase"; // Tag just for the LogCat window
     //destination path (location) of our database on device
     private static String DB_PATH = "";
@@ -293,7 +294,7 @@ public class DBHelper extends SQLiteOpenHelper
         String query2 = "INSERT INTO patterns VALUES " + searchTerms + ";";
         String query3 = "";
         index = 0;
-        for(String tableName : _tableNames)
+        for(String tableName : _tabNames)
         {
             index++;
             if(index > 1) query3 += " UNION ";
