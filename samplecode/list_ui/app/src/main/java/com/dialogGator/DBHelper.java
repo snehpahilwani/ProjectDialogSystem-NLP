@@ -58,13 +58,7 @@ public class DBHelper extends SQLiteOpenHelper
     }
 
     public int GetResultSize(Map<String, String> searchBox){
-        Log.i(TAG, "Result Size Called");
-        boolean db = openDataBase();
-        ArrayList<Product> products = new ArrayList<Product>();
-        String queryString = GetQueryString(searchBox);
-        Cursor data = readData(queryString);
-        Log.i(TAG, "Result Size Returned:" + data.getCount());
-        return data.getCount();
+        return Query(searchBox).size();
     }
 
     public ArrayList<Product> Query(Map<String, String> searchBox) {
