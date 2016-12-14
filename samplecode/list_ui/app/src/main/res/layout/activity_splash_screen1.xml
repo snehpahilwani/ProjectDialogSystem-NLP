@@ -9,31 +9,22 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:layout_centerInParent="true"
+    android:background="@color/main_bg_color"
     tools:context="com.dialogGator.SplashScreenActivity1">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Some things you can say"
-        android:textSize="30sp"
-        tools:context=".MainActivity"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="100dp"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textStyle="bold"
-        android:text="\n\nYou can ask me the product you want to buy\n\nExample: Show me blue shirt?\n\nSay 'Open product number' for details\n\nOrder product number\n\nSay 'Help!' If you need help with something"
+        android:text="@string/VirtualSalesman"
+        android:textSize="50sp"
         tools:context=".MainActivity"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginTop="200dp"
-        android:layout_alignParentTop="true"
+        android:textColor="#ffffff"
+        android:textStyle="bold"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"/>
+        android:id="@+id/SplashScreenText"/>
+
 </RelativeLayout>

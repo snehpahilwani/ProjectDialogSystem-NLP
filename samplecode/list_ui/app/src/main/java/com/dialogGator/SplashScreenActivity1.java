@@ -30,6 +30,6 @@ public class SplashScreenActivity1 extends Activity {
                 SplashScreenActivity1.this.finish();
 
             }
-        }, 5000);
+        }, 1000);
     }
 }
