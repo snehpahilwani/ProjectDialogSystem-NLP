@@ -10,4 +10,7 @@
     <color name="colorWhite">#ffffff</color>
     <color name="colorDivider">#B6B6B6</color>
 
+    <color name ="showCaseBackground">#ff03000a</color>
+
+
 </resources>

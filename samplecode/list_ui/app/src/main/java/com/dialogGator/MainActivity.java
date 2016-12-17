@@ -1,9 +1,11 @@
 package com.dialogGator;
 
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
+import android.view.MotionEvent;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,24 +15,37 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.amlcurran.showcaseview.OnShowcaseEventListener;
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.voice.APIAITaskAgent;
 import com.voice.TTS;
 
+import java.io.IOException;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.inject.Singleton;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     NavigationView navigationView = null;
     Toolbar toolbar = null;
+    ShowcaseView showcaseView;
+    FloatingActionButton fab = null;
+    private int counter = 0;
+    final int SHOWCASEVIEW_ID = 28;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +59,50 @@ public class MainActivity extends AppCompatActivity
         fragmentTransaction.replace(R.id.fragment_container, fragment,"scheduleFragment");
         //fragmentTransaction.addToBackStack("scheduleFragment");
         fragmentTransaction.commit();
+        //To Handle ShowCaseView positions
+        int margin = ((Number) (getResources().getDisplayMetrics().density * 16)).intValue();
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        RelativeLayout.LayoutParams lps = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lps.setMargins(margin, 1550, margin, margin);
+        //lps.setMargins(400, 800, 200, 200);
+        showcaseView = new ShowcaseView.Builder(this).withMaterialShowcase()
+                .setTarget(new ViewTarget(findViewById(R.id.fab)))
+                .setStyle(R.style.ShowCaseViewStyle)
+                .setOnClickListener(this)
+                .setContentText("\n\nTap the button to speak.\n\nYou can ask for the product you want to buy.\n\nExample: Show me a blue shirt.\n\nSay 'Open product number 123' for product details.\n\nSay 'Help!' if you need help with something.\n\nSay 'Start Over' to clear all filters.")
+                .setContentTitle("Things you can say.")
+                .build();
+        showcaseView.setButtonPosition(lps);
+        //Setup Logging
+        if ( isExternalStorageWritable() ) {
+
+            File appDirectory = new File( Environment.getExternalStorageDirectory() + "/VirtualSA" );
+            File logDirectory = new File( appDirectory + "/log" );
+            File logFile = new File( logDirectory, "logcat" + System.currentTimeMillis() + ".txt" );
+
+            // create app folder
+            if ( !appDirectory.exists() ) {
+                appDirectory.mkdir();
+            }
+
+            // create log folder
+            if ( !logDirectory.exists() ) {
+                logDirectory.mkdir();
+            }
+
+            // clear the previous logcat and then write the new one to the file
+            try {
+                Process process = Runtime.getRuntime().exec("logcat -c");
+                process = Runtime.getRuntime().exec("logcat -f " + logFile);
+            } catch ( IOException e ) {
+                e.printStackTrace();
+            }
+
+        } else if ( isExternalStorageReadable() ) {
+            // only readable
+        } else {
+            // not accessible
+        }
 
         /*FragmentTransaction fragmentTransaction =  getActivity().getSupportFragmentManager().beginTransaction();
         Fragment scheduleFragment = new ScheduleFragment();
@@ -56,14 +115,16 @@ public class MainActivity extends AppCompatActivity
 
         TTS.init(getApplicationContext());
         ProductAttributes.init();
-
+        String attributes = "";
+        Toolbar searchBar = (Toolbar) findViewById(R.id.search_bar);
+        searchBar.setTitle("Filters: "+ attributes);
         //DBHelper.getInstance(getApplicationContext());
         final APIAITaskAgent apiaiTaskAgent = new APIAITaskAgent(this);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 TTS.stopSpeaking();
+                showcaseView.hide();
                 apiaiTaskAgent.startRecognition();
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
@@ -95,7 +156,24 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    /* Checks if external storage is available for read and write */
+    public boolean isExternalStorageWritable() {
+        String state = Environment.getExternalStorageState();
+        if ( Environment.MEDIA_MOUNTED.equals( state ) ) {
+            return true;
+        }
+        return false;
+    }
 
+    /* Checks if external storage is available to at least read */
+    public boolean isExternalStorageReadable() {
+        String state = Environment.getExternalStorageState();
+        if ( Environment.MEDIA_MOUNTED.equals( state ) ||
+                Environment.MEDIA_MOUNTED_READ_ONLY.equals( state ) ) {
+            return true;
+        }
+        return false;
+    }
 
 
     @Override
@@ -155,6 +233,7 @@ public class MainActivity extends AppCompatActivity
             android.support.v4.app.FragmentTransaction fragmentTransaction =
                     getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, fragment,"scheduleFragment");
+            APIAITaskAgent.clearFilters();
             //fragmentTransaction.addToBackStack("scheduleFragment");
             fragmentTransaction.commit();
         }
@@ -179,17 +258,11 @@ public class MainActivity extends AppCompatActivity
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
             //Set the fragment initially
-            GalleryFragment fragment = new GalleryFragment();
+            UniversalFragment fragment = new UniversalFragment();
             android.support.v4.app.FragmentTransaction fragmentTransaction =
                     getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, fragment);
             fragmentTransaction.commit();
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
 
         }
 
@@ -198,9 +271,14 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
-//        TTS.stopSpeaking();
-//    }
+
+
+    @Override
+    public void onClick(View v) {
+
+        showcaseView.hide();
+    }
+
+
+
 }

@@ -13,6 +13,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.text.TextUtils;
 import android.util.Log;
 
 public class DBHelper extends SQLiteOpenHelper
@@ -20,7 +21,8 @@ public class DBHelper extends SQLiteOpenHelper
     private static DBHelper sInstance;
 
     private static final Set<String> _tableNames = new HashSet<String>(Arrays.asList("brand", "category", "color", "size"));
-    private static String TAG = "DataBaseHelper"; // Tag just for the LogCat window
+    private static final Set<String> _tabNames = new HashSet<String>(Arrays.asList("brand", "category", "color", "size", "gender"));
+    private static String TAG = "DataBase"; // Tag just for the LogCat window
     //destination path (location) of our database on device
     private static String DB_PATH = "";
     private static String DB_NAME ="Dialog.db";// Database name
@@ -56,8 +58,13 @@ public class DBHelper extends SQLiteOpenHelper
         }
     }
 
+    public int GetResultSize(Map<String, String> searchBox){
+        return Query(searchBox).size();
+    }
+
     public ArrayList<Product> Query(Map<String, String> searchBox) {
         boolean db = openDataBase();
+        Log.i(TAG, "Query Products Called");
         ArrayList<Product> products = new ArrayList<Product>();
         String queryString = GetQueryString(searchBox);
         Cursor data = readData(queryString);
@@ -73,6 +80,7 @@ public class DBHelper extends SQLiteOpenHelper
                 product.size = (data.getString(5));
                 product.color = (data.getString(6));
                 product.imgUrl = (data.getString(7));
+                product.gender = (data.getString(8));
 
                 Set<String> attributeSet = searchBox.keySet();
 
@@ -83,23 +91,26 @@ public class DBHelper extends SQLiteOpenHelper
 
                 int addFlag = 1;
                 for (String attribute : attributeSet) {
-                    Field field = null;
-                    try {
-                        field = Product.class.getDeclaredField(attribute);
-                    } catch (NoSuchFieldException e) {
-                        e.printStackTrace();
-                    }
-                    field.setAccessible(true);
-                    String lhs = null;
-                    try {
-                        lhs = (String) field.get(product);
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
-                    }
-                    String rhs = searchBox.get(attribute);
-                    if (EditDistance.findEditDistance(lhs.toLowerCase(), rhs.toLowerCase()) <= 70) {
-                        addFlag = 0;
-                        break;
+                    if(_tableNames.contains(attribute) || attribute == "gender")
+                    {
+                        Field field = null;
+                        try {
+                            field = Product.class.getDeclaredField(attribute);
+                        } catch (NoSuchFieldException e) {
+                            e.printStackTrace();
+                        }
+                        field.setAccessible(true);
+                        String lhs = null;
+                        try {
+                            lhs = (String) field.get(product);
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                        }
+                        String rhs = searchBox.get(attribute);
+                        if (EditDistance.findEditDistance(lhs.toLowerCase(), rhs.toLowerCase()) <= 70) {
+                            addFlag = 0;
+                            break;
+                        }
                     }
                 }
                 if(addFlag == 1)products.add(product);
@@ -110,6 +121,7 @@ public class DBHelper extends SQLiteOpenHelper
             Log.e(TAG, e.toString());
         }
         close();
+        Log.i(TAG, "Query Products Resturned:" + Integer.toString(products.size()));
         return products;
     }
 
@@ -143,7 +155,8 @@ public class DBHelper extends SQLiteOpenHelper
                 "Price," +
                 "size.Name," +
                 "color.Name," +
-                "ImgUrl " +
+                "ImgUrl," +
+                "gender " +
                 "from product P " +
                 "inner join category on category.Id = categoryId " +
                 "inner join brand on brand.Id = brandId " +
@@ -152,27 +165,34 @@ public class DBHelper extends SQLiteOpenHelper
 
         String whereClause = "";
 
-        for(String attribute : attributeSet)
+        if(attributeSet.size() == 1 && attributeSet.iterator().next().toLowerCase() == "id")
         {
-            if(_tableNames.contains(attribute))
-            {
-                whereClause += NewWhereClause(whereClause);
-                Log.i("ProductMap", searchBox.get(attribute).toString());
-                String attributeValue = searchBox.get(attribute);
-                int valueLength = attributeValue.length();
-                whereClause += "LOWER(" + attribute + ".Name) LIKE '%" + attributeValue.substring(0, Math.min(3, valueLength)).toLowerCase() + "%'";
-            }
-            else if(attribute == "priceStart")
-            {
-                whereClause += NewWhereClause(whereClause);
-                whereClause += "price >= " + searchBox.get(attribute);
-            }
-            else if(attribute == "priceEnd")
-            {
-                whereClause += NewWhereClause(whereClause);
-                whereClause += "price <= " + searchBox.get(attribute);
+            int val = Integer.parseInt(searchBox.get(attributeSet.iterator().next()));
+            whereClause += " where P.Id = " + Integer.toString(val);
+        }
+        else
+        {
+            for (String attribute : attributeSet) {
+                if (_tableNames.contains(attribute)) {
+                    whereClause += NewWhereClause(whereClause);
+                    Log.i("ProductMap", searchBox.get(attribute).toString());
+                    String attributeValue = searchBox.get(attribute);
+                    int valueLength = attributeValue.length();
+                    whereClause += "LOWER(" + attribute + ".Name) LIKE '%" + attributeValue.substring(0, Math.min(3, valueLength)).toLowerCase() + "%'";
+                } else if (attribute == "priceStart") {
+                    whereClause += NewWhereClause(whereClause);
+                    whereClause += "price >= " + searchBox.get(attribute);
+                } else if (attribute == "priceEnd") {
+                    whereClause += NewWhereClause(whereClause);
+                    whereClause += "price <= " + searchBox.get(attribute);
+                } else if (attribute == "gender") {
+                    String val = searchBox.get(attribute);
+                    whereClause += NewWhereClause(whereClause);
+                    whereClause += "gender LIKE '%" + val.substring(0, Math.min(3, val.length())).toLowerCase() + "%'";
+                }
             }
         }
+        Log.i(TAG, "Product query : " + query + whereClause);
         return query + whereClause;
     }
 
@@ -188,7 +208,7 @@ public class DBHelper extends SQLiteOpenHelper
         boolean mDataBaseExist = checkDataBase();
         if(!mDataBaseExist)
         {
-            this.getReadableDatabase();
+            this.getWritableDatabase();
             this.close();
             try
             {
@@ -233,7 +253,7 @@ public class DBHelper extends SQLiteOpenHelper
     {
         String mPath = DB_PATH + DB_NAME;
         //Log.v("mPath", mPath);
-        mDataBase = SQLiteDatabase.openDatabase(mPath, null, SQLiteDatabase.OPEN_READONLY);
+        mDataBase = SQLiteDatabase.openDatabase(mPath, null, SQLiteDatabase.OPEN_READWRITE);
         //mDataBase = SQLiteDatabase.openDatabase(mPath, null, SQLiteDatabase.NO_LOCALIZED_COLLATORS);
         return mDataBase != null;
     }
@@ -253,5 +273,78 @@ public class DBHelper extends SQLiteOpenHelper
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
     {}
+
+    public HashMap populateMapOnOpenPrompt(String[] query){
+        HashMap<String, String> frame = BuildFrame(query);
+        return frame.size() > 0 ? frame : null;
+    }
+
+    private HashMap<String, String> BuildFrame(String[] query)
+    {
+        Log.i(TAG, "Build-Frame called : " + query.toString());
+        String searchTerms = "";
+        int index = 0;
+        for(String term : query)
+        {
+            index++;
+            if(index > 1) searchTerms += ",";
+            searchTerms += "('%" + term.substring(0, Math.min(3, term.length())) + "%','" + term + "')";
+        }
+        String query1 = "CREATE TEMP TABLE patterns (pattern VARCHAR(20), term VARCHAR(20)); ";
+        String query2 = "INSERT INTO patterns VALUES " + searchTerms + ";";
+        String query3 = "";
+        index = 0;
+        for(String tableName : _tabNames)
+        {
+            index++;
+            if(index > 1) query3 += " UNION ";
+            query3 += "Select '" + tableName + "' AS Attribute, Name, p.term from " + tableName
+                    + " JOIN patterns p ON (Name LIKE p.pattern) ";
+        }
+
+        boolean db = openDataBase();
+        HashMap<String, String> frame = new HashMap<String, String>();
+        HashMap<String, Float> termDist = new HashMap<String, Float>();
+        HashMap<String, String> termAttr = new HashMap<String, String>();
+        mDataBase.beginTransaction();
+        mDataBase.execSQL(query1);
+        mDataBase.execSQL(query2);
+        Cursor data = readData(query3);
+        try
+        {
+            while (data.moveToNext())
+            {
+                String attr = data.getString(0);
+                String val = data.getString(1);
+                String term = data.getString(2);
+                float d = EditDistance.findEditDistance(term, val);
+                if (termDist.containsKey(term))
+                {
+                    if(d > termDist.get(term))
+                    {
+                        frame.remove(termAttr.get(term));
+                        frame.put(attr, val);
+                        termDist.put(term, d);
+                        termAttr.put(term, attr);
+                    }
+                }
+                else if(d >= 70)
+                {
+                    frame.put(attr, val);
+                    termAttr.put(term, attr);
+                    termDist.put(term, d);
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Log.e(TAG, e.toString());
+        }
+        mDataBase.endTransaction();
+        close();
+        Log.i(TAG, "Build-Frame returned : " + frame.toString());
+        return frame;
+
+    }
 }
 
